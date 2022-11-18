@@ -12,6 +12,11 @@ import com.cs371m.bookmark.databinding.ActionBarBinding
 import com.cs371m.bookmark.databinding.ActivityMainBinding
 
 class MainActivity2 : AppCompatActivity() {
+
+    companion object {
+        var globalDebug = false // default: false
+    }
+
     private var actionBarBinding: ActionBarBinding? = null
 
     private fun initActionBar(actionBar: ActionBar) {

@@ -84,7 +84,7 @@
         android:layout_marginRight="10dp"
         android:text="Title"
         android:textColor="@color/burnt"
-        android:textSize="35sp"
+        android:textSize="30sp"
         android:textStyle="bold|italic"
         />
 
@@ -137,12 +137,13 @@
             android:id="@+id/actionComment"
             android:layout_width="0dp"
             android:minEms="16"
+            android:minLines="1"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:layout_gravity="center_vertical"
             android:hint="Type here"
             android:imeOptions="actionSend"
-            android:inputType="text"
+            android:inputType="textCapSentences|textMultiLine"
             android:padding="8dp" />
 
         <ImageView

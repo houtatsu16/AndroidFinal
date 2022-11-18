@@ -1,6 +1,7 @@
 package com.cs371m.bookmark.ui.hot
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,12 @@ class HotFragment : Fragment() {
             // textView.text = it
         }
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d(javaClass.simpleName, "onViewCreated")
+        val rv = binding.recyclerView
     }
 
     override fun onDestroyView() {
