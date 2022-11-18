@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Bookmark</string>
+    <string name="title_hot">Hot</string>
+    <string name="title_rate">Rate</string>
+    <string name="title_collection">Collection</string>
+    <string name="title_settings">Settings</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+</resources>

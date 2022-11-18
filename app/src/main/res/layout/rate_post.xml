@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:focusable="true"
+    android:clickable="true"
+    android:layout_margin="8dp"
+    android:background="?android:attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/grey">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".MainActivity2">
+
+        <ImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_margin="2dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/title"
+            />
+
+        <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="23sp"
+                android:text="Title"
+                android:textStyle="bold"
+                android:textColor="@color/burnt"
+                android:padding="2dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/thumbnail"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/author"
+                />
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="1dp"
+            android:text="author"
+            android:textStyle="italic"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintLeft_toRightOf="@+id/thumbnail"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/description"
+            />
+
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="1dp"
+            android:text="description"
+            app:layout_constraintTop_toBottomOf="@+id/author"
+            app:layout_constraintLeft_toRightOf="@+id/thumbnail"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/rowFav"
+            />
+
+        <ImageView
+            android:id="@+id/rowFav"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_favorite_border_black_24dp"
+            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+            app:layout_constraintLeft_toRightOf="@+id/thumbnail"
+            app:layout_constraintRight_toLeftOf="@+id/fav_num"
+            app:layout_constraintTop_toBottomOf="@+id/description" />
+
+        <TextView
+            android:id="@+id/fav_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:text="fav_num"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+            app:layout_constraintLeft_toRightOf="@+id/rowFav"
+            app:layout_constraintTop_toBottomOf="@+id/description" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="4dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+            app:layout_constraintLeft_toRightOf="@+id/fav_num"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description"
+            />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@android:attr/ratingBarStyleSmall"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:backgroundTint="@color/black"
+            android:progressTint="@color/burnt"
+            android:secondaryProgressTint="@color/burnt"
+            app:layout_constraintTop_toBottomOf="@+id/fav_num"
+            android:numStars="5"
+            android:rating="3.5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/thumbnail"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_hot"
+        android:icon="@drawable/ic_baseline_local_fire_department_24"
+        android:title="@string/title_hot" />
+
+    <item
+        android:id="@+id/navigation_rate"
+        android:icon="@drawable/ic_baseline_rate_review_24"
+        android:title="@string/title_rate" />
+
+    <item
+        android:id="@+id/navigation_collection"
+        android:icon="@drawable/ic_baseline_collections_bookmark_24"
+        android:title="@string/title_collection" />
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/title_settings" />
+
+</menu>
