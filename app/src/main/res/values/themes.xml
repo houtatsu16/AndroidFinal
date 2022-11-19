@@ -16,8 +16,8 @@
     </style>
 
     <style name="ThemeOverlay.Bookmark.FullscreenContainer" parent="">
-        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
-        <item name="fullscreenTextColor">@color/light_blue_A200</item>
+        <item name="fullscreenBackgroundColor">@color/burnt</item>
+        <item name="fullscreenTextColor">@color/burnt</item>
     </style>
 
     <style name="Theme.Bookmark.Fullscreen" parent="Theme.Bookmark">

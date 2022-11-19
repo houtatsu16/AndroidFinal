@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.cs371m.bookmark.MainActivity2
 import com.cs371m.bookmark.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
@@ -28,6 +30,7 @@ class SettingsFragment : Fragment() {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        (activity as AppCompatActivity).supportActionBar?.hide()
         // val textView: TextView = binding.textSettings
         notificationsViewModel.text.observe(viewLifecycleOwner) {
             // textView.text = it

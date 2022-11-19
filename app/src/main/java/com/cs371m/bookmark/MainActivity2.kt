@@ -1,6 +1,9 @@
 package com.cs371m.bookmark
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.ActionBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +22,14 @@ class MainActivity2 : AppCompatActivity() {
 
     private var actionBarBinding: ActionBarBinding? = null
 
+    // An Android nightmare
+    // https://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
+    // https://stackoverflow.com/questions/7789514/how-to-get-activitys-windowtoken-without-view
+    fun hideKeyboard() {
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(window.decorView.rootView.windowToken, 0)
+    }
+
     private fun initActionBar(actionBar: ActionBar) {
         // Disable the default and enable the custom
         actionBar.setDisplayShowTitleEnabled(false)
@@ -29,6 +40,23 @@ class MainActivity2 : AppCompatActivity() {
         // viewModel.setTitleToSubreddit()
         // actionBarBinding?.actionTitle?.text = "r/aww"
 
+    }
+
+    // Check out addTextChangedListener
+    private fun actionBarSearch() {
+        actionBarBinding?.actionSearch?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(s.isNullOrEmpty()) {
+                    hideKeyboard()
+                }
+                // viewModel.setSearchTerm(s.toString())
+            }
+        })
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -55,5 +83,7 @@ class MainActivity2 : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        actionBarSearch()
     }
 }

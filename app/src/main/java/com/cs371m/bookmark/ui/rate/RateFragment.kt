@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.cs371m.bookmark.databinding.FragmentRateBinding
@@ -24,6 +25,8 @@ class RateFragment : Fragment() {
     ): View {
         val homeViewModel =
             ViewModelProvider(this).get(RateViewModel::class.java)
+
+        (activity as AppCompatActivity).supportActionBar?.show()
 
         _binding = FragmentRateBinding.inflate(inflater, container, false)
         val root: View = binding.root
