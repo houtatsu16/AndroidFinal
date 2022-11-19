@@ -24,6 +24,8 @@ class MainViewModel : ViewModel(){
 // From https://openlibrary.org/dev/docs/api/covers
 //    https://covers.openlibrary.org/b/$key/$value-$size.jpg
 //
+    // haha
+    //haha
 //    Where:
 //
 //    key can be any one of ISBN, OCLC, LCCN, OLID and ID (case-insensitive)
