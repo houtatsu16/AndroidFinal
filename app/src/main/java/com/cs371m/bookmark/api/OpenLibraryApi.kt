@@ -20,9 +20,12 @@ interface OpenLibraryApi {
     // XXX Write me: Retrofit annotation, see CatNet
 
     // https://openlibrary.org/dev/docs/api/books
-    @GET("?format=json&jscmd=details")
+    @GET("/api/books?format=json&jscmd=details")
     suspend fun getBook(@Query("bibkeys") bibkeys: String) : Map<String, Book>
     // XXX Write me: The return type
+
+    @GET("/search.json?limit=100")
+    suspend fun searchBookByTitle(@Query("title") title: String) : SearchResult
 
 
     // I just looked at the response and "parsed" it by eye
@@ -34,7 +37,7 @@ interface OpenLibraryApi {
         // https://square.github.io/okhttp/4.x/okhttp/okhttp3/-http-url/
         var url = HttpUrl.Builder()
             .scheme("https")
-            .host("openlibrary.org").addPathSegment("api").addPathSegment("books").addPathSegment("")
+            .host("openlibrary.org").addPathSegment("")
             .build()
 
 

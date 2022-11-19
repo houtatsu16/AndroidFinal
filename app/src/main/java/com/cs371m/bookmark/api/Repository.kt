@@ -7,4 +7,10 @@ class Repository(private val api: OpenLibraryApi) {
         return api.getBook("ISBN:$ISBN")
         //EEE // XXX Write me
     }
+
+    suspend fun searchBookByTitle(title: String): SearchResult {
+        //SSS
+        return api.searchBookByTitle(title)
+        //EEE // XXX Write me
+    }
 }

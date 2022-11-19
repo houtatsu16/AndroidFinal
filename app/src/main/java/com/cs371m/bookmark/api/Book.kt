@@ -13,36 +13,6 @@ data class Book (
     val thumbnail_url: String,
     @SerializedName("details")
     val details: Details,
-
-//    @SerializedName("title")
-//    val title: String,
-//    @SerializedName("authors")
-//    val authors: List<Author>,
-//    @SerializedName("number_of_pages")
-//    val number_of_pages: Int,
-//    @SerializedName("pagination")
-//    val pagination: String,
-//    @SerializedName("by_statement")
-//    val by_statement: String,
-//    identifiers is omitted.
-//    classifications is omitted.
-//    @SerializedName("publishers")
-//    val publishers: List<Publisher>,
-//    @SerializedName("publish_places")
-//    val publish_places: List<PublishPlace>,
-//    @SerializedName("publish_date")
-//    val publish_date: String,
-//    @SerializedName("subjects")
-//    val subjects: List<Subject>,
-//    @SerializedName("subject_places")
-//    val subject_places: List<Subject>,
-//    @SerializedName("subject_people")
-//    val subject_people: List<Subject>,
-//    @SerializedName("subject_times")
-//    val subject_times: List<Subject>,
-//    notes is omitted.
-//    ebooks is omitted.
-
 )
 
 data class Details(

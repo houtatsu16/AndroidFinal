@@ -11,6 +11,7 @@ import okhttp3.HttpUrl
 
 class MainViewModel : ViewModel(){
     private var isbn = "9780980200447"
+    private var searchTitle = "abc"
 
     private var api = OpenLibraryApi.create()
     private var repo = Repository(api)
@@ -53,6 +54,8 @@ class MainViewModel : ViewModel(){
             }
 
             Log.d("netRefresh", coverImageUrl(isbn, "S"))
+
+            Log.d("netRefresh", repo.searchBookByTitle(searchTitle).toString())
         }
     }
 
