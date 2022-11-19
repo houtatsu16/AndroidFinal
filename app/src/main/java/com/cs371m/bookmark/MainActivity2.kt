@@ -1,13 +1,10 @@
 package com.cs371m.bookmark
 
 import android.os.Bundle
-<<<<<<< HEAD
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
-=======
 import androidx.activity.viewModels
->>>>>>> 2600747 (add getBook api)
 import androidx.appcompat.app.ActionBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
