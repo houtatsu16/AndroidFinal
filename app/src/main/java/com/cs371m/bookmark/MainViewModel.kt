@@ -56,7 +56,7 @@ class MainViewModel : ViewModel(){
             }
 
             Log.d("netRefresh", coverImageUrl(isbn, "S"))
-
+            val i = 3
             Log.d("netRefresh", repo.searchBookByTitle(searchTitle).toString())
         }
     }
