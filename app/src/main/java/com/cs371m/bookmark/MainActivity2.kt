@@ -1,9 +1,13 @@
 package com.cs371m.bookmark
 
 import android.os.Bundle
+<<<<<<< HEAD
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
+=======
+import androidx.activity.viewModels
+>>>>>>> 2600747 (add getBook api)
 import androidx.appcompat.app.ActionBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +25,7 @@ class MainActivity2 : AppCompatActivity() {
     }
 
     private var actionBarBinding: ActionBarBinding? = null
+    private val viewModel : MainViewModel by viewModels()
 
     // An Android nightmare
     // https://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
@@ -83,7 +88,7 @@ class MainActivity2 : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
         actionBarSearch()
+        viewModel.netRefresh()
     }
 }
