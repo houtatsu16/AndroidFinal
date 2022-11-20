@@ -1,18 +1,18 @@
-package com.cs371m.bookmark.ui.hot
+package com.cs371m.bookmark.ui
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
+import com.cs371m.bookmark.MainViewModel
 import com.cs371m.bookmark.databinding.FragmentHotBinding
 
 class HotFragment : Fragment() {
-
+    private val viewModel: MainViewModel by activityViewModels()
     private var _binding: FragmentHotBinding? = null
 
     // This property is only valid between onCreateView and
@@ -24,19 +24,10 @@ class HotFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HotViewModel::class.java)
-
         (activity as AppCompatActivity).supportActionBar?.show()
 
         _binding = FragmentHotBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        // val textView: TextView = binding.textHot
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            // textView.text = it
-        }
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

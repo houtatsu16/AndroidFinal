@@ -1,4 +1,4 @@
-package com.cs371m.bookmark.ui.rate
+package com.cs371m.bookmark.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
-import com.cs371m.bookmark.databinding.FragmentRateBinding
+import com.cs371m.bookmark.MainViewModel
+import com.cs371m.bookmark.databinding.FragmentCollectionBinding
 
-class RateFragment : Fragment() {
-
-    private var _binding: FragmentRateBinding? = null
+class CollectionFragment : Fragment() {
+    private val viewModel: MainViewModel by activityViewModels()
+    private var _binding: FragmentCollectionBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -23,19 +25,10 @@ class RateFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(RateViewModel::class.java)
-
         (activity as AppCompatActivity).supportActionBar?.show()
 
-        _binding = FragmentRateBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        // val textView: TextView = binding.textRate
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            // textView.text = it
-        }
-        return root
+        _binding = FragmentCollectionBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onDestroyView() {
