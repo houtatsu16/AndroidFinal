@@ -1,4 +1,4 @@
-package com.cs371m.bookmark.ui
+package com.cs371m.bookmark.ui.rate
 
 import android.os.Bundle
 import android.view.LayoutInflater

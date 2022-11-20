@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_hot"
-        android:name="com.cs371m.bookmark.ui.HotFragment"
+        android:name="com.cs371m.bookmark.ui.hot.HotFragment"
         android:label="@string/title_hot"
         tools:layout="@layout/fragment_hot" />
 
     <fragment
         android:id="@+id/navigation_rate"
-        android:name="com.cs371m.bookmark.ui.RateFragment"
+        android:name="com.cs371m.bookmark.ui.rate.RateFragment"
         android:label="@string/title_rate"
         tools:layout="@layout/fragment_rate" />
 
     <fragment
         android:id="@+id/navigation_collection"
-        android:name="com.cs371m.bookmark.ui.CollectionFragment"
+        android:name="com.cs371m.bookmark.ui.collection.CollectionFragment"
         android:label="@string/title_collection"
         tools:layout="@layout/fragment_collection" />
 

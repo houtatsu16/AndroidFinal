@@ -1,19 +1,20 @@
-package com.cs371m.bookmark.ui
+package com.cs371m.bookmark.ui.collection
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import com.cs371m.bookmark.MainViewModel
-import com.cs371m.bookmark.databinding.FragmentHotBinding
+import com.cs371m.bookmark.databinding.FragmentCollectionBinding
 
-class HotFragment : Fragment() {
+class CollectionFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
-    private var _binding: FragmentHotBinding? = null
+    private var _binding: FragmentCollectionBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -26,14 +27,8 @@ class HotFragment : Fragment() {
     ): View {
         (activity as AppCompatActivity).supportActionBar?.show()
 
-        _binding = FragmentHotBinding.inflate(inflater, container, false)
+        _binding = FragmentCollectionBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.d(javaClass.simpleName, "onViewCreated")
-        val rv = binding.recyclerView
     }
 
     override fun onDestroyView() {
