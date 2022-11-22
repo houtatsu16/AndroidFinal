@@ -24,6 +24,7 @@ class MainActivity2 : AppCompatActivity() {
     private var actionBarBinding: ActionBarBinding? = null
     private val viewModel : MainViewModel by viewModels()
 
+
     // An Android nightmare
     // https://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
     // https://stackoverflow.com/questions/7789514/how-to-get-activitys-windowtoken-without-view
@@ -39,9 +40,6 @@ class MainActivity2 : AppCompatActivity() {
         actionBarBinding = ActionBarBinding.inflate(layoutInflater)
         // Apply the custom view
         actionBar.customView = actionBarBinding?.root
-        // viewModel.setTitleToSubreddit()
-        // actionBarBinding?.actionTitle?.text = "r/aww"
-
     }
 
     // Check out addTextChangedListener

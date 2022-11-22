@@ -66,7 +66,7 @@ object Glide {
         }
     }
 
-    fun glideFetch(urlString: String, thumbnailURL: String, imageView: ImageView) {
+    fun glideFetch(urlString: String, imageView: ImageView) {
         if (MainActivity2.globalDebug) {
            assetFetch(urlString, imageView)
         } else {
@@ -76,14 +76,6 @@ object Glide {
                 .apply(glideOptions)
                 .error(R.color.burnt)
                 .override(width, height)
-                .error(
-                    GlideApp.with(imageView.context)
-                        .asBitmap()
-                        .load(fromHtml(thumbnailURL))
-                        .apply(glideOptions)
-                        .error(R.color.burnt)
-                        .override(500, 500)
-                )
                 .into(imageView)
         }
     }

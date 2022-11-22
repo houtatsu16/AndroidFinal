@@ -1,8 +1,11 @@
 package com.cs371m.bookmark
 
 import android.util.Log
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cs371m.bookmark.api.Book
 import com.cs371m.bookmark.api.Repository
 import com.cs371m.bookmark.api.OpenLibraryApi
 import kotlinx.coroutines.Dispatchers
@@ -11,17 +14,20 @@ import okhttp3.HttpUrl
 
 class MainViewModel : ViewModel(){
 
-    private var isbn = "9780980200449"
+    private var isbn = "9780980200447"
 
     private var searchTitle = "abc"
 
     private var api = OpenLibraryApi.create()
     private var repo = Repository(api)
 
+    private var postContent = MutableLiveData<List<Book>>()
+
     init {
         // XXX one-liner to kick off the app
         netRefresh()
     }
+
 
 // From https://openlibrary.org/dev/docs/api/covers
 //    https://covers.openlibrary.org/b/$key/$value-$size.jpg
@@ -57,9 +63,15 @@ class MainViewModel : ViewModel(){
                 Log.d("netRefresh", it.value.toString())
             }
 
-            Log.d("netRefresh", coverImageUrl(isbn, "S"))
+            Log.d("netRefresh", coverImageUrl(isbn, "M"))
             Log.d("netRefresh", repo.searchBookByTitle(searchTitle).toString())
         }
+    }
+
+
+
+    fun observePosts(): MutableLiveData<List<Book>> {
+        return postContent
     }
 
 }

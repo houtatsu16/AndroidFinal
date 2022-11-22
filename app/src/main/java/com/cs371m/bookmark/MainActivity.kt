@@ -13,7 +13,7 @@ import com.cs371m.bookmark.databinding.ActivityFullscreenBinding
  */
 class MainActivity : AppCompatActivity(), Runnable {
 
-    private val TIME_OUT:Long = 1000
+    private val TIME_OUT:Long = 1000 // default: 5000
     private lateinit var binding: ActivityFullscreenBinding
     private val handler = Handler()
     private var isFullscreen: Boolean = false
