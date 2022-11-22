@@ -9,11 +9,12 @@
     android:layout_margin="8dp"
     android:background="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/grey">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:context=".MainActivity2">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".MainActivity2">
 
         <ImageView
             android:id="@+id/thumbnail"
@@ -25,23 +26,21 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/title"
             />
 
+
         <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="23sp"
-                android:text="Title"
-                android:textStyle="bold"
-                android:textColor="@color/burnt"
-                android:padding="2dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/thumbnail"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/author"
-                />
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Title"
+            android:textStyle="bold"
+            android:textColor="@color/burnt"
+            android:padding="2dp"
+            app:layout_constraintLeft_toRightOf="@+id/thumbnail"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <TextView
             android:id="@+id/author"
@@ -51,12 +50,26 @@
             android:padding="1dp"
             android:text="author"
             android:textStyle="italic"
-            app:layout_constraintTop_toBottomOf="@+id/title"
             app:layout_constraintLeft_toRightOf="@+id/thumbnail"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/rowFav"
+            app:layout_constraintTop_toBottomOf="@+id/title"
             />
 
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:isIndicator="false"
+            android:numStars="5"
+            android:progressTint="@color/burnt"
+            android:rating="3.5"
+            android:scaleX="0.4"
+            android:scaleY="0.4"
+            android:secondaryProgressTint="@color/burnt"
+            app:layout_constraintTop_toBottomOf="@+id/author"
+            app:layout_constraintLeft_toRightOf="@+id/thumbnail"
+            />
 
         <ImageView
             android:id="@+id/rowFav"
@@ -64,50 +77,19 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:src="@drawable/ic_favorite_border_black_24dp"
-            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
-            app:layout_constraintLeft_toRightOf="@+id/thumbnail"
-            app:layout_constraintRight_toLeftOf="@+id/fav_num"
-            app:layout_constraintTop_toBottomOf="@+id/author" />
-
-        <TextView
-            android:id="@+id/fav_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="6dp"
-            android:text="fav_num"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
-            app:layout_constraintLeft_toRightOf="@+id/rowFav"
-            app:layout_constraintTop_toBottomOf="@+id/author" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/rate_Button"
+            android:layout_marginRight="40dp"
+            />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="4dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
-            app:layout_constraintLeft_toRightOf="@+id/fav_num"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/author"
-            />
-
-        <RatingBar
-            android:id="@+id/ratingBar"
+            android:id="@+id/rate_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@android:attr/ratingBarStyleSmall"
-            android:scaleX="0.5"
-            android:scaleY="0.5"
-            android:backgroundTint="@color/black"
-            android:progressTint="@color/burnt"
-            android:secondaryProgressTint="@color/burnt"
-            app:layout_constraintTop_toBottomOf="@+id/fav_num"
-            android:numStars="5"
-            android:rating="3.5"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/thumbnail"
             app:layout_constraintRight_toRightOf="parent"
+            android:visibility="invisible"
             />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

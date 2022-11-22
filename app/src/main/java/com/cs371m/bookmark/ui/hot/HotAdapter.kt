@@ -29,10 +29,11 @@ import com.cs371m.bookmark.glide.Glide
 class HotAdapter(private val viewModel: MainViewModel)
     : ListAdapter<Book, HotAdapter.VH>(BookDiff()) {
     companion object {
-        const val postRowTitle = "title"
-        const val postRowSelfText = "selfText"
-        const val postRowImageURL = "imageURL"
-        const val postRowThumbURL = "thumbURL"
+        const val hotTitle = "title"
+        const val hotAuthor = "author"
+        const val hotImageURL = "imageURL"
+        const val hotStars = "stars"
+        const val hotLikes = "likes"
     }
 
     inner class VH(val hotPostBinding: HotPostBinding) : RecyclerView.ViewHolder(hotPostBinding.root) {
