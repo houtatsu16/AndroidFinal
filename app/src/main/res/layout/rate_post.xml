@@ -54,22 +54,9 @@
             app:layout_constraintTop_toBottomOf="@+id/title"
             app:layout_constraintLeft_toRightOf="@+id/thumbnail"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/description"
+            app:layout_constraintBottom_toTopOf="@id/rowFav"
             />
 
-
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:padding="1dp"
-            android:text="description"
-            app:layout_constraintTop_toBottomOf="@+id/author"
-            app:layout_constraintLeft_toRightOf="@+id/thumbnail"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/rowFav"
-            />
 
         <ImageView
             android:id="@+id/rowFav"
@@ -80,7 +67,7 @@
             app:layout_constraintBottom_toTopOf="@+id/ratingBar"
             app:layout_constraintLeft_toRightOf="@+id/thumbnail"
             app:layout_constraintRight_toLeftOf="@+id/fav_num"
-            app:layout_constraintTop_toBottomOf="@+id/description" />
+            app:layout_constraintTop_toBottomOf="@+id/author" />
 
         <TextView
             android:id="@+id/fav_num"
@@ -91,7 +78,7 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/ratingBar"
             app:layout_constraintLeft_toRightOf="@+id/rowFav"
-            app:layout_constraintTop_toBottomOf="@+id/description" />
+            app:layout_constraintTop_toBottomOf="@+id/author" />
 
         <Button
             android:layout_width="wrap_content"
@@ -100,7 +87,7 @@
             app:layout_constraintBottom_toTopOf="@+id/ratingBar"
             app:layout_constraintLeft_toRightOf="@+id/fav_num"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description"
+            app:layout_constraintTop_toBottomOf="@+id/author"
             />
 
         <RatingBar
