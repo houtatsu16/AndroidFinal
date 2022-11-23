@@ -33,6 +33,10 @@ class MainViewModel : ViewModel(){
 
     private val topBooks= MutableLiveData<List<BookModel>>()
 
+    private val randomBooks= MutableLiveData<List<BookModel>>()
+
+    private val randomBookIndex= MutableLiveData(0)
+
     init {
         // XXX one-liner to kick off the app
         netRefresh()
