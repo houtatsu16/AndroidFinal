@@ -38,10 +38,10 @@ class OnePost : AppCompatActivity() {
         } */
 
         // Write comments
-        onePostBinding.comment.requestFocus()
+        onePostBinding.actionComment.requestFocus()
 
         onePostBinding.onePostCreate.setOnClickListener {
-            val stringInput = onePostBinding.comment.text.toString()
+            val stringInput = onePostBinding.actionComment.text.toString()
             if (stringInput.isEmpty()) {
                 Toast.makeText(this,
                     "Comment cannot be null!",

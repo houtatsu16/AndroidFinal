@@ -16,7 +16,7 @@
         tools:context=".MainActivity2">
 
         <ImageView
-            android:id="@+id/thumbnail"
+            android:id="@+id/hotPost_thumbnail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -28,7 +28,7 @@
             />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/hotPost_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="23sp"
@@ -37,35 +37,35 @@
             android:textColor="@color/burnt"
             android:padding="2dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/thumbnail"
+            app:layout_constraintLeft_toRightOf="@+id/hotPost_thumbnail"
             />
 
         <TextView
-            android:id="@+id/author"
+            android:id="@+id/hotPost_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:padding="1dp"
             android:text="author"
             android:textStyle="italic"
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            app:layout_constraintLeft_toRightOf="@+id/thumbnail"
+            app:layout_constraintTop_toBottomOf="@+id/hotPost_title"
+            app:layout_constraintLeft_toRightOf="@+id/hotPost_thumbnail"
             />
 
 
         <ImageView
-            android:id="@+id/rowFav"
+            android:id="@+id/hotPost_rowFav"
             android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:src="@drawable/ic_favorite_border_black_24dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/fav_num"
+            app:layout_constraintRight_toLeftOf="@+id/hotPost_favNum"
             />
 
         <TextView
-            android:id="@+id/fav_num"
+            android:id="@+id/hotPost_favNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="6dp"
@@ -86,10 +86,11 @@
             />
 
         <RatingBar
-            android:id="@+id/ratingBar"
+            android:id="@+id/hotPost_ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@android:attr/ratingBarStyleSmall"
+            android:isIndicator="false"
             android:scaleX="0.4"
             android:scaleY="0.4"
             android:backgroundTint="@color/black"
@@ -97,9 +98,9 @@
             android:secondaryProgressTint="@color/burnt"
             android:numStars="5"
             android:rating="3.5"
-            app:layout_constraintTop_toBottomOf="@+id/author"
+            app:layout_constraintTop_toBottomOf="@+id/hotPost_author"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/thumbnail"
+            app:layout_constraintLeft_toRightOf="@+id/hotPost_thumbnail"
             />
 
 

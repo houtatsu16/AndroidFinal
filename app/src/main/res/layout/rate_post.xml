@@ -17,7 +17,7 @@
         tools:context=".MainActivity2">
 
         <ImageView
-            android:id="@+id/thumbnail"
+            android:id="@+id/ratePost_thumbnail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -30,7 +30,7 @@
 
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/ratePost_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
@@ -38,24 +38,24 @@
             android:textStyle="bold"
             android:textColor="@color/burnt"
             android:padding="2dp"
-            app:layout_constraintLeft_toRightOf="@+id/thumbnail"
+            app:layout_constraintLeft_toRightOf="@+id/ratePost_thumbnail"
             app:layout_constraintTop_toTopOf="parent"
             />
 
         <TextView
-            android:id="@+id/author"
+            android:id="@+id/ratePost_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:padding="1dp"
             android:text="author"
             android:textStyle="italic"
-            app:layout_constraintLeft_toRightOf="@+id/thumbnail"
-            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintLeft_toRightOf="@+id/ratePost_thumbnail"
+            app:layout_constraintTop_toBottomOf="@+id/ratePost_title"
             />
 
         <RatingBar
-            android:id="@+id/ratingBar"
+            android:id="@+id/ratePost_ratingBar"
             style="@android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,12 +67,12 @@
             android:scaleX="0.4"
             android:scaleY="0.4"
             android:secondaryProgressTint="@color/burnt"
-            app:layout_constraintTop_toBottomOf="@+id/author"
-            app:layout_constraintLeft_toRightOf="@+id/thumbnail"
+            app:layout_constraintTop_toBottomOf="@+id/ratePost_author"
+            app:layout_constraintLeft_toRightOf="@+id/ratePost_thumbnail"
             />
 
         <ImageView
-            android:id="@+id/rowFav"
+            android:id="@+id/ratePost_rowFav"
             android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -88,6 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:visibility="invisible"
             />
 

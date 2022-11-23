@@ -63,11 +63,11 @@ class HotAdapter(private val viewModel: MainViewModel)
         Log.d("hotAdapter", "item: ${item}")
         val hotPostBinding = holder.hotPostBinding
 
-        hotPostBinding.title.text = "Slow reading"
+        hotPostBinding.hotPostTitle.text = "Slow reading"
 
-        hotPostBinding.favNum.text = item.bib_key
+        hotPostBinding.hotPostFavNum.text = item.bib_key
 
-        Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", hotPostBinding.thumbnail)
+        Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", hotPostBinding.hotPostThumbnail)
 
         /* if(viewModel.isFav(item)) {
             rowPostBinding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
@@ -77,7 +77,7 @@ class HotAdapter(private val viewModel: MainViewModel)
 
         Log.d("onBind", "onbindview.......")
 
-        hotPostBinding.title.setOnClickListener {
+        hotPostBinding.hotPostTitle.setOnClickListener {
             val intent = Intent(holder.itemView.context, OnePost::class.java)
             intent.apply {
 

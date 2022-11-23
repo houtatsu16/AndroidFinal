@@ -3,6 +3,7 @@ package com.cs371m.bookmark
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar
@@ -18,12 +19,13 @@ import com.cs371m.bookmark.databinding.ActivityMainBinding
 class MainActivity2 : AppCompatActivity() {
 
     companion object {
-        var globalDebug = false // default: false
+        var globalDebug = true // default: false
+        lateinit var allBook: String
+        lateinit var allUser: String
     }
 
     private var actionBarBinding: ActionBarBinding? = null
     private val viewModel : MainViewModel by viewModels()
-
 
     // An Android nightmare
     // https://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
@@ -31,6 +33,24 @@ class MainActivity2 : AppCompatActivity() {
     fun hideKeyboard() {
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(window.decorView.rootView.windowToken, 0)
+    }
+
+    private fun initDebug() {
+        if(globalDebug) {
+            assets.list("")?.forEach {
+                Log.d(javaClass.simpleName, "Asset file: $it" )
+            }
+            allBook = assets.open("allBook.txt").bufferedReader().use {
+                it.readText()
+            }
+            Log.d(javaClass.simpleName, "allBook file: $allBook" )
+
+            allUser = assets.open("allUser.txt").bufferedReader().use {
+                it.readText()
+            }
+            Log.d(javaClass.simpleName, "allUser file: $allUser" )
+
+        }
     }
 
     private fun initActionBar(actionBar: ActionBar) {
@@ -83,6 +103,7 @@ class MainActivity2 : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        initDebug()
         actionBarSearch()
         viewModel.netRefresh()
     }
