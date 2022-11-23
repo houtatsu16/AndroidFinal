@@ -5,17 +5,17 @@ import com.google.firebase.Timestamp
 data class UserCommentModel(
     var ISBN:String = "",
     var content:String = "",
-    var timestamp: Timestamp
+    var timestamp: Timestamp = Timestamp.now()
 )
 
-//data class RateModel(
-//    var ISBN:String = "",
-//    var value:Int = 0,
-//)
+data class RateModel(
+    var ISBN:String = "",
+    var value:Int = 0,
+)
 
 data class UserModel (
     var displayName:String = "",
-    var likes:List<String>,
-    var comments: List<UserCommentModel>,
-    var rate: Map<String,Int>
+    var likes:List<String> = ArrayList<String>(),
+    var comments: List<UserCommentModel> = ArrayList<UserCommentModel>(),
+    var rate: List<RateModel> = ArrayList<RateModel>(),
 )

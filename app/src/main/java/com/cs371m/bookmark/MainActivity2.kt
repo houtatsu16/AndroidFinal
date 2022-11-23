@@ -105,6 +105,6 @@ class MainActivity2 : AppCompatActivity() {
         navView.setupWithNavController(navController)
         initDebug()
         actionBarSearch()
-        viewModel.netRefresh()
+//        viewModel.netRefresh()
     }
 }
