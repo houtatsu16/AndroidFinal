@@ -90,8 +90,12 @@ class MainViewModel : ViewModel(){
 
 
 
-    fun observePosts(): MutableLiveData<List<Book>> {
-        return postContent
+    fun observeTopBooks(): MutableLiveData<List<BookModel>> {
+        return topBooks
+    }
+
+    fun observeRandomBooks(): MutableLiveData<List<BookModel>> {
+        return randomBooks
     }
 
 }

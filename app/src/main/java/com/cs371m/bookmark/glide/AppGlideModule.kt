@@ -75,7 +75,7 @@ object Glide {
                 .load(fromHtml(urlString))
                 .apply(glideOptions)
                 .error(R.color.burnt)
-                .override(width, height)
+                .override(width * 150 / height, 150)
                 .into(imageView)
         }
     }

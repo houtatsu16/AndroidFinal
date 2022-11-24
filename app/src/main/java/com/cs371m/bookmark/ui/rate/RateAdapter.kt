@@ -1,4 +1,4 @@
-package com.cs371m.bookmark.ui.hot
+package com.cs371m.bookmark.ui.rate
 
 import android.content.Intent
 import android.util.Log
@@ -12,10 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cs371m.bookmark.MainActivity2
 import com.cs371m.bookmark.MainViewModel
 import com.cs371m.bookmark.OnePost
-import com.cs371m.bookmark.R
-import com.cs371m.bookmark.api.Book
-import com.cs371m.bookmark.databinding.FragmentHotBinding
-import com.cs371m.bookmark.databinding.HotPostBinding
+import com.cs371m.bookmark.databinding.RatePostBinding
 import com.cs371m.bookmark.glide.Glide
 import com.cs371m.bookmark.model.BookModel
 
@@ -27,8 +24,8 @@ import com.cs371m.bookmark.model.BookModel
 // So you can copy the old list, change it into a new list, then submit the new list.
 //
 // You can call adapterPosition to get the index of the selected item
-class HotAdapter(private val viewModel: MainViewModel)
-    : ListAdapter<BookModel, HotAdapter.VH>(BookDiff()) {
+class RateAdapter(private val viewModel: MainViewModel)
+    : ListAdapter<BookModel, RateAdapter.VH>(BookDiff()) {
     companion object {
         const val hotTitle = "title"
         const val hotAuthor = "author"
@@ -38,7 +35,7 @@ class HotAdapter(private val viewModel: MainViewModel)
         const val isbn = "isbn"
     }
 
-    inner class VH(val hotPostBinding: HotPostBinding) : RecyclerView.ViewHolder(hotPostBinding.root) {
+    inner class VH(val ratePostBinding: RatePostBinding) : RecyclerView.ViewHolder(ratePostBinding.root) {
         init {
             /* hotPostBinding.rowFav.setOnClickListener {
                 val position = adapterPosition
@@ -53,24 +50,23 @@ class HotAdapter(private val viewModel: MainViewModel)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        Log.d("hotAdapter", "doing")
+        Log.d("rateAdapter", "doing")
 
-        val hotPostBinding = HotPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return VH(hotPostBinding)
+        val ratePostBinding = RatePostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return VH(ratePostBinding)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         Log.d("hotAdapter", "done")
         val item = currentList[holder.adapterPosition]
         Log.d("hotAdapter", "item: ${item}")
-        val hotPostBinding = holder.hotPostBinding
+        val ratePostBinding = holder.ratePostBinding
 
-        hotPostBinding.hotPostTitle.text = item.title
-        hotPostBinding.hotPostAuthor.text = item.author
-        hotPostBinding.hotPostRatingBar.rating = item.averageRate
-        hotPostBinding.hotPostFavNum.text = item.likes.toString()
+        ratePostBinding.ratePostTitle.text = item.title
+        ratePostBinding.ratePostAuthor.text = item.author
+        ratePostBinding.ratePostRatingBar.rating = item.averageRate
 
-        Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", hotPostBinding.hotPostThumbnail)
+        Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", ratePostBinding.ratePostThumbnail)
 
         /* if(viewModel.isFav(item)) {
             rowPostBinding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
@@ -80,7 +76,7 @@ class HotAdapter(private val viewModel: MainViewModel)
 
         Log.d("onBind", "onbindview.......")
 
-        hotPostBinding.hotPostTitle.setOnClickListener {
+        ratePostBinding.ratePostTitle.setOnClickListener {
             val intent = Intent(holder.itemView.context, OnePost::class.java)
             intent.apply {
                 // putExtra(isbn, item.)

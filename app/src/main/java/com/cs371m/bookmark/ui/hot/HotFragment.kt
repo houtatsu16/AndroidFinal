@@ -49,8 +49,8 @@ class HotFragment : Fragment() {
 
 
 
-        viewModel.observePosts().observe(viewLifecycleOwner) {
-            Log.d("hotFragment", "done")
+        viewModel.observeTopBooks().observe(viewLifecycleOwner) {
+            Log.d("hotFragment", "did!, ${it}")
             binding.swipeRefreshLayout.apply {
                 isRefreshing = false
                 setOnRefreshListener {
