@@ -1,6 +1,7 @@
 package com.cs371m.bookmark.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,14 @@ class SettingsFragment : Fragment() {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         (activity as AppCompatActivity).supportActionBar?.hide()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d(javaClass.simpleName, "onViewCreated")
+        binding.history.setOnClickListener {
+
+        }
     }
 
     override fun onDestroyView() {

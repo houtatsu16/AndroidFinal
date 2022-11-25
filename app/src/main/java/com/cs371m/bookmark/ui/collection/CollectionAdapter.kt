@@ -1,4 +1,4 @@
-package com.cs371m.bookmark.ui.hot
+package com.cs371m.bookmark.ui.collection
 
 import android.content.Intent
 import android.util.Log
@@ -14,6 +14,7 @@ import com.cs371m.bookmark.MainViewModel
 import com.cs371m.bookmark.OnePost
 import com.cs371m.bookmark.R
 import com.cs371m.bookmark.api.Book
+import com.cs371m.bookmark.databinding.CollectionPostBinding
 import com.cs371m.bookmark.databinding.FragmentHotBinding
 import com.cs371m.bookmark.databinding.HotPostBinding
 import com.cs371m.bookmark.glide.Glide
@@ -27,8 +28,8 @@ import com.cs371m.bookmark.model.BookModel
 // So you can copy the old list, change it into a new list, then submit the new list.
 //
 // You can call adapterPosition to get the index of the selected item
-class HotAdapter(private val viewModel: MainViewModel)
-    : ListAdapter<BookModel, HotAdapter.VH>(BookDiff()) {
+class CollectionAdapter(private val viewModel: MainViewModel)
+    : ListAdapter<BookModel, CollectionAdapter.VH>(BookDiff()) {
     companion object {
         const val hotTitle = "title"
         const val hotAuthor = "author"
@@ -38,39 +39,30 @@ class HotAdapter(private val viewModel: MainViewModel)
         const val isbn = "isbn"
     }
 
-    inner class VH(val hotPostBinding: HotPostBinding) : RecyclerView.ViewHolder(hotPostBinding.root) {
+    inner class VH(val collectionPostBinding: CollectionPostBinding) : RecyclerView.ViewHolder(collectionPostBinding.root) {
         init {
-            hotPostBinding.hotPostRowFav.setOnClickListener {
-                val position = adapterPosition
-                if (viewModel.isFav(getItem(position))) {
-                    viewModel.removeFav(getItem(position))
-                } else {
-                    viewModel.addFav(getItem(position))
-                }
-                notifyItemChanged(position)
-            }
+
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        Log.d("hotAdapter", "doing")
+        Log.d("collectionAdapter", "doing")
 
-        val hotPostBinding = HotPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return VH(hotPostBinding)
+        val collectionPostBinding = CollectionPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return VH(collectionPostBinding)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        Log.d("hotAdapter", "done")
+        Log.d("collectionAdapter", "done")
         val item = currentList[holder.adapterPosition]
-        Log.d("hotAdapter", "item: ${item}")
-        val hotPostBinding = holder.hotPostBinding
+        Log.d("collectionAdapter", "item: ${item}")
+        val collectionPostBinding = holder.collectionPostBinding
 
-        hotPostBinding.hotPostTitle.text = item.title
-        hotPostBinding.hotPostAuthor.text = item.author
-        hotPostBinding.hotPostRatingBar.rating = item.averageRate
-        hotPostBinding.hotPostFavNum.text = item.likes.toString()
+        collectionPostBinding.favTitle.text = item.title
 
-        Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", hotPostBinding.hotPostThumbnail)
+        if (item.title != null) {
+            Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", collectionPostBinding.favImg)
+        }
 
         /* if(viewModel.isFav(item)) {
             rowPostBinding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
@@ -78,15 +70,10 @@ class HotAdapter(private val viewModel: MainViewModel)
             rowPostBinding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
         } */
 
-        if(viewModel.isFav(item)) {
-            hotPostBinding.hotPostRowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
-        } else {
-            hotPostBinding.hotPostRowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-        }
 
         Log.d("onBind", "onbindview.......")
 
-        hotPostBinding.hotPostTitle.setOnClickListener {
+        collectionPostBinding.favTitle.setOnClickListener {
             val intent = Intent(holder.itemView.context, OnePost::class.java)
             intent.apply {
                 // putExtra(isbn, item.)

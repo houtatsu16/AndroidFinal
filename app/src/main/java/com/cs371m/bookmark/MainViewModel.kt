@@ -1,10 +1,7 @@
 package com.cs371m.bookmark
 
 import android.util.Log
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.cs371m.bookmark.api.Book
 import com.cs371m.bookmark.api.Repository
 import com.cs371m.bookmark.api.OpenLibraryApi
@@ -24,6 +21,8 @@ class MainViewModel : ViewModel(){
     private var repo = Repository(api)
 
     private var postContent = MutableLiveData<List<Book>>()
+    private var favoriteContent = MutableLiveData<List<BookModel>>().apply { value = mutableListOf() }
+
 
     private val dbHelp = DBHelper()
 
@@ -96,6 +95,31 @@ class MainViewModel : ViewModel(){
 
     fun observeRandomBooks(): MutableLiveData<List<BookModel>> {
         return randomBooks
+    }
+
+    fun addFav(post: BookModel){
+        val lst = favoriteContent.value?.toMutableList()
+        lst?.let {
+            it.add(post)
+            favoriteContent.value = it
+        }
+
+    }
+
+    fun isFav(post: BookModel): Boolean {
+        return favoriteContent.value?.contains(post) ?: false
+    }
+
+    fun removeFav(post: BookModel) {
+        val lst = favoriteContent.value?.toMutableList()
+        lst?.let {
+            it.remove(post)
+            favoriteContent.value = it
+        }
+    }
+
+    fun observeFavorite(): LiveData<List<BookModel>> {
+        return favoriteContent
     }
 
 }
