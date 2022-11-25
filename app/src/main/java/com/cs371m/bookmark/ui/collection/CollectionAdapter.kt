@@ -3,20 +3,13 @@ package com.cs371m.bookmark.ui.collection
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.cs371m.bookmark.MainActivity2
 import com.cs371m.bookmark.MainViewModel
-import com.cs371m.bookmark.OnePost
-import com.cs371m.bookmark.R
-import com.cs371m.bookmark.api.Book
+import com.cs371m.bookmark.ui.onePost.OnePost
 import com.cs371m.bookmark.databinding.CollectionPostBinding
-import com.cs371m.bookmark.databinding.FragmentHotBinding
-import com.cs371m.bookmark.databinding.HotPostBinding
 import com.cs371m.bookmark.glide.Glide
 import com.cs371m.bookmark.model.BookModel
 

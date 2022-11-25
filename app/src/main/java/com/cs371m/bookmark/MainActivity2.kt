@@ -19,7 +19,7 @@ import com.cs371m.bookmark.databinding.ActivityMainBinding
 class MainActivity2 : AppCompatActivity() {
 
     companion object {
-        var globalDebug = true // default: false
+        var globalDebug = false // default: false
         lateinit var allBook: String
         lateinit var allUser: String
     }

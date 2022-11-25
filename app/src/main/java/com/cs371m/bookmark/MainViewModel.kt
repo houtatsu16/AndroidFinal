@@ -24,7 +24,7 @@ class MainViewModel : ViewModel(){
     private var api = OpenLibraryApi.create()
     private var repo = Repository(api)
 
-    private var postContent = MutableLiveData<List<Book>>()
+    private var bookDetails = MutableLiveData<Map<String, Book>>()
     private var favoriteContent = MutableLiveData<List<BookModel>>().apply { value = mutableListOf() }
 
 
@@ -132,4 +132,22 @@ class MainViewModel : ViewModel(){
         return favoriteContent
     }
 
+    fun getCurrentBook(isbn: String): MutableLiveData<BookModel> {
+        dbHelp.fetchBook(isbn, currentBook)
+        return currentBook
+    }
+
+    fun observeCurrentBook(): MutableLiveData<BookModel> {
+        return currentBook
+    }
+
+    fun getDetails(isbn: String): MutableLiveData<Map<String, Book>> {
+        viewModelScope.launch(
+            context = viewModelScope.coroutineContext
+                    + Dispatchers.IO
+        ) {
+            bookDetails.postValue(repo.getBook(isbn))
+            }
+        return bookDetails
+    }
 }

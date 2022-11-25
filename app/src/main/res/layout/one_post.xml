@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/onePost_Scroll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:layout_margin="10dp">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="#FFFFFFFF"
     >
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        />
 
     <ImageView
         android:id="@+id/onePost_selfImage"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
@@ -62,7 +63,7 @@
         android:id="@+id/onePost_ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:isIndicator="false"
+        android:isIndicator="true"
         style="@android:attr/ratingBarStyleSmall"
         android:scaleX="0.5"
         android:scaleY="0.5"
@@ -99,12 +100,7 @@
         android:textStyle="italic"
         />
 
-    <ScrollView
-        android:id="@+id/onePost_Scroll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="true"
-        android:layout_margin="10dp">
+
         <TextView
             android:id="@+id/onePost_selfText"
             android:layout_width="match_parent"
@@ -115,7 +111,6 @@
             android:scrollbars="vertical"
             android:textSize="15sp"
             />
-    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -133,7 +128,7 @@
 
         <RatingBar
             android:id="@+id/onePost_ratingBarUser"
-            android:isIndicator="true"
+            android:isIndicator="false"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             style="@android:attr/ratingBarStyleSmall"
@@ -143,7 +138,7 @@
             android:progressTint="@color/burnt"
             android:secondaryProgressTint="@color/burnt"
             android:numStars="5"
-            android:rating="3.5"
+            android:rating="0"
             android:layout_gravity="left"
             />
     </LinearLayout>
@@ -197,3 +192,5 @@
         />
 
 </LinearLayout>
+
+</ScrollView>
