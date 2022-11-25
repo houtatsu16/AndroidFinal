@@ -67,7 +67,7 @@ class HotAdapter(private val viewModel: MainViewModel)
 
         hotPostBinding.hotPostTitle.text = item.title
         hotPostBinding.hotPostAuthor.text = item.author
-        hotPostBinding.hotPostRatingBar.rating = item.averageRate
+        hotPostBinding.hotPostRatingBar.rating = item.averageRate.toFloat()
         hotPostBinding.hotPostFavNum.text = item.likes.toString()
 
         Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", hotPostBinding.hotPostThumbnail)
