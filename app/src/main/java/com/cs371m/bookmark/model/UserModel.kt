@@ -10,7 +10,7 @@ data class UserCommentModel(
 
 data class RateModel(
     var ISBN:String = "",
-    var value:Int = 0,
+    var value: Double = 0.0,
 )
 
 data class UserModel (

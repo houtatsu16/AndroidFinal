@@ -6,13 +6,14 @@ import com.google.firebase.firestore.ServerTimestamp
 data class BookCommentModel(
     var content: String = "",
     var user: String = "",
-    @ServerTimestamp val timeStamp: Timestamp? = null,
+    var timestamp: Timestamp = Timestamp.now()
 )
 
 data class BookModel(
     var author:String = "",
-    var averageRate:Float = 0.0F,
-    var totalRate:Int = 0,
+    var averageRate:Double = 0.0,
+    var ISBN:String = "",
+    var totalRate:Double = 0.0,
     var totalRateCount:Int = 0,
     var likes: Int = 0,
     var title: String = "",

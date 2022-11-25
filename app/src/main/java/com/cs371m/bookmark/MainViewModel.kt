@@ -2,11 +2,15 @@ package com.cs371m.bookmark
 
 import android.util.Log
 import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.cs371m.bookmark.api.Book
 import com.cs371m.bookmark.api.Repository
 import com.cs371m.bookmark.api.OpenLibraryApi
 import com.cs371m.bookmark.model.BookModel
 import com.cs371m.bookmark.model.UserModel
+import com.google.firebase.Timestamp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.HttpUrl
@@ -70,20 +74,26 @@ class MainViewModel : ViewModel(){
                     + Dispatchers.IO) {
             // Update LiveData from IO dispatcher, use postValue
 //            Log.d("netRefresh", "haha")
-            val books = repo.getBook(isbn)
-            books.forEach{
-                Log.d("netRefresh", it.key.toString())
-                Log.d("netRefresh", it.value.toString())
-            }
-
-            Log.d("netRefresh", coverImageUrl(isbn, "M"))
-            Log.d("netRefresh", repo.searchBookByTitle(searchTitle).toString())
+//            val books = repo.getBook(isbn)
+//            books.forEach{
+//                Log.d("netRefresh", it.key.toString())
+//                Log.d("netRefresh", it.value.toString())
+//            }
+//
+//            Log.d("netRefresh", coverImageUrl(isbn, "M"))
+//            Log.d("netRefresh", repo.searchBookByTitle(searchTitle).toString())
 
             dbHelp.fetchBook("dzx8yqfsIR2aRw1PBBuZ",currentBook)
             dbHelp.fetchTopBooks(topBooks,5,"averageRate")
             dbHelp.fetchTopBooks(topBooks,5,"likes")
-
+            dbHelp.checkUser("haha")
+            dbHelp.checkBook("isbn1235", "jun","a good book.")
             dbHelp.fetchUser("uItYS3uQ3gPvDYSdxncb",currentUser)
+            dbHelp.updateUserDisPlayName("haha","new_name")
+            dbHelp.addUserComment("haha", "isbn1235","this is a comment", Timestamp.now())
+            dbHelp.likeBook("haha", "isbn1235")
+            dbHelp.unlikeBook("haha", "isbn1235")
+            dbHelp.updateRate("haha", "isbn1235",5.0,5.0,1,5.0)
         }
     }
 

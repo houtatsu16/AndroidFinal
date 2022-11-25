@@ -2,10 +2,10 @@ package com.cs371m.bookmark
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.cs371m.bookmark.model.BookModel
-import com.cs371m.bookmark.model.UserModel
+import com.cs371m.bookmark.model.*
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 
 
 class DBHelper {
@@ -40,6 +40,27 @@ class DBHelper {
         }
     }
 
+    fun checkUser(userId:String){
+        var doc = db.collection(allUsersCollection).document(userId)
+        doc.get().addOnSuccessListener { document ->
+            if (!document.exists()) {
+                db.collection(allUsersCollection).document(userId)
+                    .set(UserModel(displayName = userId))
+            }
+        }
+    }
+
+    fun checkBook(ISBN:String, author:String, title: String){
+        var doc = db.collection(allBooksCollection).document(ISBN)
+        doc.get().addOnSuccessListener { document ->
+            if (!document.exists()) {
+                db.collection(allBooksCollection).document(ISBN)
+                    .set(BookModel(author=author, ISBN = ISBN, title = title))
+            }
+        }
+    }
+
+
     fun fetchUser(userId:String, model:MutableLiveData<UserModel>) {
         db.collection(allUsersCollection).document(userId).get().addOnSuccessListener {
                 document ->
@@ -52,4 +73,45 @@ class DBHelper {
             Log.d("fetchUser", "fetchBook fetch FAILED ", it)
         }
     }
+
+    fun updateUserDisPlayName(userId: String, displayName: String){
+        var doc = db.collection(allUsersCollection).document(userId)
+        doc.update("displayName", displayName)
+    }
+
+    fun addUserComment(userId: String, ISBN: String, content: String, timestamp: Timestamp){
+        val bookComment = BookCommentModel(content,userId,timestamp)
+        db.collection(allBooksCollection).document(ISBN).update("comment", FieldValue.arrayUnion(bookComment))
+
+        val userComment = UserCommentModel(ISBN, content, timestamp)
+        db.collection(allUsersCollection).document(userId).update("comments", FieldValue.arrayUnion(userComment))
+    }
+
+    fun likeBook(userId: String,ISBN: String){
+        db.collection(allBooksCollection).document(ISBN).update("likes", FieldValue.increment(1))
+        db.collection(allUsersCollection).document(userId).update("likes", FieldValue.arrayUnion(ISBN))
+    }
+
+    fun unlikeBook(userId: String,ISBN: String){
+        db.collection(allBooksCollection).document(ISBN).update("likes", FieldValue.increment(-1))
+        db.collection(allUsersCollection).document(userId).update("likes", FieldValue.arrayRemove(ISBN))
+    }
+
+    fun updateRate(
+        userId: String,
+        ISBN: String, rate: Double, totalRate: Double, totalRateCount: Int, averageRate: Double
+    ){
+        db.collection(allBooksCollection).document(ISBN).update(
+            mapOf(
+                "totalRate" to totalRate,
+                "totalRateCount" to totalRateCount,
+                "averageRate" to averageRate
+            )
+        )
+        db.collection(allUsersCollection).document(userId).update("rate", FieldValue.arrayUnion(
+            RateModel(ISBN, rate)
+        ))
+    }
+
+
 }
