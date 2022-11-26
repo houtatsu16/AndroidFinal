@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cs371m.bookmark.MainViewModel
 import com.cs371m.bookmark.databinding.FragmentCollectionBinding
@@ -35,11 +36,14 @@ class CollectionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = CollectionAdapter(viewModel)
-        val rv = binding.recyclerView
+        val rv = binding.collectionContainer
+        // rv.setHasFixedSize(true)
+
         rv.adapter = adapter
-        val manager = LinearLayoutManager(rv.context)
+        val manager = GridLayoutManager(rv.context, 2)
+        // val manager = LinearLayoutManager(rv.context)
         rv.layoutManager = manager
-        binding.swipeRefreshLayout.isEnabled = false
+        // binding.swipeRefreshLayout.isEnabled = false
 
         viewModel.observeFavorite().observe(viewLifecycleOwner) {
             adapter.submitList(it)
