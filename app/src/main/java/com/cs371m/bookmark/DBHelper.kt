@@ -22,6 +22,7 @@ class DBHelper {
                 Log.d("book1", "fetchBook data: ${document.toObject(BookModel::class.java)!!}")
                 val book = document.toObject(BookModel::class.java)!!
                 model.postValue(book)
+                Log.d("bookModel", "model value: ${model.value}")
             }
         }.addOnFailureListener {
             Log.d("fetchBook", "fetchBook fetch FAILED ", it)

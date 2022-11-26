@@ -101,8 +101,8 @@
                 android:layout_height="wrap_content"
                 android:isIndicator="true"
                 style="@android:attr/ratingBarStyleSmall"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
+                android:scaleX="0.45"
+                android:scaleY="0.45"
                 android:backgroundTint="@color/black"
                 android:progressTint="@color/burnt"
                 android:secondaryProgressTint="@color/burnt"
@@ -207,7 +207,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:src="@drawable/ic_baseline_create_24"
+            android:src="@drawable/ic_baseline_send_24"
             />
 
     </LinearLayout>

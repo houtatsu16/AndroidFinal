@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cs371m.bookmark.MainViewModel
 import com.cs371m.bookmark.databinding.FragmentHotBinding
 import com.cs371m.bookmark.databinding.FragmentRateBinding
@@ -49,7 +51,26 @@ class RateFragment : Fragment() {
             rv.context, LinearLayoutManager.VERTICAL )
         rv.addItemDecoration(dividerItemDecoration)
 
+        val itemTouchHelper = ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                /* val fromPos = viewHolder.adapterPosition
+                val toPos = target.adapterPosition
+                adapter.notifyItemMoved(fromPos, toPos)
+                return true */
+                return false
+            }
 
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                adapter.notifyItemMoved(viewHolder.adapterPosition, direction)
+            }
+        })
+
+        itemTouchHelper.attachToRecyclerView(rv)
 
 
         viewModel.observeRandomBooks().observe(viewLifecycleOwner) {

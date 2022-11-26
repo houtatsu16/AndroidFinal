@@ -12,6 +12,7 @@ import com.cs371m.bookmark.ui.onePost.OnePost
 import com.cs371m.bookmark.databinding.CollectionPostBinding
 import com.cs371m.bookmark.glide.Glide
 import com.cs371m.bookmark.model.BookModel
+import com.cs371m.bookmark.ui.hot.HotAdapter
 
 // https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter
 // Slick adapter that provides submitList, so you don't worry about how to update
@@ -54,7 +55,7 @@ class CollectionAdapter(private val viewModel: MainViewModel)
         collectionPostBinding.favTitle.text = item.title
 
         if (item.title != null) {
-            Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", collectionPostBinding.favImg)
+            Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-L.jpg", collectionPostBinding.favImg)
         }
 
         /* if(viewModel.isFav(item)) {
@@ -69,7 +70,7 @@ class CollectionAdapter(private val viewModel: MainViewModel)
         collectionPostBinding.favTitle.setOnClickListener {
             val intent = Intent(holder.itemView.context, OnePost::class.java)
             intent.apply {
-                // putExtra(isbn, item.)
+                putExtra(isbn, item.ISBN)
             }
 
             holder.itemView.context.startActivity(intent)

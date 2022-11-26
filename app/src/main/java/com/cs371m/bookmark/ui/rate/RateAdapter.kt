@@ -12,6 +12,7 @@ import com.cs371m.bookmark.ui.onePost.OnePost
 import com.cs371m.bookmark.databinding.RatePostBinding
 import com.cs371m.bookmark.glide.Glide
 import com.cs371m.bookmark.model.BookModel
+import com.cs371m.bookmark.ui.hot.HotAdapter
 
 // https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter
 // Slick adapter that provides submitList, so you don't worry about how to update
@@ -76,7 +77,7 @@ class RateAdapter(private val viewModel: MainViewModel)
         ratePostBinding.ratePostTitle.setOnClickListener {
             val intent = Intent(holder.itemView.context, OnePost::class.java)
             intent.apply {
-                // putExtra(isbn, item.)
+                putExtra(isbn, item.ISBN)
             }
 
             holder.itemView.context.startActivity(intent)

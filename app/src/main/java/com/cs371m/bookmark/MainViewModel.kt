@@ -94,16 +94,21 @@ class MainViewModel : ViewModel(){
             dbHelp.likeBook("haha", "isbn1235")
             dbHelp.unlikeBook("haha", "isbn1235")
             dbHelp.updateRate("haha", "isbn1235",5.0,5.0,1,5.0)
+
+            dbHelp.fetchTopBooks(randomBooks, 5, "averageRate")
+
         }
     }
 
 
 
     fun observeTopBooks(): MutableLiveData<List<BookModel>> {
+        Log.d("MainVM", "topBooks: ${topBooks.value}")
         return topBooks
     }
 
     fun observeRandomBooks(): MutableLiveData<List<BookModel>> {
+        Log.d("MainVM", "randomBooks: ${randomBooks.value}")
         return randomBooks
     }
 
@@ -138,6 +143,7 @@ class MainViewModel : ViewModel(){
     }
 
     fun observeCurrentBook(): MutableLiveData<BookModel> {
+        Log.d("MainVM", "currentBook: ${currentBook.value}")
         return currentBook
     }
 
