@@ -57,7 +57,15 @@ class OnePost : AppCompatActivity() {
             onePostBinding.onePostAuthor.text = it.author
             onePostBinding.onePostRatingBar.rating = it.averageRate.toFloat()
             onePostBinding.onePostFavNum.text = it.likes.toString()
-            Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", onePostBinding.onePostSelfImage)
+            Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780062899149-M.jpg", onePostBinding.onePostSelfImage)
+            val book = viewModel.getDetails("9780062899149").value
+            if (book != null) {
+                Log.d("details", "value: ${book}")
+                Log.d("details", "value1: ${book.values.toMutableList()[0].details.description}")
+                onePostBinding.onePostSelfText.text = book.values.toMutableList()[0].details.description
+            } else {
+                onePostBinding.onePostSelfText.text = "N/A"
+            }
             // onePostBinding.onePostSelfText.text = viewModel.getDetails("9780980200447").value!!.get("detail").toString()
             adapter.submitList(it.comment)
             adapter.notifyDataSetChanged()
