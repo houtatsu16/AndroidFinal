@@ -16,6 +16,9 @@ import com.cs371m.bookmark.databinding.OnePostBinding
 import com.cs371m.bookmark.glide.Glide
 import com.cs371m.bookmark.model.BookCommentModel
 import com.cs371m.bookmark.model.BookModel
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.util.*
 
 // https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter
 // Slick adapter that provides submitList, so you don't worry about how to update
@@ -56,9 +59,17 @@ class CommentAdapter(private val viewModel: MainViewModel)
         val commentPostBinding = holder.commentPostBinding
 
         commentPostBinding.commentContent.text = item.content
-        commentPostBinding.commentTime.text = item.timestamp.toString()
+        commentPostBinding.commentTime.text = convertTimestamp(item.timestamp)
         commentPostBinding.commentUsername.text = item.user
+    }
 
+    fun convertTimestamp(time: com.google.firebase.Timestamp): String {
+        val milliseconds = time.seconds * 1000 + time.nanoseconds / 1000000
+        val sdf = SimpleDateFormat("MM/dd/yyyy HH:M:SS")
+        val netDate = Date(milliseconds)
+        val date = sdf.format(netDate).toString()
+        Log.d("dateTime", "time: $date")
+        return date
     }
 
     class CommentDiff : DiffUtil.ItemCallback<BookCommentModel>() {

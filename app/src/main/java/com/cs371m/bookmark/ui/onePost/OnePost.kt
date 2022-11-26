@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cs371m.bookmark.MainViewModel
 import com.cs371m.bookmark.databinding.OnePostBinding
 import com.cs371m.bookmark.glide.Glide
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 
 class OnePost : AppCompatActivity() {
     companion object {
@@ -26,7 +29,7 @@ class OnePost : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // supportActionBar?.hide()
+        supportActionBar?.hide()
         val onePostBinding = OnePostBinding.inflate(layoutInflater)
         setContentView(onePostBinding.root)
 
@@ -74,7 +77,7 @@ class OnePost : AppCompatActivity() {
         } */
 
         // Write comments
-        onePostBinding.actionComment.requestFocus()
+        // onePostBinding.actionComment.requestFocus()
 
         onePostBinding.onePostCreate.setOnClickListener {
             val stringInput = onePostBinding.actionComment.text.toString()
