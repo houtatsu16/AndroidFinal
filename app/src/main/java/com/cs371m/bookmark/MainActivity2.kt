@@ -64,7 +64,8 @@ class MainActivity2 : AppCompatActivity() {
 
     // Check out addTextChangedListener
     private fun actionBarSearch() {
-        actionBarBinding?.actionSearch?.addTextChangedListener(object : TextWatcher {
+
+        /* actionBarBinding?.actionSearch?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -76,7 +77,7 @@ class MainActivity2 : AppCompatActivity() {
                 }
                 // viewModel.setSearchTerm(s.toString())
             }
-        })
+        })*/
     }
 
     private lateinit var binding: ActivityMainBinding
