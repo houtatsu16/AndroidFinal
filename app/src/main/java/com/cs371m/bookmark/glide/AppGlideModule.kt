@@ -71,7 +71,7 @@ object Glide {
         }
     }
 
-    fun glideFetch(urlString: String, imageView: ImageView, heightSize: Int) {
+    fun glideFetch(urlString: String, imageView: ImageView, widthsize: Int) {
         if (MainActivity2.globalDebug) {
            assetFetch(urlString, imageView)
         } else {
@@ -105,8 +105,46 @@ object Glide {
                 })
                 .apply(glideOptions)
                 .error(R.drawable.no_picture)
+                .override(widthsize, widthsize * height / height)
+                .into(imageView)
+        }
+    }
+
+    fun glideFetchbyHeight(urlString: String, imageView: ImageView, heightSize: Int) {
+        if (MainActivity2.globalDebug) {
+            assetFetch(urlString, imageView)
+        } else {
+            GlideApp.with(imageView.context)
+                .load(fromHtml(urlString))
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        // Log.d("glide", "width: ${resource?.minimumWidth}")
+                        if (resource?.minimumWidth == 1) {
+                            imageView.setImageResource(R.drawable.no_picture)
+                            return true
+                        }
+
+                        return false
+                    }
+                })
+                .apply(glideOptions)
+                .error(R.drawable.no_picture)
                 .override(width * heightSize / height, heightSize)
-                //.override(widthsize, widthsize * height / height)
                 .into(imageView)
         }
     }

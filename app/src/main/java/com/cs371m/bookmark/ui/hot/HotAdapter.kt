@@ -65,11 +65,12 @@ class HotAdapter(private val viewModel: MainViewModel)
         hotPostBinding.hotPostAuthor.text = "by " + item.author
         hotPostBinding.hotPostRatingBar.rating = item.averageRate.toFloat()
         hotPostBinding.hotPostFavNum.text = item.likes.toString()
+        hotPostBinding.hotPostAverageRating.text = item.averageRate.toFloat().toString()
 
         var url = viewModel.coverImageUrl(item.ISBN, "M")
 
         Log.d("onBindViewHolder", url)
-        Glide.glideFetch(url, hotPostBinding.hotPostThumbnail, 150)
+        Glide.glideFetch(url, hotPostBinding.hotPostThumbnail,90)
 
         /* if(viewModel.isFav(item)) {
             rowPostBinding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)

@@ -75,9 +75,10 @@ class OnePost : AppCompatActivity() {
 
         viewModel.observeCurrentBook().observe(this) {
             onePostBinding.onePostTitle.text = it.title
-            onePostBinding.onePostAuthor.text = it.author
+            onePostBinding.onePostAuthor.text = "by " + it.author
             onePostBinding.onePostRatingBar.rating = it.averageRate.toFloat()
             onePostBinding.onePostFavNum.text = it.likes.toString()
+            onePostBinding.onePostAverageRating.text = it.averageRate.toFloat().toString()
             /*
             val urlString = "https://covers.openlibrary.org/b/ISBN/" + onePostISBN + "-L.jpg"
             Glide.glideFetch(urlString, onePostBinding.onePostSelfImage, 180)
@@ -86,7 +87,7 @@ class OnePost : AppCompatActivity() {
             var url = viewModel.coverImageUrl(it.ISBN, "M")
 
             Log.d("onBindViewHolder", url)
-            Glide.glideFetch(url, onePostBinding.onePostSelfImage, 180)
+            Glide.glideFetch(url, onePostBinding.onePostSelfImage, 120)
 
 //            Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-L.jpg", onePostBinding.onePostSelfImage, 180)
             val book = viewModel.getDetails(it.ISBN).value

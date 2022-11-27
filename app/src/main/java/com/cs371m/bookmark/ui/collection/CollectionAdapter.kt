@@ -55,7 +55,7 @@ class CollectionAdapter(private val viewModel: MainViewModel)
         collectionPostBinding.favTitle.text = item.title
 
         if (item.title != null) {
-            Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-L.jpg", collectionPostBinding.favImg, 250)
+            Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-L.jpg", collectionPostBinding.favImg, 150)
         }
 
         /* if(viewModel.isFav(item)) {

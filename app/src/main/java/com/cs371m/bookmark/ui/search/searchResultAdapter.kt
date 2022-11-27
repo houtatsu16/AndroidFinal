@@ -85,7 +85,7 @@ class searchResultAdapter(private val viewModel: MainViewModel)
             }
             searchPostBinding.searchPostIsbn.text = "ISBN: " + item.isbn[0]
             val urlStr = "https://covers.openlibrary.org/b/ISBN/" + item.isbn[0] + "-L.jpg"
-            Glide.glideFetch(urlStr, searchPostBinding.searchPostThumbnail, 150)
+            Glide.glideFetch(urlStr, searchPostBinding.searchPostThumbnail, 90)
         } else {
             searchPostBinding.searchPostIsbn.text = "ISBN: N/A"
         }

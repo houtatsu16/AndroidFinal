@@ -52,7 +52,7 @@ class RateFragment : Fragment() {
 
         binding.rateRatingBar.rating = item.value!!.averageRate.toFloat()
         var url = viewModel.coverImageUrl(item.value!!.ISBN, "M")
-        Glide.glideFetch(url, binding.rateSelfImage, 250)
+        Glide.glideFetchbyHeight(url, binding.rateSelfImage, 250)
 
         viewModel.observeCurrentBook().observe(viewLifecycleOwner) {
             Log.d("rate", "title: ${it.title}")
@@ -60,7 +60,7 @@ class RateFragment : Fragment() {
             binding.rateAuthor.text = it.author
             // binding.rateRatingBar.rating = it.averageRate.toFloat()
             var url = viewModel.coverImageUrl(it.ISBN, "M")
-            Glide.glideFetch(url, binding.rateSelfImage, 250)
+            Glide.glideFetchbyHeight(url, binding.rateSelfImage, 250)
 
         }
 
@@ -72,7 +72,7 @@ class RateFragment : Fragment() {
             binding.rateAuthor.text = item.value!!.author
             // binding.rateRatingBar.rating = item.value!!.averageRate.toFloat()
             var url = viewModel.coverImageUrl(item.value!!.ISBN, "M")
-            Glide.glideFetch(url, binding.rateSelfImage, 250)
+            Glide.glideFetchbyHeight(url, binding.rateSelfImage, 250)
         }
 
         binding.rightButton.setOnClickListener {
@@ -82,7 +82,7 @@ class RateFragment : Fragment() {
             binding.rateAuthor.text = item.value!!.author
             // binding.rateRatingBar.rating = item.value!!.averageRate.toFloat()
             var url = viewModel.coverImageUrl(item.value!!.ISBN, "M")
-            Glide.glideFetch(url, binding.rateSelfImage, 250)
+            Glide.glideFetchbyHeight(url, binding.rateSelfImage, 250)
         }
 
         binding.submitButton.setOnClickListener {

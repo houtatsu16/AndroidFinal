@@ -21,8 +21,8 @@
 
         <ImageView
             android:id="@+id/onePost_selfImage"
-            android:layout_width="wrap_content"
-            android:layout_height="180dp"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
@@ -41,7 +41,7 @@
                 android:id="@+id/onePost_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="10dp"
                 android:text="Title"
@@ -77,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:src="@drawable/ic_favorite_border_black_24dp"
+                    android:src="@drawable/ic_favorite_black_24dp"
                     />
                 <TextView
                     android:id="@+id/onePost_favNum"
@@ -86,7 +86,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="fav_num"
-                    android:textSize="15sp"
+                    android:textSize="18sp"
                     />
                 <com.google.android.material.internal.BaselineLayout
                     android:layout_width="0dp"
@@ -106,11 +106,23 @@
                 android:scaleY="0.45"
                 android:backgroundTint="@color/black"
                 android:progressTint="@color/burnt"
+                android:transformPivotY="60dp"
+                android:transformPivotX="120dp"
                 android:secondaryProgressTint="@color/burnt"
                 android:numStars="5"
                 android:rating="3.5"
                 android:layout_gravity="center"
                 />
+
+            <TextView
+                android:id="@+id/onePost_averageRating"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="5.0"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="30dp"/>
+
 
         </LinearLayout>
 
@@ -138,20 +150,23 @@
         android:textStyle="italic"
         />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_baseline_thumb_up_24"
+        android:text="Like?"
+        android:textColor="@color/black_overlay"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:layout_gravity="right"
+        android:gravity="left|center_vertical"
+        android:layout_marginRight="30dp"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rating:"
-            android:textStyle="bold"
-            android:textSize="17sp"
-            android:layout_margin="5dp"
-            android:layout_gravity="center"
-            />
+        android:orientation="horizontal">
 
         <RatingBar
             android:id="@+id/onePost_ratingBarUser"
@@ -159,8 +174,10 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             style="@android:attr/ratingBarStyleSmall"
-            android:scaleX="0.42"
-            android:scaleY="0.42"
+            android:scaleX="0.4"
+            android:scaleY="0.4"
+            android:transformPivotX="220dp"
+            android:transformPivotY="20dp"
             android:backgroundTint="@color/black"
             android:progressTint="@color/burnt"
             android:secondaryProgressTint="@color/burnt"
@@ -168,6 +185,16 @@
             android:rating="0"
             android:layout_gravity="left"
             />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rate!"
+            android:textAlignment="center"
+            android:textColor="@color/black_overlay"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            />
+
     </LinearLayout>
 
     <LinearLayout
