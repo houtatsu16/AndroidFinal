@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.cs371m.bookmark.DBHelper
 import com.cs371m.bookmark.MainViewModel
 import com.cs371m.bookmark.ui.onePost.OnePost
 import com.cs371m.bookmark.R
@@ -19,6 +20,7 @@ import com.cs371m.bookmark.databinding.SearchPostBinding
 import com.cs371m.bookmark.glide.Glide
 import com.cs371m.bookmark.model.BookCommentModel
 import com.cs371m.bookmark.model.BookModel
+import com.cs371m.bookmark.ui.rate.RateAdapter
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
@@ -42,6 +44,8 @@ class searchResultAdapter(private val viewModel: MainViewModel)
         const val hotComment = "comment"
         const val isbn = "isbn"
     }
+    private val dbHelp = DBHelper()
+
 
     inner class VH(val searchPostBinding: SearchPostBinding) : RecyclerView.ViewHolder(searchPostBinding.root) {
         init {
@@ -70,13 +74,23 @@ class searchResultAdapter(private val viewModel: MainViewModel)
         }
 
         if (item.isbn != null) {
+            searchPostBinding.searchPostTitle.setOnClickListener {
+                dbHelp.checkBook(item.isbn[0], item.author_name[0], item.title)
+                val intent = Intent(holder.itemView.context, OnePost::class.java)
+                intent.apply {
+                    putExtra(isbn, item.isbn[0])
+                }
+
+                holder.itemView.context.startActivity(intent)
+            }
             searchPostBinding.searchPostIsbn.text = "ISBN: " + item.isbn[0]
             val urlStr = "https://covers.openlibrary.org/b/ISBN/" + item.isbn[0] + "-L.jpg"
             Glide.glideFetch(urlStr, searchPostBinding.searchPostThumbnail, 150)
         } else {
             searchPostBinding.searchPostIsbn.text = "ISBN: N/A"
-
         }
+
+
         // Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", searchPostBinding.searchPostThumbnail)
     }
 

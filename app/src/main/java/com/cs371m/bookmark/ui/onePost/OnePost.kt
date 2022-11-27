@@ -77,6 +77,11 @@ class OnePost : AppCompatActivity() {
             onePostBinding.onePostAuthor.text = it.author
             onePostBinding.onePostRatingBar.rating = it.averageRate.toFloat()
             onePostBinding.onePostFavNum.text = it.likes.toString()
+            /*
+            val urlString = "https://covers.openlibrary.org/b/ISBN/" + onePostISBN + "-L.jpg"
+            Glide.glideFetch(urlString, onePostBinding.onePostSelfImage, 180)
+            val book = viewModel.getDetails(onePostISBN).value
+            */
             Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-L.jpg", onePostBinding.onePostSelfImage, 180)
             val book = viewModel.getDetails("9780980200447").value
             if (book != null) {
