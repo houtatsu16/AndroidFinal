@@ -9,13 +9,16 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cs371m.bookmark.DBHelper
 import com.cs371m.bookmark.MainViewModel
 import com.cs371m.bookmark.databinding.FragmentRateBinding
+import com.cs371m.bookmark.glide.Glide
 import com.cs371m.bookmark.ui.hot.HotAdapter
 
 class RateFragment : Fragment() {
@@ -25,7 +28,6 @@ class RateFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,6 +43,56 @@ class RateFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d(javaClass.simpleName, "onViewCreated")
 
+
+        val item = viewModel.getCurrentBook("0446568813")
+        val user = viewModel.getCurrentUser("haha")
+
+        binding.rateTitle.text = item.value!!.title
+        binding.rateAuthor.text = item.value!!.author
+
+        binding.rateRatingBar.rating = item.value!!.averageRate.toFloat()
+        var url = viewModel.coverImageUrl(item.value!!.ISBN, "M")
+        Glide.glideFetch(url, binding.rateSelfImage, 250)
+
+        viewModel.observeCurrentBook().observe(viewLifecycleOwner) {
+            Log.d("rate", "title: ${it.title}")
+            binding.rateTitle.text = it.title
+            binding.rateAuthor.text = it.author
+            // binding.rateRatingBar.rating = it.averageRate.toFloat()
+            var url = viewModel.coverImageUrl(it.ISBN, "M")
+            Glide.glideFetch(url, binding.rateSelfImage, 250)
+
+        }
+
+        binding.leftButton.setOnClickListener {
+            val isbn = "8441516480"
+            val item = viewModel.getCurrentBook(isbn)
+
+            binding.rateTitle.text = item.value!!.title
+            binding.rateAuthor.text = item.value!!.author
+            // binding.rateRatingBar.rating = item.value!!.averageRate.toFloat()
+            var url = viewModel.coverImageUrl(item.value!!.ISBN, "M")
+            Glide.glideFetch(url, binding.rateSelfImage, 250)
+        }
+
+        binding.rightButton.setOnClickListener {
+            val isbn = "0446568813"
+            val item = viewModel.getCurrentBook(isbn)
+            binding.rateTitle.text = item.value!!.title
+            binding.rateAuthor.text = item.value!!.author
+            // binding.rateRatingBar.rating = item.value!!.averageRate.toFloat()
+            var url = viewModel.coverImageUrl(item.value!!.ISBN, "M")
+            Glide.glideFetch(url, binding.rateSelfImage, 250)
+        }
+
+        binding.submitButton.setOnClickListener {
+
+        }
+
+
+
+
+        /* // Swipe
         val adapter = RateAdapter(viewModel)
         val rv = binding.recyclerView
         rv.adapter = adapter
@@ -83,6 +135,8 @@ class RateFragment : Fragment() {
             adapter.submitList(it)
             adapter.notifyDataSetChanged()
         }
+        */
+
 
 
     }

@@ -156,6 +156,11 @@ class MainViewModel : ViewModel(){
         return currentBook
     }
 
+    fun getCurrentUser(user: String): MutableLiveData<UserModel> {
+        dbHelp.fetchUser(user, currentUser)
+        return currentUser
+    }
+
     fun observeCurrentBook(): MutableLiveData<BookModel> {
         Log.d("MainVM", "currentBook: ${currentBook.value}")
         return currentBook

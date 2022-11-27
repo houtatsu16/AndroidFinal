@@ -7,15 +7,90 @@
     android:background="#FFFFFFFF"
     >
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/rate_selfImage"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:layout_marginTop="60dp"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/no_picture"
+        />
+    <TextView
+        android:id="@+id/rate_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/RateSwipeRefreshLayout"
-        >
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginVertical="10dp"
+        android:text="Title"
+        android:textColor="@color/burnt"
+        android:textSize="22sp"
+        android:textStyle="bold|italic"
+        />
+
+    <TextView
+        android:id="@+id/rate_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="author"
+        android:layout_marginBottom="10dp"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        />
+
+    <ImageView
+        android:id="@+id/rate_rowFav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_favorite_border_black_24dp"
+        />
+
+    <RatingBar
+        android:id="@+id/rate_ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="false"
+        style="@android:attr/ratingBarStyleSmall"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:backgroundTint="@color/black"
+        android:progressTint="@color/burnt"
+        android:secondaryProgressTint="@color/burnt"
+        android:numStars="5"
+        android:rating="0"
+        android:layout_gravity="center"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <Button
+            android:id="@+id/left_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:layout_marginLeft="20dp"
+            android:text="left"
             />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:text="submit"
+            />
+        <Button
+            android:id="@+id/right_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="right"
+            />
+    </LinearLayout>
 </LinearLayout>

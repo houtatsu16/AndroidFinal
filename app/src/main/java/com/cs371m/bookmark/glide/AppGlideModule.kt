@@ -106,6 +106,7 @@ object Glide {
                 .apply(glideOptions)
                 .error(R.drawable.no_picture)
                 .override(width * heightSize / height, heightSize)
+                //.override(widthsize, widthsize * height / height)
                 .into(imageView)
         }
     }
