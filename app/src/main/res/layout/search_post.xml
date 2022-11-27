@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:focusable="true"
+    android:clickable="true"
+    android:layout_margin="8dp"
+    android:background="?android:attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/grey">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".MainActivity2">
+
+        <ImageView
+            android:id="@+id/searchPost_thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_margin="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+
+        <TextView
+            android:id="@+id/searchPost_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="19sp"
+            android:text="Title"
+            android:textStyle="bold"
+            android:textColor="@color/burnt"
+            android:padding="2dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintLeft_toRightOf="@+id/searchPost_thumbnail"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/searchPost_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:padding="1dp"
+            android:text="author"
+            android:textStyle="bold|italic"
+            android:layout_marginLeft="15dp"
+            app:layout_constraintLeft_toRightOf="@+id/searchPost_thumbnail"
+            app:layout_constraintTop_toBottomOf="@+id/searchPost_title"
+            />
+
+        <TextView
+            android:id="@+id/searchPost_isbn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:padding="1dp"
+            android:text="isbn:"
+            android:layout_marginLeft="15dp"
+            app:layout_constraintLeft_toRightOf="@+id/searchPost_thumbnail"
+            app:layout_constraintTop_toBottomOf="@+id/searchPost_author"
+            />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

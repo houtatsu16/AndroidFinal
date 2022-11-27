@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.cs371m.bookmark.api.Book
 import com.cs371m.bookmark.api.Repository
 import com.cs371m.bookmark.api.OpenLibraryApi
+import com.cs371m.bookmark.api.SearchResult
 import com.cs371m.bookmark.model.BookModel
 import com.cs371m.bookmark.model.UserModel
 import com.google.firebase.Timestamp
@@ -23,6 +24,8 @@ class MainViewModel : ViewModel(){
 
     private var api = OpenLibraryApi.create()
     private var repo = Repository(api)
+
+    private var searchBookResult = MutableLiveData<SearchResult>()
 
     private var bookDetails = MutableLiveData<Map<String, Book>>()
     private var favoriteContent = MutableLiveData<List<BookModel>>().apply { value = mutableListOf() }
@@ -155,5 +158,20 @@ class MainViewModel : ViewModel(){
             bookDetails.postValue(repo.getBook(isbn))
             }
         return bookDetails
+    }
+
+    // Searching
+    fun searchBook(title: String) {
+        viewModelScope.launch(
+            context = viewModelScope.coroutineContext
+                    + Dispatchers.IO
+        ) {
+            searchBookResult.postValue(repo.searchBookByTitle(title))
+            Log.d("searchBookResult", "value: ${searchBookResult.value}")
+        }
+    }
+
+    fun observeSearchBook(): MutableLiveData<SearchResult> {
+        return searchBookResult
     }
 }

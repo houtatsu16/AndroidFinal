@@ -1,5 +1,6 @@
 package com.cs371m.bookmark
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,6 +17,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cs371m.bookmark.databinding.ActionBarBinding
 import com.cs371m.bookmark.databinding.ActivityMainBinding
+import com.cs371m.bookmark.ui.hot.HotAdapter
+import com.cs371m.bookmark.ui.onePost.OnePost
+import com.cs371m.bookmark.ui.search.searchPost
 
 class MainActivity2 : AppCompatActivity() {
 
@@ -68,11 +72,19 @@ class MainActivity2 : AppCompatActivity() {
 
         actionBarBinding?.actionSearch?.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                TODO("Not yet implemented")
+                val intent = Intent(applicationContext, searchPost::class.java)
+                intent.apply {
+                    putExtra("query", query)
+                    // putExtra(hotStars, item.averageRate)
+                    // putExtra(hotTitle, item.title)
+                    // putExtra(hotAuthor, item.author)
+                }
+                startActivity(intent)
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                TODO("Not yet implemented")
+                return false
             }
 
         })
