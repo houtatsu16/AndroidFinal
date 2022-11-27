@@ -16,7 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.HttpUrl
 
-class MainViewModel : ViewModel(){
+class MainViewModel : ViewModel() {
 
     private var isbn = "9780980200447"
 
@@ -28,22 +28,23 @@ class MainViewModel : ViewModel(){
     private var searchBookResult = MutableLiveData<SearchResult>()
 
     private var bookDetails = MutableLiveData<Map<String, Book>>()
-    private var favoriteContent = MutableLiveData<List<BookModel>>().apply { value = mutableListOf() }
+    private var favoriteContent =
+        MutableLiveData<List<BookModel>>().apply { value = mutableListOf() }
 
 
     private val dbHelp = DBHelper()
 
-    private val currentBook= MutableLiveData(BookModel())
+    private val currentBook = MutableLiveData(BookModel())
 
-    private val currentUser= MutableLiveData(UserModel())
+    private val currentUser = MutableLiveData(UserModel())
 
-    private val topBooks= MutableLiveData<List<BookModel>>()
+    private val topBooks = MutableLiveData<List<BookModel>>()
 
     val topBooksReady = MutableLiveData(false)
 
-    private val randomBooks= MutableLiveData<List<BookModel>>()
+    private val randomBooks = MutableLiveData<List<BookModel>>()
 
-    private val randomBookIndex= MutableLiveData(0)
+    private val randomBookIndex = MutableLiveData(0)
 
     init {
         // XXX one-liner to kick off the app
@@ -51,7 +52,7 @@ class MainViewModel : ViewModel(){
     }
 
 
-// From https://openlibrary.org/dev/docs/api/covers
+    // From https://openlibrary.org/dev/docs/api/covers
 //    https://covers.openlibrary.org/b/$key/$value-$size.jpg
 //
     // haha
@@ -72,9 +73,9 @@ class MainViewModel : ViewModel(){
         return url.toString()
     }
 
-    fun updateTopBooks(){
+    fun updateTopBooks() {
         topBooksReady.postValue(false)
-        dbHelp.fetchTopBooks(topBooks,5,"averageRate")
+        dbHelp.fetchTopBooks(topBooks, 5, "averageRate")
         topBooksReady.postValue(true)
     }
 
@@ -82,7 +83,8 @@ class MainViewModel : ViewModel(){
         // XXX Write me.  This is where the network request is initiated.
         viewModelScope.launch(
             context = viewModelScope.coroutineContext
-                    + Dispatchers.IO) {
+                    + Dispatchers.IO
+        ) {
             // Update LiveData from IO dispatcher, use postValue
 //            Log.d("netRefresh", "haha")
 //            val books = repo.getBook(isbn)
@@ -115,7 +117,6 @@ class MainViewModel : ViewModel(){
     }
 
 
-
     fun observeTopBooks(): MutableLiveData<List<BookModel>> {
         Log.d("MainVM", "topBooks: ${topBooks.value}")
         return topBooks
@@ -126,7 +127,7 @@ class MainViewModel : ViewModel(){
         return randomBooks
     }
 
-    fun addFav(post: BookModel){
+    fun addFav(post: BookModel) {
         val lst = favoriteContent.value?.toMutableList()
         lst?.let {
             it.add(post)
@@ -156,38 +157,62 @@ class MainViewModel : ViewModel(){
         return currentBook
     }
 
+
     fun getCurrentUser(user: String): MutableLiveData<UserModel> {
         dbHelp.fetchUser(user, currentUser)
         return currentUser
-    }
 
-    fun observeCurrentBook(): MutableLiveData<BookModel> {
-        Log.d("MainVM", "currentBook: ${currentBook.value}")
-        return currentBook
-    }
-
-    fun getDetails(isbn: String): MutableLiveData<Map<String, Book>> {
-        viewModelScope.launch(
-            context = viewModelScope.coroutineContext
-                    + Dispatchers.IO
-        ) {
-            bookDetails.postValue(repo.getBook(isbn))
-            }
-        return bookDetails
-    }
-
-    // Searching
-    fun searchBook(title: String) {
-        viewModelScope.launch(
-            context = viewModelScope.coroutineContext
-                    + Dispatchers.IO
-        ) {
-            searchBookResult.postValue(repo.searchBookByTitle(title))
-            Log.d("searchBookResult", "value: ${searchBookResult.value}")
+        fun refreshCurrentBook() {
+            dbHelp.fetchBook(currentBook.value!!.ISBN, currentBook)
         }
-    }
 
-    fun observeSearchBook(): MutableLiveData<SearchResult> {
-        return searchBookResult
+        fun observeCurrentBook(): MutableLiveData<BookModel> {
+            Log.d("MainVM", "currentBook: ${currentBook.value}")
+            return currentBook
+        }
+
+        fun getDetails(isbn: String): MutableLiveData<Map<String, Book>> {
+            viewModelScope.launch(
+                context = viewModelScope.coroutineContext
+                        + Dispatchers.IO
+            ) {
+                bookDetails.postValue(repo.getBook(isbn))
+            }
+            return bookDetails
+        }
+
+        // Searching
+        fun searchBook(title: String) {
+            viewModelScope.launch(
+                context = viewModelScope.coroutineContext
+                        + Dispatchers.IO
+            ) {
+                searchBookResult.postValue(repo.searchBookByTitle(title))
+                Log.d("searchBookResult", "value: ${searchBookResult.value}")
+            }
+        }
+
+        fun observeSearchBook(): MutableLiveData<SearchResult> {
+            return searchBookResult
+        }
+
+
+        fun checkUser(userId: String) {
+            dbHelp.checkUser(userId)
+        }
+
+        fun checkBook(ISBN: String, author: String, title: String) {
+            dbHelp.checkBook(ISBN, author, title)
+        }
+
+        fun addUserComment(content: String) {
+//        dbHelp.addUserComment(currentUser.value!!.displayName, currentBook.value!!.ISBN,content,
+//            Timestamp.now())
+
+            dbHelp.addUserComment(
+                "haha", currentBook.value!!.ISBN, content,
+                Timestamp.now()
+            )
+        }
     }
 }

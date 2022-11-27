@@ -7,6 +7,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import okhttp3.internal.wait
 
 
 class DBHelper {
@@ -20,7 +21,7 @@ class DBHelper {
         db.collection(allBooksCollection).document(isbn).get().addOnSuccessListener {
                 document ->
             if (document != null) {
-                Log.d("book1", "fetchBook data: ${document.toObject(BookModel::class.java)!!}")
+                Log.d("checkBook3", "fetchBook data: $document")
                 val book = document.toObject(BookModel::class.java)!!
                 model.postValue(book)
                 Log.d("bookModel", "model value: ${model.value}")
@@ -53,11 +54,16 @@ class DBHelper {
     }
 
     fun checkBook(ISBN:String, author:String, title: String){
+        Log.d("checkBook1", ISBN)
         var doc = db.collection(allBooksCollection).document(ISBN)
         doc.get().addOnSuccessListener { document ->
             if (!document.exists()) {
                 db.collection(allBooksCollection).document(ISBN)
-                    .set(BookModel(author=author, ISBN = ISBN, title = title))
+                    .set(BookModel(author=author, ISBN = ISBN, title = title)).addOnSuccessListener {
+                        Log.d("checkBook2", ISBN + " done")
+                    }
+
+
             }
         }
     }
@@ -67,7 +73,7 @@ class DBHelper {
         db.collection(allUsersCollection).document(userId).get().addOnSuccessListener {
                 document ->
             if (document != null) {
-                Log.d("book1", "fetchBook data: ${document.toObject(UserModel::class.java)!!}")
+                Log.d("book1", "fetchUser data: ${document.toObject(UserModel::class.java)!!}")
                 val book = document.toObject(UserModel::class.java)!!
                 model.postValue(book)
             }

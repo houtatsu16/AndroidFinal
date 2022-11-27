@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -37,11 +38,11 @@ class OnePost : AppCompatActivity() {
 
         val bundle: Bundle? = intent.extras
 
-        val onePostISBN = bundle!!.getString(postISBN, "0")
-        // val onePostTitle = bundle!!.getString(postTitle, "a")
-        Log.d("onePost", "isbn: ${onePostISBN}")
-        val item = viewModel.getCurrentBook(onePostISBN)
-        Log.d("onePost", "item: ${item.value}")
+        val onePostISBN = bundle!!.getString(postISBN, "")
+        val onePostTitle = bundle!!.getString(postTitle, "")
+        val onePostAuthor = bundle!!.getString(postAuthor, "0")
+        viewModel.checkBook(onePostISBN,onePostAuthor,onePostTitle)
+        viewModel.getCurrentBook(onePostISBN)
 
         val adapter = CommentAdapter(viewModel)
         val rv = onePostBinding.recyclerView
@@ -126,7 +127,9 @@ class OnePost : AppCompatActivity() {
                     "Comment cannot be null!",
                     Toast.LENGTH_LONG).show()
             } else {
-
+                viewModel.addUserComment(stringInput)
+                onePostBinding.actionComment.text.clear()
+                viewModel.refreshCurrentBook()
             }
         }
 

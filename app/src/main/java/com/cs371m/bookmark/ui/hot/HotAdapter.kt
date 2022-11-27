@@ -36,15 +36,15 @@ class HotAdapter(private val viewModel: MainViewModel)
 
     inner class VH(val hotPostBinding: HotPostBinding) : RecyclerView.ViewHolder(hotPostBinding.root) {
         init {
-            hotPostBinding.hotPostRowFav.setOnClickListener {
-                val position = adapterPosition
-                if (viewModel.isFav(getItem(position))) {
-                    viewModel.removeFav(getItem(position))
-                } else {
-                    viewModel.addFav(getItem(position))
-                }
-                notifyItemChanged(position)
-            }
+//            hotPostBinding.hotPostRowFav.setOnClickListener {
+//                val position = adapterPosition
+//                if (viewModel.isFav(getItem(position))) {
+//                    viewModel.removeFav(getItem(position))
+//                } else {
+//                    viewModel.addFav(getItem(position))
+//                }
+//                notifyItemChanged(position)
+//            }
         }
     }
 
@@ -91,8 +91,8 @@ class HotAdapter(private val viewModel: MainViewModel)
             intent.apply {
                 putExtra(isbn, item.ISBN)
                 // putExtra(hotStars, item.averageRate)
-                // putExtra(hotTitle, item.title)
-                // putExtra(hotAuthor, item.author)
+                 putExtra(hotTitle, item.title)
+                 putExtra(hotAuthor, item.author)
             }
 
             holder.itemView.context.startActivity(intent)
