@@ -62,11 +62,22 @@ class searchResultAdapter(private val viewModel: MainViewModel)
         val searchPostBinding = holder.searchPostBinding
 
         searchPostBinding.searchPostTitle.text = item.title
-        searchPostBinding.searchPostAuthor.text = item.author_name[0]
-        searchPostBinding.searchPostIsbn.text = item.isbn[0]
-        val urlStr = "https://covers.openlibrary.org/b/ISBN/" + item.isbn[0] + "-M.jpg"
+
+        if (item.author_name != null) {
+            searchPostBinding.searchPostAuthor.text = "by " + item.author_name[0]
+        } else {
+            searchPostBinding.searchPostAuthor.text = "by N/A"
+        }
+
+        if (item.isbn != null) {
+            searchPostBinding.searchPostIsbn.text = "ISBN: " + item.isbn[0]
+            val urlStr = "https://covers.openlibrary.org/b/ISBN/" + item.isbn[0] + "-M.jpg"
+            Glide.glideFetch(urlStr, searchPostBinding.searchPostThumbnail)
+        } else {
+            searchPostBinding.searchPostIsbn.text = "ISBN: N/A"
+
+        }
         // Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", searchPostBinding.searchPostThumbnail)
-        Glide.glideFetch(urlStr, searchPostBinding.searchPostThumbnail)
     }
 
     class CommentDiff : DiffUtil.ItemCallback<Doc>() {

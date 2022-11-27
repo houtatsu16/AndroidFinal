@@ -71,10 +71,8 @@ object Glide {
            assetFetch(urlString, imageView)
         } else {
             GlideApp.with(imageView.context)
-                .asBitmap() // Try to display animated Gifs and video still
                 .load(fromHtml(urlString))
                 .apply(glideOptions)
-                .error(R.color.burnt)
                 .override(width * 150 / height, 150)
                 .into(imageView)
         }

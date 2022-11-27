@@ -62,7 +62,7 @@ class HotAdapter(private val viewModel: MainViewModel)
         val hotPostBinding = holder.hotPostBinding
 
         hotPostBinding.hotPostTitle.text = item.title
-        hotPostBinding.hotPostAuthor.text = item.author
+        hotPostBinding.hotPostAuthor.text = "by " + item.author
         hotPostBinding.hotPostRatingBar.rating = item.averageRate.toFloat()
         hotPostBinding.hotPostFavNum.text = item.likes.toString()
 

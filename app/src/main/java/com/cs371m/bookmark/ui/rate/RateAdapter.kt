@@ -61,7 +61,7 @@ class RateAdapter(private val viewModel: MainViewModel)
         val ratePostBinding = holder.ratePostBinding
 
         ratePostBinding.ratePostTitle.text = item.title
-        ratePostBinding.ratePostAuthor.text = item.author
+        ratePostBinding.ratePostAuthor.text = "by " + item.author
         ratePostBinding.ratePostRatingBar.rating = item.averageRate.toFloat()
 
         Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", ratePostBinding.ratePostThumbnail)

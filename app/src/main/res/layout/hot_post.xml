@@ -25,13 +25,14 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/no_picture"
             />
 
         <TextView
             android:id="@+id/hotPost_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="23sp"
+            android:textSize="17sp"
             android:text="Title"
             android:textStyle="bold"
             android:textColor="@color/burnt"
@@ -46,7 +47,7 @@
             android:id="@+id/hotPost_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:padding="1dp"
             android:text="author"
             android:textStyle="bold|italic"

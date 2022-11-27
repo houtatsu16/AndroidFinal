@@ -21,7 +21,7 @@ class searchPost : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.show()
+        supportActionBar?.hide()
         val activitySearchPostBinding = ActivitySearchPostBinding.inflate(layoutInflater)
         setContentView(activitySearchPostBinding.root)
 
@@ -44,6 +44,9 @@ class searchPost : AppCompatActivity() {
         viewModel.observeSearchBook().observe(this) {
             Log.d("searchPost", "nums: ${it.numFound}")
             Log.d("searchPost", "docs: ${it.docs}")
+            if (it == null) {
+                // todo (add a toast)
+            }
             adapter.submitList(it.docs)
             adapter.notifyDataSetChanged()
         }
