@@ -2,15 +2,20 @@ package com.cs371m.bookmark.glide
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.text.Html
 import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.module.AppGlideModule
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.cs371m.bookmark.MainActivity2
 import com.cs371m.bookmark.R
 
@@ -72,7 +77,34 @@ object Glide {
         } else {
             GlideApp.with(imageView.context)
                 .load(fromHtml(urlString))
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        // Log.d("glide", "width: ${resource?.minimumWidth}")
+                        if (resource?.minimumWidth == 1) {
+                            imageView.setImageResource(R.drawable.no_picture)
+                            return true
+                        }
+
+                        return false
+                    }
+                })
                 .apply(glideOptions)
+                .error(R.drawable.no_picture)
                 .override(width * 150 / height, 150)
                 .into(imageView)
         }
