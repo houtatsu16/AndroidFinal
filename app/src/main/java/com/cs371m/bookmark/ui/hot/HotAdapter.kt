@@ -66,7 +66,7 @@ class HotAdapter(private val viewModel: MainViewModel)
         hotPostBinding.hotPostRatingBar.rating = item.averageRate.toFloat()
         hotPostBinding.hotPostFavNum.text = item.likes.toString()
 
-        Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", hotPostBinding.hotPostThumbnail)
+        Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-L.jpg", hotPostBinding.hotPostThumbnail, 150)
 
         /* if(viewModel.isFav(item)) {
             rowPostBinding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)

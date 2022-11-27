@@ -64,7 +64,7 @@ class RateAdapter(private val viewModel: MainViewModel)
         ratePostBinding.ratePostAuthor.text = "by " + item.author
         ratePostBinding.ratePostRatingBar.rating = item.averageRate.toFloat()
 
-        Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", ratePostBinding.ratePostThumbnail)
+        Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-L.jpg", ratePostBinding.ratePostThumbnail, 150)
 
         /* if(viewModel.isFav(item)) {
             rowPostBinding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)

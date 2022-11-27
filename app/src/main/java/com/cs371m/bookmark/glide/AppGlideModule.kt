@@ -71,7 +71,7 @@ object Glide {
         }
     }
 
-    fun glideFetch(urlString: String, imageView: ImageView) {
+    fun glideFetch(urlString: String, imageView: ImageView, heightSize: Int) {
         if (MainActivity2.globalDebug) {
            assetFetch(urlString, imageView)
         } else {
@@ -105,7 +105,7 @@ object Glide {
                 })
                 .apply(glideOptions)
                 .error(R.drawable.no_picture)
-                .override(width * 150 / height, 150)
+                .override(width * heightSize / height, heightSize)
                 .into(imageView)
         }
     }

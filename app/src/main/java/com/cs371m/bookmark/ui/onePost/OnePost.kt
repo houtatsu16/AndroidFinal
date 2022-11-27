@@ -77,7 +77,7 @@ class OnePost : AppCompatActivity() {
             onePostBinding.onePostAuthor.text = it.author
             onePostBinding.onePostRatingBar.rating = it.averageRate.toFloat()
             onePostBinding.onePostFavNum.text = it.likes.toString()
-            Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", onePostBinding.onePostSelfImage)
+            Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-L.jpg", onePostBinding.onePostSelfImage, 180)
             val book = viewModel.getDetails("9780980200447").value
             if (book != null) {
                 Log.d("details", "value: ${book}")
