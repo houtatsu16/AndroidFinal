@@ -39,6 +39,8 @@ class MainViewModel : ViewModel(){
 
     private val topBooks= MutableLiveData<List<BookModel>>()
 
+    val topBooksReady = MutableLiveData(false)
+
     private val randomBooks= MutableLiveData<List<BookModel>>()
 
     private val randomBookIndex= MutableLiveData(0)
@@ -70,6 +72,12 @@ class MainViewModel : ViewModel(){
         return url.toString()
     }
 
+    fun updateTopBooks(){
+        topBooksReady.postValue(false)
+        dbHelp.fetchTopBooks(topBooks,5,"averageRate")
+        topBooksReady.postValue(true)
+    }
+
     fun netRefresh() {
         // XXX Write me.  This is where the network request is initiated.
         viewModelScope.launch(
@@ -86,19 +94,22 @@ class MainViewModel : ViewModel(){
 //            Log.d("netRefresh", coverImageUrl(isbn, "M"))
 //            Log.d("netRefresh", repo.searchBookByTitle(searchTitle).toString())
 
-            dbHelp.fetchBook("dzx8yqfsIR2aRw1PBBuZ",currentBook)
-            dbHelp.fetchTopBooks(topBooks,5,"averageRate")
-            dbHelp.fetchTopBooks(topBooks,5,"likes")
-            dbHelp.checkUser("haha")
-            dbHelp.checkBook("isbn1235", "jun","a good book.")
-            dbHelp.fetchUser("uItYS3uQ3gPvDYSdxncb",currentUser)
-            dbHelp.updateUserDisPlayName("haha","new_name")
-            dbHelp.addUserComment("haha", "isbn1235","this is a comment", Timestamp.now())
-            dbHelp.likeBook("haha", "isbn1235")
-            dbHelp.unlikeBook("haha", "isbn1235")
-            dbHelp.updateRate("haha", "isbn1235",5.0,5.0,1,5.0)
+//            dbHelp.fetchBook("dzx8yqfsIR2aRw1PBBuZ",currentBook)
+//            dbHelp.fetchTopBooks(topBooks,5,"averageRate")
+//            dbHelp.fetchTopBooks(topBooks,5,"likes")
+//            dbHelp.checkUser("haha")
+//            dbHelp.checkBook("isbn1235", "jun","a good book.")
+//            dbHelp.fetchUser("uItYS3uQ3gPvDYSdxncb",currentUser)
+//            dbHelp.updateUserDisPlayName("haha","new_name")
+//            dbHelp.addUserComment("haha", "isbn1235","this is a comment", Timestamp.now())
+//            dbHelp.likeBook("haha", "isbn1235")
+//            dbHelp.unlikeBook("haha", "isbn1235")
+//            dbHelp.updateRate("haha", "isbn1235",5.0,5.0,1,5.0)
 
-            dbHelp.fetchTopBooks(randomBooks, 5, "averageRate")
+
+//            dbHelp.fetchTopBooks(randomBooks, 5, "averageRate")
+
+            updateTopBooks()
 
         }
     }

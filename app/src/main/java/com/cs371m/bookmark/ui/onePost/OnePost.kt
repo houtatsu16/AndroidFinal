@@ -82,8 +82,13 @@ class OnePost : AppCompatActivity() {
             Glide.glideFetch(urlString, onePostBinding.onePostSelfImage, 180)
             val book = viewModel.getDetails(onePostISBN).value
             */
-            Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-L.jpg", onePostBinding.onePostSelfImage, 180)
-            val book = viewModel.getDetails("9780980200447").value
+            var url = viewModel.coverImageUrl(it.ISBN, "M")
+
+            Log.d("onBindViewHolder", url)
+            Glide.glideFetch(url, onePostBinding.onePostSelfImage, 180)
+
+//            Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-L.jpg", onePostBinding.onePostSelfImage, 180)
+            val book = viewModel.getDetails(it.ISBN).value
             if (book != null) {
                 Log.d("details", "value: ${book}")
                 Log.d("details", "value1: ${book.values.toMutableList()[0].details.description}")

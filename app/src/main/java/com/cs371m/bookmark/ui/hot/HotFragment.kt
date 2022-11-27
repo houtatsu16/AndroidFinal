@@ -51,14 +51,18 @@ class HotFragment : Fragment() {
 
         viewModel.observeTopBooks().observe(viewLifecycleOwner) {
             Log.d("hotFragment", "did!, ${it}")
-            binding.swipeRefreshLayout.apply {
-                isRefreshing = false
-                setOnRefreshListener {
-                    viewModel.netRefresh()
-                }
-            }
             adapter.submitList(it)
             adapter.notifyDataSetChanged()
+        }
+
+        binding.HotSwipeRefreshLayout.apply {
+            setOnRefreshListener {
+                viewModel.updateTopBooks()
+            }
+        }
+
+        viewModel.topBooksReady.observe(viewLifecycleOwner){
+            binding.HotSwipeRefreshLayout.isRefreshing = !it
         }
 
 

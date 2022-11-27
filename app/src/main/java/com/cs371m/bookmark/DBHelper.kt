@@ -6,6 +6,7 @@ import com.cs371m.bookmark.model.*
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 
 class DBHelper {
@@ -30,7 +31,7 @@ class DBHelper {
     }
 
     fun fetchTopBooks(models:MutableLiveData<List<BookModel>>, limit:Long, orderBy:String){
-        db.collection(allBooksCollection).orderBy(orderBy).limit(limit).get().addOnSuccessListener {
+        db.collection(allBooksCollection).orderBy(orderBy, Query.Direction.DESCENDING).limit(limit).get().addOnSuccessListener {
                 result ->
             Log.d("fetchTopBooks", "getHotBooks fetch ${result!!.documents.size}")
                 models.postValue(result.documents.mapNotNull {

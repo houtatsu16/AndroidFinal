@@ -50,7 +50,6 @@ class CollectionFragment : Fragment() {
             adapter.notifyDataSetChanged()
         }
 
-
     }
 
     override fun onDestroyView() {

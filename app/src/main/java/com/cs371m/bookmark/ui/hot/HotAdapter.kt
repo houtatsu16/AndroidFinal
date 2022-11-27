@@ -66,7 +66,10 @@ class HotAdapter(private val viewModel: MainViewModel)
         hotPostBinding.hotPostRatingBar.rating = item.averageRate.toFloat()
         hotPostBinding.hotPostFavNum.text = item.likes.toString()
 
-        Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-L.jpg", hotPostBinding.hotPostThumbnail, 150)
+        var url = viewModel.coverImageUrl(item.ISBN, "M")
+
+        Log.d("onBindViewHolder", url)
+        Glide.glideFetch(url, hotPostBinding.hotPostThumbnail, 150)
 
         /* if(viewModel.isFav(item)) {
             rowPostBinding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
@@ -74,11 +77,12 @@ class HotAdapter(private val viewModel: MainViewModel)
             rowPostBinding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
         } */
 
-        if(viewModel.isFav(item)) {
-            hotPostBinding.hotPostRowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
-        } else {
-            hotPostBinding.hotPostRowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-        }
+//        if(viewModel.isFav(item)) {
+//            hotPostBinding.hotPostRowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
+//        } else {
+//            hotPostBinding.hotPostRowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
+//        }
+        hotPostBinding.hotPostRowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
 
         Log.d("onBind", "onbindview.......")
 

@@ -15,13 +15,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cs371m.bookmark.MainViewModel
-import com.cs371m.bookmark.databinding.FragmentHotBinding
 import com.cs371m.bookmark.databinding.FragmentRateBinding
 import com.cs371m.bookmark.ui.hot.HotAdapter
 
 class RateFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
-    private var _binding: FragmentHotBinding? = null
+    private var _binding: FragmentRateBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -34,7 +33,7 @@ class RateFragment : Fragment() {
     ): View {
         (activity as AppCompatActivity).supportActionBar?.show()
 
-        _binding = FragmentHotBinding.inflate(inflater, container, false)
+        _binding = FragmentRateBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -75,7 +74,7 @@ class RateFragment : Fragment() {
 
         viewModel.observeRandomBooks().observe(viewLifecycleOwner) {
             Log.d("rateFragment", "did!, ${it}")
-            binding.swipeRefreshLayout.apply {
+            binding.RateSwipeRefreshLayout.apply {
                 isRefreshing = false
                 setOnRefreshListener {
                     viewModel.netRefresh()
