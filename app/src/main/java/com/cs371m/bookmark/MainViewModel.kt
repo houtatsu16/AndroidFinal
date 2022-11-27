@@ -161,6 +161,7 @@ class MainViewModel : ViewModel() {
     fun getCurrentUser(user: String): MutableLiveData<UserModel> {
         dbHelp.fetchUser(user, currentUser)
         return currentUser
+    }
 
         fun refreshCurrentBook() {
             dbHelp.fetchBook(currentBook.value!!.ISBN, currentBook)
@@ -215,4 +216,3 @@ class MainViewModel : ViewModel() {
             )
         }
     }
-}
