@@ -1,5 +1,6 @@
 package com.cs371m.bookmark.ui.rate
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +21,8 @@ import com.cs371m.bookmark.MainViewModel
 import com.cs371m.bookmark.databinding.FragmentRateBinding
 import com.cs371m.bookmark.glide.Glide
 import com.cs371m.bookmark.ui.hot.HotAdapter
+import com.cs371m.bookmark.ui.onePost.OnePost
+import com.cs371m.bookmark.ui.search.searchResultAdapter
 import java.util.*
 
 class RateFragment : Fragment() {
@@ -127,6 +130,17 @@ class RateFragment : Fragment() {
             // TODO: Update database
         }
 
+        binding.rateTitle.setOnClickListener {
+            val intent = Intent(requireActivity(), OnePost::class.java)
+            intent.apply {
+                putExtra(searchResultAdapter.isbn, currentISBN)
+                // putExtra(searchResultAdapter.hotTitle, item.title)
+                // putExtra(searchResultAdapter.hotAuthor, item.author_name[0])
+
+            }
+
+            requireActivity().startActivity(intent)
+        }
 
 
 

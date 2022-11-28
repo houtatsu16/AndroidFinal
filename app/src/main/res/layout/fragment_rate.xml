@@ -11,7 +11,7 @@
         android:id="@+id/rate_selfImage"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
@@ -101,7 +101,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="28dp"
         android:layout_gravity="center"
-        android:text="submit"
+        android:text="Go!"
         android:layout_marginTop="25dp"
         />
 
