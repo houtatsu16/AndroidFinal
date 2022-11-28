@@ -11,8 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cs371m.bookmark.MainViewModel
 import com.cs371m.bookmark.databinding.FragmentSettingsBinding
+import com.cs371m.bookmark.ui.onePost.CommentAdapter
 
 class SettingsFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
@@ -41,7 +44,28 @@ class SettingsFragment : Fragment() {
         }
 
         binding.SettingHistory.setOnClickListener {
-            // TODO: What type of data to be displayed?
+            val adapter = HistoryAdapter(viewModel)
+            val rv = binding.recyclerView
+            rv.adapter = adapter
+            val manager = LinearLayoutManager(rv.context)
+            rv.layoutManager = manager
+            val dividerItemDecoration = DividerItemDecoration(
+                rv.context, LinearLayoutManager.VERTICAL )
+            rv.addItemDecoration(dividerItemDecoration)
+
+            viewModel.observeCurrentUser().observe(viewLifecycleOwner) {
+                binding.historyTitle.visibility = View.VISIBLE
+                binding.historyClose.visibility = View.VISIBLE
+                binding.recyclerView.visibility = View.VISIBLE
+                adapter.submitList(it.comments)
+                adapter.notifyDataSetChanged()
+            }
+        }
+
+        binding.historyClose.setOnClickListener {
+            binding.historyTitle.visibility = View.INVISIBLE
+            binding.historyClose.visibility = View.INVISIBLE
+            binding.recyclerView.visibility = View.INVISIBLE
         }
 
         binding.SettingChangeName.setOnClickListener {

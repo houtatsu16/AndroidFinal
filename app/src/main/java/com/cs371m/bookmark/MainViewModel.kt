@@ -34,6 +34,8 @@ class MainViewModel : ViewModel() {
 
     private val dbHelp = DBHelper()
 
+    private val bookForTitle = MutableLiveData(BookModel())
+
     private val currentBook = MutableLiveData(BookModel())
 
     private val currentUser = MutableLiveData(UserModel())
@@ -158,6 +160,11 @@ class MainViewModel : ViewModel() {
     fun getCurrentBook(isbn: String): MutableLiveData<BookModel> {
         dbHelp.fetchBook(isbn, currentBook)
         return currentBook
+    }
+
+    fun getBookForTitle(isbn: String): MutableLiveData<BookModel> {
+        dbHelp.fetchBook(isbn, bookForTitle)
+        return bookForTitle
     }
 
 

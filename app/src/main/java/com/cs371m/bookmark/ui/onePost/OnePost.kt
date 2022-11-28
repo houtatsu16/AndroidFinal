@@ -146,6 +146,10 @@ class OnePost : AppCompatActivity() {
             }
         }
 
+        onePostBinding.onePostLikeButton.setOnClickListener {
+
+        }
+
 
     }
 
