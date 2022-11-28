@@ -11,7 +11,7 @@
         android:id="@+id/rate_selfImage"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
@@ -19,11 +19,14 @@
         />
     <TextView
         android:id="@+id/rate_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:layout_gravity="center"
         android:layout_marginVertical="10dp"
         android:text="Title"
+        android:textAlignment="center"
         android:textColor="@color/burnt"
         android:textSize="22sp"
         android:textStyle="bold|italic"
@@ -42,8 +45,8 @@
 
     <ImageView
         android:id="@+id/rate_rowFav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_margin="10dp"
         android:layout_gravity="center"
         android:src="@drawable/ic_favorite_border_black_24dp"
@@ -75,24 +78,31 @@
             android:drawableLeft="@drawable/ic_baseline_arrow_back_24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="60dp"
             android:text="prev"
+            android:layout_gravity="left"
             />
-        <Button
-            android:id="@+id/submit_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:text="submit"
-            />
+
         <Button
             android:id="@+id/right_button"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginLeft="60dp"
             android:text="next"
             />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="28dp"
+        android:layout_gravity="center"
+        android:text="submit"
+        android:layout_marginTop="25dp"
+        />
+
 </LinearLayout>

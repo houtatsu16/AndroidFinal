@@ -20,11 +20,11 @@ import com.cs371m.bookmark.MainViewModel
 import com.cs371m.bookmark.databinding.FragmentRateBinding
 import com.cs371m.bookmark.glide.Glide
 import com.cs371m.bookmark.ui.hot.HotAdapter
+import java.util.*
 
 class RateFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
     private var _binding: FragmentRateBinding? = null
-
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -44,49 +44,87 @@ class RateFragment : Fragment() {
         Log.d(javaClass.simpleName, "onViewCreated")
 
 
-        val item = viewModel.getCurrentBook("0446568813")
+        val bookList = viewModel.getTopBookList().value
+        val bookListSize = bookList!!.size
+
+        var randomNum = Random().nextInt(bookListSize)
+        var currentISBN = bookList!!.get(randomNum).ISBN
+
+        val item = viewModel.getCurrentBook(currentISBN)
         val user = viewModel.getCurrentUser("haha")
 
+        Log.d("RateFragment", "user: ${user.value}")
+
+
+        /*
         binding.rateTitle.text = item.value!!.title
-        binding.rateAuthor.text = item.value!!.author
+        binding.rateAuthor.text = "by " + item.value!!.author
 
         binding.rateRatingBar.rating = item.value!!.averageRate.toFloat()
         var url = viewModel.coverImageUrl(item.value!!.ISBN, "M")
         Glide.glideFetchbyHeight(url, binding.rateSelfImage, 250)
 
+         */
+
+
         viewModel.observeCurrentBook().observe(viewLifecycleOwner) {
             Log.d("rate", "title: ${it.title}")
             binding.rateTitle.text = it.title
-            binding.rateAuthor.text = it.author
+            binding.rateAuthor.text = "by " + it.author
             // binding.rateRatingBar.rating = it.averageRate.toFloat()
             var url = viewModel.coverImageUrl(it.ISBN, "M")
             Glide.glideFetchbyHeight(url, binding.rateSelfImage, 250)
+            currentISBN = it.ISBN
+        }
 
+        viewModel.observeCurrentUser().observe(viewLifecycleOwner) {
+            Log.d("RateFragment", "currentUser: ${it}")
+            // TODO: fetch like and averageRate from userModel and show it
         }
 
         binding.leftButton.setOnClickListener {
-            val isbn = "8441516480"
-            val item = viewModel.getCurrentBook(isbn)
+            var i = Random().nextInt(bookListSize)
+            while (i == randomNum) {
+                i = Random().nextInt(bookListSize)
+            }
+            randomNum = i
+            // val isbn = "8441516480"
+            val item = viewModel.getCurrentBook(bookList!!.get(randomNum).ISBN)
 
+            /*
             binding.rateTitle.text = item.value!!.title
-            binding.rateAuthor.text = item.value!!.author
+            binding.rateAuthor.text = "by " + item.value!!.author
             // binding.rateRatingBar.rating = item.value!!.averageRate.toFloat()
             var url = viewModel.coverImageUrl(item.value!!.ISBN, "M")
             Glide.glideFetchbyHeight(url, binding.rateSelfImage, 250)
+
+             */
         }
 
         binding.rightButton.setOnClickListener {
-            val isbn = "0446568813"
-            val item = viewModel.getCurrentBook(isbn)
+            var i = Random().nextInt(bookListSize)
+            while (i == randomNum) {
+                i = Random().nextInt(bookListSize)
+            }
+            randomNum = i
+
+            val item = viewModel.getCurrentBook(bookList!!.get(randomNum).ISBN)
+
+            /*
             binding.rateTitle.text = item.value!!.title
-            binding.rateAuthor.text = item.value!!.author
+            binding.rateAuthor.text = "by " + item.value!!.author
             // binding.rateRatingBar.rating = item.value!!.averageRate.toFloat()
             var url = viewModel.coverImageUrl(item.value!!.ISBN, "M")
             Glide.glideFetchbyHeight(url, binding.rateSelfImage, 250)
+
+             */
         }
 
-        binding.submitButton.setOnClickListener {
+        binding.rateRatingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->  }
 
+
+        binding.submitButton.setOnClickListener {
+            // TODO: Update database
         }
 
 

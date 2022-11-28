@@ -63,22 +63,26 @@ class searchResultAdapter(private val viewModel: MainViewModel)
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = currentList[holder.adapterPosition]
         Log.d("searchPostAdapter", "item: ${item}")
-        val searchPostBinding = holder.searchPostBinding
-
-        searchPostBinding.searchPostTitle.text = item.title
-
-        if (item.author_name != null) {
-            searchPostBinding.searchPostAuthor.text = "by " + item.author_name[0]
-        } else {
-            searchPostBinding.searchPostAuthor.text = "by N/A"
-        }
-
         if (item.isbn != null) {
+            val searchPostBinding = holder.searchPostBinding
+
+            searchPostBinding.searchPostTitle.text = item.title
+
+            if (item.author_name != null) {
+                searchPostBinding.searchPostAuthor.text = "by " + item.author_name[0]
+            } else {
+                searchPostBinding.searchPostAuthor.text = "by N/A"
+            }
+
+
             searchPostBinding.searchPostTitle.setOnClickListener {
-                dbHelp.checkBook(item.isbn[0], item.author_name[0], item.title)
+                // dbHelp.checkBook(item.isbn[0], item.author_name[0], item.title)
                 val intent = Intent(holder.itemView.context, OnePost::class.java)
                 intent.apply {
                     putExtra(isbn, item.isbn[0])
+                    putExtra(hotTitle, item.title)
+                    putExtra(hotAuthor, item.author_name[0])
+
                 }
 
                 holder.itemView.context.startActivity(intent)
@@ -86,9 +90,9 @@ class searchResultAdapter(private val viewModel: MainViewModel)
             searchPostBinding.searchPostIsbn.text = "ISBN: " + item.isbn[0]
             val urlStr = "https://covers.openlibrary.org/b/ISBN/" + item.isbn[0] + "-L.jpg"
             Glide.glideFetch(urlStr, searchPostBinding.searchPostThumbnail, 90)
-        } else {
-            searchPostBinding.searchPostIsbn.text = "ISBN: N/A"
+
         }
+
 
 
         // Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", searchPostBinding.searchPostThumbnail)

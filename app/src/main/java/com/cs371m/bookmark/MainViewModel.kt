@@ -49,6 +49,9 @@ class MainViewModel : ViewModel() {
     init {
         // XXX one-liner to kick off the app
         netRefresh()
+
+
+
     }
 
 
@@ -75,7 +78,7 @@ class MainViewModel : ViewModel() {
 
     fun updateTopBooks() {
         topBooksReady.postValue(false)
-        dbHelp.fetchTopBooks(topBooks, 5, "averageRate")
+        dbHelp.fetchTopBooks(topBooks, 10, "averageRate")
         topBooksReady.postValue(true)
     }
 
@@ -163,56 +166,65 @@ class MainViewModel : ViewModel() {
         return currentUser
     }
 
-        fun refreshCurrentBook() {
-            dbHelp.fetchBook(currentBook.value!!.ISBN, currentBook)
+    fun refreshCurrentBook() {
+        dbHelp.fetchBook(currentBook.value!!.ISBN, currentBook)
+    }
+
+    fun observeCurrentBook(): MutableLiveData<BookModel> {
+        Log.d("MainVM", "currentBook: ${currentBook.value}")
+        return currentBook
+    }
+
+    fun observeCurrentUser(): MutableLiveData<UserModel> {
+        Log.d("MainVM", "currentUser: ${currentUser.value}")
+        return currentUser
+    }
+
+    fun getDetails(isbn: String): MutableLiveData<Map<String, Book>> {
+        viewModelScope.launch(
+            context = viewModelScope.coroutineContext
+                    + Dispatchers.IO
+        ) {
+            bookDetails.postValue(repo.getBook(isbn))
         }
+        return bookDetails
+    }
 
-        fun observeCurrentBook(): MutableLiveData<BookModel> {
-            Log.d("MainVM", "currentBook: ${currentBook.value}")
-            return currentBook
+    // Searching
+    fun searchBook(title: String) {
+        viewModelScope.launch(
+            context = viewModelScope.coroutineContext
+                    + Dispatchers.IO
+        ) {
+            searchBookResult.postValue(repo.searchBookByTitle(title))
+            Log.d("searchBookResult", "value: ${searchBookResult.value}")
         }
+    }
 
-        fun getDetails(isbn: String): MutableLiveData<Map<String, Book>> {
-            viewModelScope.launch(
-                context = viewModelScope.coroutineContext
-                        + Dispatchers.IO
-            ) {
-                bookDetails.postValue(repo.getBook(isbn))
-            }
-            return bookDetails
-        }
-
-        // Searching
-        fun searchBook(title: String) {
-            viewModelScope.launch(
-                context = viewModelScope.coroutineContext
-                        + Dispatchers.IO
-            ) {
-                searchBookResult.postValue(repo.searchBookByTitle(title))
-                Log.d("searchBookResult", "value: ${searchBookResult.value}")
-            }
-        }
-
-        fun observeSearchBook(): MutableLiveData<SearchResult> {
-            return searchBookResult
-        }
+    fun observeSearchBook(): MutableLiveData<SearchResult> {
+        return searchBookResult
+    }
 
 
-        fun checkUser(userId: String) {
-            dbHelp.checkUser(userId)
-        }
+    fun checkUser(userId: String) {
+        dbHelp.checkUser(userId)
+    }
 
-        fun checkBook(ISBN: String, author: String, title: String) {
-            dbHelp.checkBook(ISBN, author, title)
-        }
+    fun checkBook(ISBN: String, author: String, title: String) {
+        dbHelp.checkBook(ISBN, author, title)
+    }
 
-        fun addUserComment(content: String) {
+    fun addUserComment(content: String) {
 //        dbHelp.addUserComment(currentUser.value!!.displayName, currentBook.value!!.ISBN,content,
 //            Timestamp.now())
 
-            dbHelp.addUserComment(
-                "haha", currentBook.value!!.ISBN, content,
-                Timestamp.now()
-            )
-        }
+        dbHelp.addUserComment(
+            "haha", currentBook.value!!.ISBN, content,
+            Timestamp.now()
+        )
     }
+
+    fun getTopBookList(): MutableLiveData<List<BookModel>> {
+        return topBooks
+    }
+}

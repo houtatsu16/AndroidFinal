@@ -35,9 +35,19 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(javaClass.simpleName, "onViewCreated")
-        binding.history.setOnClickListener {
+        viewModel.getCurrentUser("haha")
+        viewModel.observeCurrentUser().observe(viewLifecycleOwner) {
+            binding.Username.text = it.displayName
+        }
+
+        binding.SettingHistory.setOnClickListener {
 
         }
+
+        binding.SettingChangeName.setOnClickListener {
+
+        }
+
     }
 
     override fun onDestroyView() {
