@@ -1,6 +1,7 @@
 package com.cs371m.bookmark.ui.collection
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cs371m.bookmark.MainViewModel
 import com.cs371m.bookmark.databinding.FragmentCollectionBinding
+import okhttp3.internal.notifyAll
 
 class CollectionFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
@@ -44,11 +46,26 @@ class CollectionFragment : Fragment() {
         // val manager = LinearLayoutManager(rv.context)
         rv.layoutManager = manager
         // binding.swipeRefreshLayout.isEnabled = false
+        val user = viewModel.getCurrentUser("haha")
 
-        viewModel.observeFavorite().observe(viewLifecycleOwner) {
-            adapter.submitList(it)
-            adapter.notifyDataSetChanged()
+
+
+        viewModel.observeCurrentUser().observe(viewLifecycleOwner) {
+            if (it.likes.isNotEmpty()) {
+                adapter.submitList(it.likes)
+                adapter.notifyDataSetChanged()
+            }
         }
+
+        viewModel.observeMediatorLike().observe(viewLifecycleOwner) {
+                adapter.submitList(it)
+                adapter.notifyDataSetChanged()
+            }
+
+
+
+
+
 
     }
 

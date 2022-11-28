@@ -39,6 +39,8 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d(javaClass.simpleName, "onViewCreated")
         viewModel.getCurrentUser("haha")
+        // viewModel.getBookForTitle("9074336639")
+
         viewModel.observeCurrentUser().observe(viewLifecycleOwner) {
             binding.Username.text = it.displayName
         }

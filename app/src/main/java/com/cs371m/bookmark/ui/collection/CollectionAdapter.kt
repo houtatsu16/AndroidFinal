@@ -23,7 +23,7 @@ import com.cs371m.bookmark.ui.hot.HotAdapter
 //
 // You can call adapterPosition to get the index of the selected item
 class CollectionAdapter(private val viewModel: MainViewModel)
-    : ListAdapter<BookModel, CollectionAdapter.VH>(BookDiff()) {
+    : ListAdapter<String, CollectionAdapter.VH>(BookDiff()) {
     companion object {
         const val hotTitle = "title"
         const val hotAuthor = "author"
@@ -52,11 +52,18 @@ class CollectionAdapter(private val viewModel: MainViewModel)
         Log.d("collectionAdapter", "item: ${item}")
         val collectionPostBinding = holder.collectionPostBinding
 
-        collectionPostBinding.favTitle.text = item.title
+        // Caution
+        // val currentBookInfo = viewModel.getCurrentBook(item)
+        // Log.d("collectionAdapter", "info: ${currentBookInfo.value}")
 
-        if (item.title != null) {
-            Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-L.jpg", collectionPostBinding.favImg, 150)
-        }
+
+        // collectionPostBinding.favTitle.text = currentBookInfo.value!!.title
+
+        var url = viewModel.coverImageUrl(item, "L")
+
+        Log.d("onBindViewHolder", url)
+        Glide.glideFetch(url, collectionPostBinding.favImg, 170)
+
 
         /* if(viewModel.isFav(item)) {
             rowPostBinding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
@@ -70,25 +77,25 @@ class CollectionAdapter(private val viewModel: MainViewModel)
         collectionPostBinding.favTitle.setOnClickListener {
             val intent = Intent(holder.itemView.context, OnePost::class.java)
             intent.apply {
-                putExtra(isbn, item.ISBN)
-                putExtra(hotTitle, item.title)
-                putStringArrayListExtra(hotAuthor, ArrayList(item.author))
+                putExtra(isbn, item)
+                // putExtra(hotTitle, item.title)
+                // putStringArrayListExtra(hotAuthor, ArrayList(item.author))
             }
 
             holder.itemView.context.startActivity(intent)
         }
 
         collectionPostBinding.favButton.setOnClickListener {
-            // TODO: like & dislike
+            viewModel.updateLike(item, false)
         }
     }
 
-    class BookDiff : DiffUtil.ItemCallback<BookModel>() {
-        override fun areItemsTheSame(oldItem: BookModel, newItem: BookModel): Boolean {
-            return oldItem.title == newItem.title
+    class BookDiff : DiffUtil.ItemCallback<String>() {
+        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+            return oldItem == newItem
         }
-        override fun areContentsTheSame(oldItem: BookModel, newItem: BookModel): Boolean {
-            return oldItem.author == newItem.author
+        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+            return oldItem == newItem
         }
     }
 }
