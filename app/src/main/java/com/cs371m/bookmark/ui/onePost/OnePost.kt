@@ -40,10 +40,10 @@ class OnePost : AppCompatActivity() {
 
         val onePostISBN = bundle!!.getString(postISBN, "")
         val onePostTitle = bundle!!.getString(postTitle, "")
-        val onePostAuthor = bundle!!.getString(postAuthor, "0")
+        val onePostAuthor = bundle!!.getStringArrayList(postAuthor)
         Log.d("onBindViewHolder", "onePostisbn: ${onePostISBN}")
 
-        viewModel.checkBook(onePostISBN,onePostAuthor,onePostTitle)
+//        viewModel.checkBook(onePostISBN,List(onePostAuthor),onePostTitle)
         viewModel.getCurrentBook(onePostISBN)
 
         val adapter = CommentAdapter(viewModel)

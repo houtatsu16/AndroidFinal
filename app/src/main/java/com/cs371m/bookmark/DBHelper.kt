@@ -53,7 +53,7 @@ class DBHelper {
         }
     }
 
-    fun checkBook(ISBN:String, author:String, title: String, model:MutableLiveData<BookModel>){
+    fun checkBook(ISBN:String, author:List<String>, title: String, model:MutableLiveData<BookModel>){
         Log.d("checkBook1", ISBN)
         var doc = db.collection(allBooksCollection).document(ISBN)
         doc.get().addOnSuccessListener { document ->

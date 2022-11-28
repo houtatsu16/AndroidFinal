@@ -220,7 +220,7 @@ class MainViewModel : ViewModel() {
         dbHelp.checkUser(userId)
     }
 
-    fun checkBook(ISBN: String, author: String, title: String) {
+    fun checkBook(ISBN: String, author: List<String>, title: String) {
         dbHelp.checkBook(ISBN, author, title,currentBook)
     }
 
