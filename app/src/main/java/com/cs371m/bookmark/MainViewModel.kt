@@ -78,7 +78,7 @@ class MainViewModel : ViewModel() {
 
     fun updateTopBooks() {
         topBooksReady.postValue(false)
-        dbHelp.fetchTopBooks(topBooks, 10, "averageRate")
+        dbHelp.fetchTopBooks(topBooks, 15, "averageRate")
         topBooksReady.postValue(true)
     }
 

@@ -59,6 +59,7 @@
         android:drawableLeft="@drawable/ic_baseline_history_24"
         android:textAllCaps="false"
         android:textAlignment="textStart"
+        android:textSize="16sp"
         android:textColor="@color/black_overlay"
         />
 
@@ -71,6 +72,7 @@
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:textAllCaps="false"
         android:textAlignment="textStart"
+        android:textSize="16sp"
         android:textColor="@color/black_overlay"
         />
 
@@ -112,6 +114,22 @@
             />
 
     </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comment History"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="10dp"
+        />
 
 
 
