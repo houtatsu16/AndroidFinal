@@ -19,25 +19,25 @@ data class Details(
     @SerializedName("number_of_pages")
     val number_of_pages: Int,
     @SerializedName("table_of_contents")
-    val table_of_contents: List<TableOfContent>,
+    val table_of_contents: ArrayList<TableOfContent>,
     @SerializedName("title")
     val title: String,
     @SerializedName("subjects")
-    val subjects: List<String>,
+    val subjects: ArrayList<String>,
     @SerializedName("by_statement")
     val by_statement: String,
     @SerializedName("physical_dimensions")
     val physical_dimensions: String,
     @SerializedName("publishers")
-    val publishers: List<String>,
+    val publishers: ArrayList<String>,
     @SerializedName("description")
     val description: String,
     @SerializedName("physical_format")
     val physical_format: String,
     @SerializedName("authors")
-    val authors: List<Author>,
+    val authors: ArrayList<Author>,
     @SerializedName("publish_places")
-    val publish_places: List<String>,
+    val publish_places: ArrayList<String>,
     @SerializedName("pagination")
     val pagination: String,
     @SerializedName("publish_date")

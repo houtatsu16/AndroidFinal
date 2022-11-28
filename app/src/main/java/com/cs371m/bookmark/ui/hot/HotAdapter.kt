@@ -93,7 +93,7 @@ class HotAdapter(private val viewModel: MainViewModel)
                 putExtra(isbn, item.ISBN)
                 // putExtra(hotStars, item.averageRate)
                  putExtra(hotTitle, item.title)
-                 putExtra(hotAuthor, item.author)
+                 putStringArrayListExtra(hotAuthor, ArrayList(item.author))
             }
 
             holder.itemView.context.startActivity(intent)

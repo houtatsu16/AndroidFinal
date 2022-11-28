@@ -34,11 +34,10 @@ class MainViewModel : ViewModel() {
 
     private val dbHelp = DBHelper()
 
-    private val bookForTitle = MutableLiveData(BookModel())
+    private val bookForTitle = MutableLiveData<BookModel>()
+    private val currentBook = MutableLiveData<BookModel>()
 
-    private val currentBook = MutableLiveData(BookModel())
-
-    private val currentUser = MutableLiveData(UserModel())
+    private val currentUser = MutableLiveData<UserModel>()
 
     private val topBooks = MutableLiveData<List<BookModel>>()
 
@@ -80,7 +79,7 @@ class MainViewModel : ViewModel() {
 
     fun updateTopBooks() {
         topBooksReady.postValue(false)
-        dbHelp.fetchTopBooks(topBooks, 15, "averageRate")
+        dbHelp.fetchTopBooks(topBooks, 100, "averageRate")
         topBooksReady.postValue(true)
     }
 

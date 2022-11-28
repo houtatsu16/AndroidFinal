@@ -72,7 +72,7 @@ class CollectionAdapter(private val viewModel: MainViewModel)
             intent.apply {
                 putExtra(isbn, item.ISBN)
                 putExtra(hotTitle, item.title)
-                putExtra(hotAuthor, item.author)
+                putStringArrayListExtra(hotAuthor, ArrayList(item.author))
             }
 
             holder.itemView.context.startActivity(intent)
