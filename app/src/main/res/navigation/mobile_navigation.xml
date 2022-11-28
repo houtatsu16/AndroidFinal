@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.cs371m.bookmark.ui.SettingsFragment"
+        android:name="com.cs371m.bookmark.ui.setting.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>
