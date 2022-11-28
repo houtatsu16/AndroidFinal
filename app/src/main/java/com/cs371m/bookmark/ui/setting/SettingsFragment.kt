@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.cs371m.bookmark.MainViewModel
@@ -39,31 +41,37 @@ class SettingsFragment : Fragment() {
         }
 
         binding.SettingHistory.setOnClickListener {
-
+            // TODO: What type of data to be displayed?
         }
 
         binding.SettingChangeName.setOnClickListener {
             binding.settingTypeName.visibility = View.VISIBLE
             binding.settingOk.visibility = View.VISIBLE
+        }
 
+        binding.Username.setOnClickListener {
+            binding.settingTypeName.visibility = View.VISIBLE
+            binding.settingOk.visibility = View.VISIBLE
         }
 
         binding.settingOk.setOnClickListener {
             val stringInput = binding.settingTypeName.text.toString()
             if (stringInput.isEmpty()) {
                 Toast.makeText(requireActivity(),
-                    "Comment cannot be null!",
+                    "Name cannot be null!",
                     Toast.LENGTH_LONG).show()
             } else {
                 viewModel.updateUserDisplayName(stringInput)
                 binding.settingTypeName.text.clear()
                 viewModel.refreshCurrentUser()
+                binding.settingTypeName.visibility = View.INVISIBLE
+                binding.settingOk.visibility = View.INVISIBLE
+                // TODO: hide keyboard
             }
-            binding.settingTypeName.visibility = View.INVISIBLE
-            binding.settingOk.visibility = View.INVISIBLE
         }
 
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

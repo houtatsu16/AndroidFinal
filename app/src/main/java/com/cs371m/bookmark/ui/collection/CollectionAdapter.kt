@@ -71,9 +71,15 @@ class CollectionAdapter(private val viewModel: MainViewModel)
             val intent = Intent(holder.itemView.context, OnePost::class.java)
             intent.apply {
                 putExtra(isbn, item.ISBN)
+                putExtra(hotTitle, item.title)
+                putExtra(hotAuthor, item.author)
             }
 
             holder.itemView.context.startActivity(intent)
+        }
+
+        collectionPostBinding.favButton.setOnClickListener {
+            // TODO: like & dislike
         }
     }
 

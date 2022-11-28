@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:layout_marginLeft="20dp"
-            android:hint="Type new display name here"
+            android:hint="Type new display name here!"
             android:visibility="invisible"
             />
         <Button
@@ -93,6 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:text="OK"
+            android:textColor="@color/black_overlay"
             android:clickable="false"
             android:visibility="invisible"
             />
