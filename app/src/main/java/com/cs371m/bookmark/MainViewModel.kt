@@ -170,6 +170,10 @@ class MainViewModel : ViewModel() {
         dbHelp.fetchBook(currentBook.value!!.ISBN, currentBook)
     }
 
+    fun refreshCurrentUser() {
+        dbHelp.fetchUser("haha", currentUser)
+    }
+
     fun observeCurrentBook(): MutableLiveData<BookModel> {
         Log.d("MainVM", "currentBook: ${currentBook.value}")
         return currentBook
@@ -222,6 +226,10 @@ class MainViewModel : ViewModel() {
             "haha", currentBook.value!!.ISBN, content,
             Timestamp.now()
         )
+    }
+
+    fun updateUserDisplayName(displayName: String) {
+        dbHelp.updateUserDisPlayName("haha", displayName)
     }
 
     fun getTopBookList(): MutableLiveData<List<BookModel>> {

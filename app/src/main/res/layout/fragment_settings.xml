@@ -29,7 +29,7 @@
             />
     </LinearLayout>
 
-    <LinearLayout
+    <!-- <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -47,12 +47,13 @@
             android:layout_marginLeft="10dp"
             android:theme="@style/SettingSwitch"
             />
-    </LinearLayout>
+    </LinearLayout> -->
 
     <Button
         android:id="@+id/Setting_history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="5dp"
         android:text="History"
         android:drawableLeft="@drawable/ic_baseline_history_24"
@@ -72,6 +73,35 @@
         android:textAlignment="textStart"
         android:textColor="@color/black_overlay"
         />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+        <EditText
+            android:id="@+id/setting_typeName"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginLeft="20dp"
+            android:hint="Type new display name here"
+            android:visibility="invisible"
+            />
+        <Button
+            android:id="@+id/setting_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="OK"
+            android:clickable="false"
+            android:visibility="invisible"
+            />
+
+    </LinearLayout>
+
+
+
+
 
 
 </LinearLayout>
