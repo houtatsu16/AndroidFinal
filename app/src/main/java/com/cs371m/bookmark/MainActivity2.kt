@@ -80,6 +80,7 @@ class MainActivity2 : AppCompatActivity() {
                     // putExtra(hotAuthor, item.author)
                 }
                 startActivity(intent)
+                hideKeyboard()
                 return true
             }
 

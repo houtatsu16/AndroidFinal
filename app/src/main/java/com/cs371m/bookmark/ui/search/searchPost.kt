@@ -1,12 +1,19 @@
 package com.cs371m.bookmark.ui.search
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cs371m.bookmark.MainActivity2
 import com.cs371m.bookmark.MainViewModel
+import com.cs371m.bookmark.databinding.ActionBarBinding
+import com.cs371m.bookmark.databinding.ActionBarSearchBinding
 import com.cs371m.bookmark.databinding.ActivityMainBinding
 import com.cs371m.bookmark.databinding.ActivitySearchPostBinding
 import com.cs371m.bookmark.databinding.OnePostBinding
@@ -18,10 +25,26 @@ class searchPost : AppCompatActivity() {
         const val queryString = "query"
     }
     private val viewModel : MainViewModel by viewModels()
+    private var actionBarSearchBinding: ActionBarSearchBinding? = null
+    private val handler = Handler()
+    private val TIME_OUT: Long = 3000
 
+
+
+
+    private fun initActionBar(actionBar: ActionBar, queryStr: String) {
+        // Disable the default and enable the custom
+        actionBar.setDisplayShowTitleEnabled(false)
+        actionBar.setDisplayShowCustomEnabled(true)
+        actionBarSearchBinding = ActionBarSearchBinding.inflate(layoutInflater)
+        // Apply the custom view
+        actionBar.customView = actionBarSearchBinding?.root
+        actionBarSearchBinding?.searchActionBarTitle?.text = "Search result:  \"" + queryStr + "\""
+
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
+
         val activitySearchPostBinding = ActivitySearchPostBinding.inflate(layoutInflater)
         setContentView(activitySearchPostBinding.root)
 
@@ -29,6 +52,10 @@ class searchPost : AppCompatActivity() {
 
         val queryStr = bundle!!.getString(queryString, "0")
         Log.d("searchResult", "queryString: $queryStr")
+
+        supportActionBar?.let{
+            initActionBar(it, queryStr)
+        }
 
         viewModel.searchBook(queryStr)
 
@@ -44,13 +71,23 @@ class searchPost : AppCompatActivity() {
         viewModel.observeSearchBook().observe(this) {
             Log.d("searchPost", "nums: ${it.numFound}")
             Log.d("searchPost", "docs: ${it.docs}")
-            if (it == null) {
-                // todo (add a toast)
+            if (it.numFound == 0) {
+                Toast.makeText(this,
+                    "Not any result fit for this query!",
+                    Toast.LENGTH_LONG).show()
+                // finish()
+                run()
             }
             adapter.submitList(it.docs)
             adapter.notifyDataSetChanged()
         }
 
 
+    }
+
+    fun run() {
+        handler.postDelayed({
+                            finish()
+        }, TIME_OUT)
     }
 }

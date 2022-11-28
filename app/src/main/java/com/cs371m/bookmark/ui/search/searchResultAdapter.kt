@@ -20,7 +20,6 @@ import com.cs371m.bookmark.databinding.SearchPostBinding
 import com.cs371m.bookmark.glide.Glide
 import com.cs371m.bookmark.model.BookCommentModel
 import com.cs371m.bookmark.model.BookModel
-import com.cs371m.bookmark.ui.rate.RateAdapter
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
