@@ -215,7 +215,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun checkBook(ISBN: String, author: String, title: String) {
-        dbHelp.checkBook(ISBN, author, title)
+        dbHelp.checkBook(ISBN, author, title,currentBook)
     }
 
     fun addUserComment(content: String) {

@@ -20,7 +20,7 @@ class DBHelper {
     fun fetchBook(isbn:String, model:MutableLiveData<BookModel>){
         db.collection(allBooksCollection).document(isbn).get().addOnSuccessListener {
                 document ->
-            if (document != null) {
+            if (document.exists()) {
                 Log.d("checkBook3", "fetchBook data: $document")
                 val book = document.toObject(BookModel::class.java)!!
                 model.postValue(book)
@@ -53,17 +53,17 @@ class DBHelper {
         }
     }
 
-    fun checkBook(ISBN:String, author:String, title: String){
+    fun checkBook(ISBN:String, author:String, title: String, model:MutableLiveData<BookModel>){
         Log.d("checkBook1", ISBN)
         var doc = db.collection(allBooksCollection).document(ISBN)
         doc.get().addOnSuccessListener { document ->
             if (!document.exists()) {
+                val newBook = BookModel(author=author, ISBN = ISBN, title = title)
                 db.collection(allBooksCollection).document(ISBN)
-                    .set(BookModel(author=author, ISBN = ISBN, title = title)).addOnSuccessListener {
+                    .set(newBook).addOnSuccessListener {
                         Log.d("checkBook2", ISBN + " done")
                     }
-
-
+                model.postValue(newBook)
             }
         }
     }
