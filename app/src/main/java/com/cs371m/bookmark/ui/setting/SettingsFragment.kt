@@ -47,11 +47,19 @@ class SettingsFragment : Fragment() {
         binding.SettingChangeName.setOnClickListener {
             binding.settingTypeName.visibility = View.VISIBLE
             binding.settingOk.visibility = View.VISIBLE
+            binding.settingCancel.visibility = View.VISIBLE
         }
 
         binding.Username.setOnClickListener {
             binding.settingTypeName.visibility = View.VISIBLE
             binding.settingOk.visibility = View.VISIBLE
+            binding.settingCancel.visibility = View.VISIBLE
+        }
+
+        binding.settingCancel.setOnClickListener {
+            binding.settingTypeName.visibility = View.INVISIBLE
+            binding.settingOk.visibility = View.INVISIBLE
+            binding.settingCancel.visibility = View.INVISIBLE
         }
 
         binding.settingOk.setOnClickListener {
@@ -66,6 +74,8 @@ class SettingsFragment : Fragment() {
                 viewModel.refreshCurrentUser()
                 binding.settingTypeName.visibility = View.INVISIBLE
                 binding.settingOk.visibility = View.INVISIBLE
+                binding.settingCancel.visibility = View.INVISIBLE
+
                 // TODO: hide keyboard
             }
         }
