@@ -149,6 +149,8 @@ class RateFragment : Fragment() {
             randomNum = i
             // val isbn = "8441516480"
             viewModel.getCurrentBook(bookList!!.get(randomNum).ISBN)
+
+            viewModel.refreshCurrentUser()
         }
 
         binding.rateTitle.setOnClickListener {
