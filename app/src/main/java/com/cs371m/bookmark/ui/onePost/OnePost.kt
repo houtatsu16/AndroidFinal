@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cs371m.bookmark.MainViewModel
+import com.cs371m.bookmark.R
 import com.cs371m.bookmark.databinding.OnePostBinding
 import com.cs371m.bookmark.glide.Glide
 import java.sql.Timestamp
@@ -30,11 +31,13 @@ class OnePost : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
+        supportActionBar?.show()
         val onePostBinding = OnePostBinding.inflate(layoutInflater)
         setContentView(onePostBinding.root)
 
-        // supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
+
 
         val bundle: Bundle? = intent.extras
 
