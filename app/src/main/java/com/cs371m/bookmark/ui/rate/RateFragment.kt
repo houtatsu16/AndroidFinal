@@ -6,21 +6,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.cs371m.bookmark.DBHelper
 import com.cs371m.bookmark.MainViewModel
+import com.cs371m.bookmark.R
 import com.cs371m.bookmark.databinding.FragmentRateBinding
 import com.cs371m.bookmark.glide.Glide
-import com.cs371m.bookmark.ui.hot.HotAdapter
 import com.cs371m.bookmark.ui.onePost.OnePost
 import com.cs371m.bookmark.ui.search.searchResultAdapter
 import java.util.*
@@ -42,6 +34,8 @@ class RateFragment : Fragment() {
         return binding.root
     }
 
+    private var liked = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(javaClass.simpleName, "onViewCreated")
@@ -53,7 +47,7 @@ class RateFragment : Fragment() {
         var randomNum = Random().nextInt(bookListSize)
         var currentISBN = bookList!!.get(randomNum).ISBN
 
-        val item = viewModel.getCurrentBook(currentISBN)
+//        val item = viewModel.getCurrentBook(currentISBN)
         val user = viewModel.getCurrentUser("haha")
 
         Log.d("RateFragment", "user: ${user.value}")
@@ -78,12 +72,30 @@ class RateFragment : Fragment() {
             var url = viewModel.coverImageUrl(it.ISBN, "M")
             Glide.glideFetchbyHeight(url, binding.rateSelfImage, 250)
             currentISBN = it.ISBN
+
+            val user = viewModel.currentUser()
+
+            liked = user.likes.contains(currentISBN)
+
+            if(liked){
+                binding.rateRowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
+            }else{
+                binding.rateRowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
+            }
+
+            val rateMap = user.rate.associate { Pair(it.ISBN,it.value) }
+            if(rateMap.containsKey(currentISBN)){
+                binding.rateRatingBar.rating = rateMap.get(currentISBN)!!.toFloat()
+            }else{
+                binding.rateRatingBar.rating = 0F
+            }
         }
 
-        viewModel.observeCurrentUser().observe(viewLifecycleOwner) {
-            Log.d("RateFragment", "currentUser: ${it}")
-            // TODO: fetch like and averageRate from userModel and show it
-        }
+//        viewModel.observeCurrentUser().observe(viewLifecycleOwner) {
+//            Log.d("RateFragment", "currentUser: ${it}")
+//            // TODO: fetch like and averageRate from userModel and show it
+//
+//        }
 
         binding.skipButton.setOnClickListener {
             var i = Random().nextInt(bookListSize)
@@ -92,7 +104,7 @@ class RateFragment : Fragment() {
             }
             randomNum = i
             // val isbn = "8441516480"
-            val item = viewModel.getCurrentBook(bookList!!.get(randomNum).ISBN)
+            viewModel.getCurrentBook(bookList!!.get(randomNum).ISBN)
 
             /*
             binding.rateTitle.text = item.value!!.title
@@ -104,12 +116,31 @@ class RateFragment : Fragment() {
              */
         }
 
+        binding.rateRowFav.setOnClickListener {
+            liked = !liked
+            if(liked){
+                binding.rateRowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
+            }else{
+                binding.rateRowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
+            }
+        }
 
-        binding.rateRatingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->  }
+
+//        binding.rateRatingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->  }
 
 
         binding.confirmButton.setOnClickListener {
             // TODO: Update database
+
+            val user = viewModel.currentUser()
+            val previousLike = user.likes.contains(currentISBN)
+            if(previousLike != liked){
+                viewModel.updateLike(currentISBN, liked)
+            }
+
+            if(binding.rateRatingBar.rating!=0F){
+                viewModel.updateRate(viewModel.currentBook(), binding.rateRatingBar.rating.toDouble())
+            }
 
             var i = Random().nextInt(bookListSize)
             while (i == randomNum) {
@@ -117,7 +148,7 @@ class RateFragment : Fragment() {
             }
             randomNum = i
             // val isbn = "8441516480"
-            val item = viewModel.getCurrentBook(bookList!!.get(randomNum).ISBN)
+            viewModel.getCurrentBook(bookList!!.get(randomNum).ISBN)
         }
 
         binding.rateTitle.setOnClickListener {
@@ -125,7 +156,7 @@ class RateFragment : Fragment() {
             intent.apply {
                 putExtra(searchResultAdapter.isbn, currentISBN)
                 // putExtra(searchResultAdapter.hotTitle, item.title)
-                // putExtra(searchResultAdapter.hotAuthor, item.author_name[0])
+//                 putExtra(searchResultAdapter.hotAuthor, item.author_name)
 
             }
 

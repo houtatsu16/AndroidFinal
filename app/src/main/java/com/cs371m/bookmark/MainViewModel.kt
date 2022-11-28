@@ -190,6 +190,14 @@ class MainViewModel : ViewModel() {
         return currentUser
     }
 
+    fun currentUser(): UserModel{
+        return currentUser.value!!
+    }
+
+    fun currentBook(): BookModel{
+        return currentBook.value!!
+    }
+
     fun getDetails(isbn: String): MutableLiveData<Map<String, Book>> {
         viewModelScope.launch(
             context = viewModelScope.coroutineContext
@@ -240,5 +248,21 @@ class MainViewModel : ViewModel() {
 
     fun getTopBookList(): MutableLiveData<List<BookModel>> {
         return topBooks
+    }
+
+    fun updateLike(ISBN: String, like:Boolean){
+        if(like){
+            dbHelp.likeBook("haha",ISBN)
+        }else{
+            dbHelp.unlikeBook("haha",ISBN)
+        }
+    }
+
+    fun updateRate(book: BookModel, rate: Double){
+        var tr = book.totalRate
+        var cnt = book.totalRateCount
+
+        dbHelp.updateRate("haha",book.ISBN,rate,tr+rate,cnt+1, (tr+rate) /(cnt+1) )
+
     }
 }
