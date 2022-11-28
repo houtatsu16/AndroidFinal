@@ -60,10 +60,10 @@ class HistoryAdapter(private val viewModel: MainViewModel)
         Log.d("historyAdapter", "item: ${item}")
         val historyBinding = holder.historyBinding
 
-        historyBinding.historyIsbn.text = item.ISBN
+        historyBinding.historyIsbn.text = "ISBN: " + item.ISBN
         historyBinding.historyContent.text = item.content
         historyBinding.historyTime.text = convertTimestamp(item.timestamp)
-        historyBinding.historyTitle.text = viewModel.getBookForTitle(item.ISBN).value!!.title
+        // historyBinding.historyTitle.text = viewModel.getBookForTitle(item.ISBN).value!!.title
     }
 
     fun convertTimestamp(time: com.google.firebase.Timestamp): String {

@@ -85,7 +85,7 @@ class RateFragment : Fragment() {
             // TODO: fetch like and averageRate from userModel and show it
         }
 
-        binding.leftButton.setOnClickListener {
+        binding.skipButton.setOnClickListener {
             var i = Random().nextInt(bookListSize)
             while (i == randomNum) {
                 i = Random().nextInt(bookListSize)
@@ -104,30 +104,20 @@ class RateFragment : Fragment() {
              */
         }
 
-        binding.rightButton.setOnClickListener {
+
+        binding.rateRatingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->  }
+
+
+        binding.confirmButton.setOnClickListener {
+            // TODO: Update database
+
             var i = Random().nextInt(bookListSize)
             while (i == randomNum) {
                 i = Random().nextInt(bookListSize)
             }
             randomNum = i
-
+            // val isbn = "8441516480"
             val item = viewModel.getCurrentBook(bookList!!.get(randomNum).ISBN)
-
-            /*
-            binding.rateTitle.text = item.value!!.title
-            binding.rateAuthor.text = "by " + item.value!!.author
-            // binding.rateRatingBar.rating = item.value!!.averageRate.toFloat()
-            var url = viewModel.coverImageUrl(item.value!!.ISBN, "M")
-            Glide.glideFetchbyHeight(url, binding.rateSelfImage, 250)
-
-             */
-        }
-
-        binding.rateRatingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->  }
-
-
-        binding.submitButton.setOnClickListener {
-            // TODO: Update database
         }
 
         binding.rateTitle.setOnClickListener {

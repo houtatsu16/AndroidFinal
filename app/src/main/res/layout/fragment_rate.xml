@@ -72,29 +72,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp">
         <Button
-            android:id="@+id/left_button"
-            android:drawableLeft="@drawable/ic_baseline_arrow_back_24"
+            android:id="@+id/skip_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="18dp"
             android:layout_marginRight="60dp"
-            android:text="prev"
+            android:text="skip"
             android:layout_gravity="left"
             />
 
         <Button
-            android:id="@+id/right_button"
-            android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
+            android:id="@+id/confirm_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="18dp"
             android:layout_marginLeft="60dp"
-            android:text="next"
+            android:text="confirm"
             />
     </LinearLayout>
-
+<!--
     <Button
         android:id="@+id/submit_button"
         android:layout_width="wrap_content"
@@ -103,6 +102,6 @@
         android:layout_gravity="center"
         android:text="Go!"
         android:layout_marginTop="25dp"
-        />
+        /> -->
 
 </LinearLayout>

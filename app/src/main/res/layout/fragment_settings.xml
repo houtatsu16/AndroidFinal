@@ -128,7 +128,7 @@
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="160dp"
+            android:layout_marginRight="150dp"
             android:visibility="invisible"
             />
 
