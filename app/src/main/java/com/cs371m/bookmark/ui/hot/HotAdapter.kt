@@ -75,7 +75,6 @@ class HotAdapter(private val viewModel: MainViewModel)
             }
             else -> {
                 hotPostBinding.hotPostAuthor.text = "by " + item.author[0] +", " +  item.author[1] + "..."
-
             }
         }
 

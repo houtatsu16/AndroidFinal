@@ -67,11 +67,29 @@ class searchResultAdapter(private val viewModel: MainViewModel)
 
             searchPostBinding.searchPostTitle.text = item.title
 
+            when (item.author_name.size) {
+                0 -> {
+                    searchPostBinding.searchPostAuthor.text = "by N/A"
+                }
+                1 -> {
+                    searchPostBinding.searchPostAuthor.text = "by " + item.author_name[0]
+                }
+                2 -> {
+                    searchPostBinding.searchPostAuthor.text = "by " + item.author_name[0] +", " +  item.author_name[1]
+                }
+                else -> {
+                    searchPostBinding.searchPostAuthor.text = "by " + item.author_name[0] +", " +  item.author_name[1] + "..."
+                }
+            }
+
+            /*
             if (item.author_name != null) {
                 searchPostBinding.searchPostAuthor.text = "by " + item.author_name[0]
             } else {
                 searchPostBinding.searchPostAuthor.text = "by N/A"
             }
+
+             */
 
 
             searchPostBinding.searchPostTitle.setOnClickListener {
