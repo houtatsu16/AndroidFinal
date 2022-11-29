@@ -62,10 +62,26 @@ class HotAdapter(private val viewModel: MainViewModel)
         val hotPostBinding = holder.hotPostBinding
 
         hotPostBinding.hotPostTitle.text = item.title
-        hotPostBinding.hotPostAuthor.text = "by " + item.author
+
+        when (item.author.size) {
+            0 -> {
+                hotPostBinding.hotPostAuthor.text = "by N/A"
+            }
+            1 -> {
+                hotPostBinding.hotPostAuthor.text = "by " + item.author[0]
+            }
+            2 -> {
+                hotPostBinding.hotPostAuthor.text = "by " + item.author[0] +", " +  item.author[1]
+            }
+            else -> {
+                hotPostBinding.hotPostAuthor.text = "by " + item.author[0] +", " +  item.author[1] + "..."
+
+            }
+        }
+
         hotPostBinding.hotPostRatingBar.rating = item.averageRate.toFloat()
         hotPostBinding.hotPostFavNum.text = item.likes.toString()
-        hotPostBinding.hotPostAverageRating.text = item.averageRate.toFloat().toString()
+        hotPostBinding.hotPostAverageRating.text = (Math.round(item.averageRate * 100.0) / 100.0).toString()
 
         var url = viewModel.coverImageUrl(item.ISBN, "M")
 

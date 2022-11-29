@@ -82,10 +82,25 @@ class OnePost : AppCompatActivity() {
             Log.d("onBindViewHolder", "model: $it")
             if (it.title != "" && it.ISBN != "") {
                 onePostBinding.onePostTitle.text = it.title
-                onePostBinding.onePostAuthor.text = "by " + it.author
+                // onePostBinding.onePostAuthor.text = "by " + it.author
+                when (it.author.size) {
+                    0 -> {
+                        onePostBinding.onePostAuthor.text = "by N/A"
+                    }
+                    1 -> {
+                        onePostBinding.onePostAuthor.text = "by " + it.author[0]
+                    }
+                    2 -> {
+                        onePostBinding.onePostAuthor.text = "by " + it.author[0] +", " +  it.author[1]
+                    }
+                    else -> {
+                        onePostBinding.onePostAuthor.text = "by " + it.author[0] +", " +  it.author[1] + "..."
+
+                    }
+                }
                 onePostBinding.onePostRatingBar.rating = it.averageRate.toFloat()
                 onePostBinding.onePostFavNum.text = it.likes.toString()
-                onePostBinding.onePostAverageRating.text = it.averageRate.toFloat().toString()
+                onePostBinding.onePostAverageRating.text = (Math.round(it.averageRate * 100.0) / 100.0).toString()
                 /*
                 val urlString = "https://covers.openlibrary.org/b/ISBN/" + onePostISBN + "-L.jpg"
                 Glide.glideFetch(urlString, onePostBinding.onePostSelfImage, 180)

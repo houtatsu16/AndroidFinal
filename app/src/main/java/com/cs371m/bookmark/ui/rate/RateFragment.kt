@@ -67,7 +67,23 @@ class RateFragment : Fragment() {
         viewModel.observeCurrentBook().observe(viewLifecycleOwner) {
             Log.d("rate", "title: ${it.title}")
             binding.rateTitle.text = it.title
-            binding.rateAuthor.text = "by " + it.author
+
+            when (it.author.size) {
+                0 -> {
+                    binding.rateAuthor.text = "by N/A"
+                }
+                1 -> {
+                    binding.rateAuthor.text = "by " + it.author[0]
+                }
+                2 -> {
+                    binding.rateAuthor.text = "by " + it.author[0] +", " +  it.author[1]
+                }
+                else -> {
+                    binding.rateAuthor.text = "by " + it.author[0] +", " +  it.author[1] + "..."
+                }
+            }
+
+            // binding.rateAuthor.text = "by " + it.author
             // binding.rateRatingBar.rating = it.averageRate.toFloat()
             var url = viewModel.coverImageUrl(it.ISBN, "M")
             Glide.glideFetchbyHeight(url, binding.rateSelfImage, 250)
