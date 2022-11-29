@@ -47,15 +47,18 @@ class CollectionFragment : Fragment() {
         rv.layoutManager = manager
         // binding.swipeRefreshLayout.isEnabled = false
         val user = viewModel.getCurrentUser("haha")
+        viewModel.getCurrentLikes("haha")
 
 
-
+        /*
         viewModel.observeCurrentUser().observe(viewLifecycleOwner) {
             if (it.likes.isNotEmpty()) {
                 adapter.submitList(it.likes)
                 adapter.notifyDataSetChanged()
             }
         }
+
+         */
 
         viewModel.observeMediatorLike().observe(viewLifecycleOwner) {
                 adapter.submitList(it)

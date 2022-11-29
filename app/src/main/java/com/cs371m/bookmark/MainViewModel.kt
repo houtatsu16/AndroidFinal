@@ -26,7 +26,7 @@ class MainViewModel : ViewModel() {
     private var repo = Repository(api)
 
     private var searchBookResult = MutableLiveData<SearchResult>()
-    private var likes = MutableLiveData<List<String>>()
+    private var likesResult = MutableLiveData<List<String>>()
 
     private var bookDetails = MutableLiveData<Map<String, Book>>()
     private var favoriteContent =
@@ -50,10 +50,9 @@ class MainViewModel : ViewModel() {
     private val randomBookIndex = MutableLiveData(0)
 
     val mediatorLike = MediatorLiveData<List<String>>().apply {
-        addSource(likes) {
-            value = currentUser().likes
+        addSource(currentUser) {
+            value = currentUser.value?.likes
         }
-        value = likes.value
     }
 
     init {
@@ -170,15 +169,22 @@ class MainViewModel : ViewModel() {
         return currentBook
     }
 
-    fun getBookForTitle(isbn: String): String {
-        dbHelp.fetchBook(isbn, bookForTitle)
-        return bookForTitle.value?.title ?: "0"
-    }
 
 
     fun getCurrentUser(user: String): MutableLiveData<UserModel> {
         dbHelp.fetchUser(user, currentUser)
         return currentUser
+    }
+
+    fun getCurrentLikes(user: String): List<String> {
+        dbHelp.fetchUser(user, currentUser)
+        return currentUser?.value?.likes?: mutableListOf()
+    }
+
+
+    fun getBookForTitle(isbn: String): String {
+        dbHelp.fetchBook(isbn, bookForTitle)
+        return bookForTitle.value?.title ?: "0"
     }
 
     fun refreshCurrentBook() {
@@ -200,9 +206,10 @@ class MainViewModel : ViewModel() {
     }
 
     fun observeMediatorLike(): MutableLiveData<List<String>> {
-        Log.d("MainVM", "currentUser: ${mediatorLike.value}")
+        Log.d("MainVM", "mediatorlike: ${mediatorLike.value}")
         return mediatorLike
     }
+
 
     fun currentUser(): UserModel{
         return currentUser.value!!
