@@ -13,6 +13,10 @@ import com.cs371m.bookmark.R
 import com.cs371m.bookmark.databinding.HotPostBinding
 import com.cs371m.bookmark.glide.Glide
 import com.cs371m.bookmark.model.BookModel
+import com.cs371m.bookmark.ui.onePost.OnePost.Companion.postAuthor
+import com.cs371m.bookmark.ui.onePost.OnePost.Companion.postISBN
+import com.cs371m.bookmark.ui.onePost.OnePost.Companion.postTitle
+import kotlin.math.roundToInt
 
 // https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter
 // Slick adapter that provides submitList, so you don't worry about how to update
@@ -24,91 +28,38 @@ import com.cs371m.bookmark.model.BookModel
 // You can call adapterPosition to get the index of the selected item
 class HotAdapter(private val viewModel: MainViewModel)
     : ListAdapter<BookModel, HotAdapter.VH>(BookDiff()) {
-    companion object {
-        const val hotTitle = "title"
-        const val hotAuthor = "author"
-        const val hotImageURL = "imageURL"
-        const val hotStars = "stars"
-        const val hotLikes = "likes"
-        const val hotComment = "comment"
-        const val isbn = "isbn"
-    }
 
     inner class VH(val hotPostBinding: HotPostBinding) : RecyclerView.ViewHolder(hotPostBinding.root) {
         init {
-//            hotPostBinding.hotPostRowFav.setOnClickListener {
-//                val position = adapterPosition
-//                if (viewModel.isFav(getItem(position))) {
-//                    viewModel.removeFav(getItem(position))
-//                } else {
-//                    viewModel.addFav(getItem(position))
-//                }
-//                notifyItemChanged(position)
-//            }
+
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        Log.d("hotAdapter", "doing")
-
         val hotPostBinding = HotPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return VH(hotPostBinding)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        Log.d("hotAdapter", "done")
         val item = currentList[holder.adapterPosition]
-        Log.d("hotAdapter", "item: ${item}")
         val hotPostBinding = holder.hotPostBinding
-
         hotPostBinding.hotPostTitle.text = item.title
-
-        when (item.author.size) {
-            0 -> {
-                hotPostBinding.hotPostAuthor.text = "by N/A"
-            }
-            1 -> {
-                hotPostBinding.hotPostAuthor.text = "by " + item.author[0]
-            }
-            2 -> {
-                hotPostBinding.hotPostAuthor.text = "by " + item.author[0] +", " +  item.author[1]
-            }
-            else -> {
-                hotPostBinding.hotPostAuthor.text = "by " + item.author[0] +", " +  item.author[1] + "..."
-            }
-        }
-
+        hotPostBinding.hotPostAuthor.text = viewModel.formatAuthorList(item.author)
         hotPostBinding.hotPostRatingBar.rating = item.averageRate.toFloat()
         hotPostBinding.hotPostFavNum.text = item.likes.toString()
-        hotPostBinding.hotPostAverageRating.text = (Math.round(item.averageRate * 100.0) / 100.0).toString()
+        hotPostBinding.hotPostAverageRating.text = ((item.averageRate * 100.0).roundToInt() / 100.0).toString()
 
         var url = viewModel.coverImageUrl(item.ISBN, "M")
 
-        Log.d("onBindViewHolder", url)
         Glide.glideFetch(url, hotPostBinding.hotPostThumbnail,90)
-
-        /* if(viewModel.isFav(item)) {
-            rowPostBinding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
-        } else {
-            rowPostBinding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-        } */
-
-//        if(viewModel.isFav(item)) {
-//            hotPostBinding.hotPostRowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
-//        } else {
-//            hotPostBinding.hotPostRowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-//        }
         hotPostBinding.hotPostRowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
-
-        Log.d("onBind", "onbindview.......")
 
         hotPostBinding.hotPostTitle.setOnClickListener {
             val intent = Intent(holder.itemView.context, OnePost::class.java)
             intent.apply {
-                putExtra(isbn, item.ISBN)
-                // putExtra(hotStars, item.averageRate)
-                 putExtra(hotTitle, item.title)
-                 putStringArrayListExtra(hotAuthor, ArrayList(item.author))
+                putExtra(postISBN, item.ISBN)
+                putExtra(postTitle, item.title)
+                putStringArrayListExtra(postAuthor, ArrayList(item.author))
             }
 
             holder.itemView.context.startActivity(intent)
@@ -120,7 +71,7 @@ class HotAdapter(private val viewModel: MainViewModel)
             return oldItem.title == newItem.title
         }
         override fun areContentsTheSame(oldItem: BookModel, newItem: BookModel): Boolean {
-            return oldItem.author == newItem.author
+            return oldItem.averageRate == newItem.averageRate && oldItem.likes == newItem.likes
         }
     }
 }

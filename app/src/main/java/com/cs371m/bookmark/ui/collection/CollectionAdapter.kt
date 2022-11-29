@@ -4,6 +4,7 @@ import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,8 @@ import com.cs371m.bookmark.databinding.CollectionPostBinding
 import com.cs371m.bookmark.glide.Glide
 import com.cs371m.bookmark.model.BookModel
 import com.cs371m.bookmark.ui.hot.HotAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 // https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter
 // Slick adapter that provides submitList, so you don't worry about how to update
@@ -24,15 +27,6 @@ import com.cs371m.bookmark.ui.hot.HotAdapter
 // You can call adapterPosition to get the index of the selected item
 class CollectionAdapter(private val viewModel: MainViewModel)
     : ListAdapter<String, CollectionAdapter.VH>(BookDiff()) {
-    companion object {
-        const val hotTitle = "title"
-        const val hotAuthor = "author"
-        const val hotImageURL = "imageURL"
-        const val hotStars = "stars"
-        const val hotLikes = "likes"
-        const val isbn = "isbn"
-    }
-
     inner class VH(val collectionPostBinding: CollectionPostBinding) : RecyclerView.ViewHolder(collectionPostBinding.root) {
         init {
 
@@ -40,49 +34,33 @@ class CollectionAdapter(private val viewModel: MainViewModel)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        Log.d("collectionAdapter", "doing")
-
         val collectionPostBinding = CollectionPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return VH(collectionPostBinding)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        Log.d("collectionAdapter", "done")
         val item = currentList[holder.adapterPosition]
-        Log.d("collectionAdapter", "item: ${item}")
         val collectionPostBinding = holder.collectionPostBinding
-
-        // Caution
-        // val currentBookInfo = viewModel.getCurrentBook(item)
-        // Log.d("collectionAdapter", "info: ${currentBookInfo.value}")
-
-
-        // collectionPostBinding.favTitle.text = currentBookInfo.value!!.title
 
         var url = viewModel.coverImageUrl(item, "L")
 
-        Log.d("onBindViewHolder", url)
         Glide.glideFetch(url, collectionPostBinding.favImg, 170)
+        viewModel.getBookUnsafe(item).addOnSuccessListener { it ->
+            if (it.exists()) {
+                val book = it.toObject(BookModel::class.java)!!
+                collectionPostBinding.favTitle.text = book.title
 
+                collectionPostBinding.favTitle.setOnClickListener {
+                    val intent = Intent(holder.itemView.context, OnePost::class.java)
+                    intent.apply {
+                        putExtra(OnePost.postISBN, book.ISBN)
+                        putExtra(OnePost.postTitle, book.title)
+                        putStringArrayListExtra(OnePost.postAuthor, ArrayList(book.author))
+                    }
 
-        /* if(viewModel.isFav(item)) {
-            rowPostBinding.rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
-        } else {
-            rowPostBinding.rowFav.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-        } */
-
-
-        Log.d("onBind", "onbindview.......")
-
-        collectionPostBinding.favTitle.setOnClickListener {
-            val intent = Intent(holder.itemView.context, OnePost::class.java)
-            intent.apply {
-                putExtra(isbn, item)
-                // putExtra(hotTitle, item.title)
-                // putStringArrayListExtra(hotAuthor, ArrayList(item.author))
+                    holder.itemView.context.startActivity(intent)
+                }
             }
-
-            holder.itemView.context.startActivity(intent)
         }
 
         collectionPostBinding.favButton.setOnClickListener {

@@ -22,14 +22,9 @@ interface OpenLibraryApi {
     // https://openlibrary.org/dev/docs/api/books
     @GET("/api/books?format=json&jscmd=details")
     suspend fun getBook(@Query("bibkeys") bibkeys: String) : Map<String, Book>
-    // XXX Write me: The return type
 
     @GET("/search.json?limit=100")
     suspend fun searchBookByTitle(@Query("title") title: String) : SearchResult
-
-
-    // I just looked at the response and "parsed" it by eye
-//    data class getBookResponse(val results: Map<String, Book>)
 
     companion object {
         // Leave this as a simple, base URL.  That way, we can have many different

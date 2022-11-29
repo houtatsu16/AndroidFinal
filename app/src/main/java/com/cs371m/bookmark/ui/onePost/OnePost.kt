@@ -1,5 +1,6 @@
 package com.cs371m.bookmark.ui.onePost
 
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,18 +17,16 @@ import com.cs371m.bookmark.glide.Glide
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 class OnePost : AppCompatActivity() {
     companion object {
         const val postTitle = "title"
-        const val postSelfText = "selfText"
-        const val postImageURL = "imageURL"
         const val postAuthor = "author"
-        const val postFavNum = "favNum"
-        const val postStars = "stars"
         const val postISBN = "isbn"
     }
     private val viewModel: MainViewModel by viewModels()
+    private var liked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +43,8 @@ class OnePost : AppCompatActivity() {
         val onePostISBN = bundle!!.getString(postISBN, "")
         val onePostTitle = bundle!!.getString(postTitle, "")
         val onePostAuthor = bundle!!.getStringArrayList(postAuthor)
-        Log.d("onBindViewHolder", "onePostisbn: ${onePostISBN}")
 
-//        viewModel.checkBook(onePostISBN,List(onePostAuthor),onePostTitle)
+        viewModel.checkBook(onePostISBN,onePostAuthor!!,onePostTitle)
         viewModel.getCurrentBook(onePostISBN)
 
         val adapter = CommentAdapter(viewModel)
@@ -58,66 +56,24 @@ class OnePost : AppCompatActivity() {
             rv.context, LinearLayoutManager.VERTICAL )
         rv.addItemDecoration(dividerItemDecoration)
 
-        /*
-        onePostBinding.onePostTitle.text = it.title
-        onePostBinding.onePostAuthor.text = it.author
-        onePostBinding.onePostRatingBar.rating = it.averageRate.toFloat()
-        onePostBinding.onePostFavNum.text = it.likes.toString()
-        Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", onePostBinding.onePostSelfImage)
-        val book = viewModel.getDetails("9780980200447").value
-        if (book != null) {
-            Log.d("details", "value: ${book}")
-            Log.d("details", "value1: ${book.values.toMutableList()[0].details.description}")
-            onePostBinding.onePostSelfText.text = book.values.toMutableList()[0].details.description
-        } else {
-            onePostBinding.onePostSelfText.text = "N/A"
-        }
-        // onePostBinding.onePostSelfText.text = viewModel.getDetails("9780980200447").value!!.get("detail").toString()
-        adapter.submitList(it.comment)
-        adapter.notifyDataSetChanged()
-        */
-
 
         viewModel.observeCurrentBook().observe(this) {
-            Log.d("onBindViewHolder", "model: $it")
             if (it.title != "" && it.ISBN != "") {
                 onePostBinding.onePostTitle.text = it.title
-                // onePostBinding.onePostAuthor.text = "by " + it.author
-                when (it.author.size) {
-                    0 -> {
-                        onePostBinding.onePostAuthor.text = "by N/A"
-                    }
-                    1 -> {
-                        onePostBinding.onePostAuthor.text = "by " + it.author[0]
-                    }
-                    2 -> {
-                        onePostBinding.onePostAuthor.text = "by " + it.author[0] +", " +  it.author[1]
-                    }
-                    else -> {
-                        onePostBinding.onePostAuthor.text = "by " + it.author[0] +", " +  it.author[1] + "..."
-
-                    }
-                }
+                onePostBinding.onePostAuthor.text = viewModel.formatAuthorList(it.author)
                 onePostBinding.onePostRatingBar.rating = it.averageRate.toFloat()
                 onePostBinding.onePostFavNum.text = it.likes.toString()
-                onePostBinding.onePostAverageRating.text = (Math.round(it.averageRate * 100.0) / 100.0).toString()
+                onePostBinding.onePostAverageRating.text = ((it.averageRate * 100.0).roundToInt() / 100.0).toString()
                 /*
                 val urlString = "https://covers.openlibrary.org/b/ISBN/" + onePostISBN + "-L.jpg"
                 Glide.glideFetch(urlString, onePostBinding.onePostSelfImage, 180)
                 val book = viewModel.getDetails(onePostISBN).value
                 */
                 var url = viewModel.coverImageUrl(it.ISBN, "M")
-                Log.d("onBindViewHolder", "isbn: ${it.ISBN}")
-
-                Log.d("onBindViewHolder", url)
                 Glide.glideFetch(url, onePostBinding.onePostSelfImage, 120)
-
-//            Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-L.jpg", onePostBinding.onePostSelfImage, 180)
                 val book = viewModel.getDetails(it.ISBN).value
-                Log.d("details", "value: ${book}")
                 if (book != null) {
                     val description = book.values.toMutableList()[0].details.description
-                    Log.d("details", "value1: $description")
                     if (description != null) {
                         onePostBinding.onePostSelfText.text = description
                     } else {
@@ -126,30 +82,37 @@ class OnePost : AppCompatActivity() {
                 } else {
                     onePostBinding.onePostSelfText.text = "N/A"
                 }
-                // onePostBinding.onePostSelfText.text = viewModel.getDetails("9780980200447").value!!.get("detail").toString()
                 adapter.submitList(it.comment)
                 adapter.notifyDataSetChanged()
             }
 
         }
 
+        viewModel.observeCurrentUser().observe(this){
+            Log.d("onePostOnBindViewHolder", "model: $it")
+            val user = it
+            liked = user.likes.contains(onePostISBN)
 
+            val likeButton = onePostBinding.onePostLikeButton
 
+            if(liked){
+                val img: Drawable = likeButton.context.resources.getDrawable(R.drawable.ic_favorite_black_24dp)
+                likeButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null)
+            }else{
+                val img: Drawable = likeButton.context.resources.getDrawable(R.drawable.ic_favorite_border_black_24dp)
+                likeButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null)
+            }
 
+            val rateMap = user.rate.associate { Pair(it.ISBN,it.value) }
 
+            Log.d("rateMap", rateMap.toString())
+            if(rateMap.containsKey(onePostISBN)){
+                onePostBinding.onePostRatingBarUser.rating = rateMap.get(onePostISBN)!!.toFloat()
+            }else{
+                onePostBinding.onePostRatingBarUser.rating = 0F
+            }
+        }
 
-        // onePostBinding.onePostSelfText.text = bundle!!.getString(postSelfText)
-        // onePostBinding.onePostAuthor.text = bundle.getString(postAuthor)
-
-        // val onePostImageURL = bundle!!.getString(postImageURL)
-
-        // Gilde
-        /* if (onePostImageURL != null && onePostThumbURL != null) {
-            Glide.glideFetch(onePostImageURL, onePostThumbURL, onePostBinding.onePostSelfImage)
-        } */
-
-        // Write comments
-        // onePostBinding.actionComment.requestFocus()
 
         onePostBinding.onePostCreate.setOnClickListener {
             val stringInput = onePostBinding.actionComment.text.toString()
@@ -160,15 +123,43 @@ class OnePost : AppCompatActivity() {
             } else {
                 viewModel.addUserComment(stringInput)
                 onePostBinding.actionComment.text.clear()
+                viewModel.refreshCurrentUser()
                 viewModel.refreshCurrentBook()
             }
         }
 
         onePostBinding.onePostLikeButton.setOnClickListener {
+            liked = !liked
+            val likeButton = onePostBinding.onePostLikeButton
 
+            if(liked){
+                val img: Drawable = likeButton.context.resources.getDrawable(R.drawable.ic_favorite_black_24dp)
+                likeButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null)
+            }else{
+                val img: Drawable = likeButton.context.resources.getDrawable(R.drawable.ic_favorite_border_black_24dp)
+                likeButton.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null)
+            }
+
+            val user = viewModel.currentUser()
+            val book = viewModel.currentBook()
+            val previousLike = user.likes.contains(book.ISBN)
+            if(previousLike != liked){
+                viewModel.updateLike(book.ISBN, liked)
+            }
+
+            viewModel.refreshCurrentUser()
+            viewModel.refreshCurrentBook()
         }
 
+        onePostBinding.onePostRateButton.setOnClickListener {
+            val book = viewModel.currentBook()
+            if(onePostBinding.onePostRatingBarUser.rating != 0F){
+                viewModel.updateRate(book, onePostBinding.onePostRatingBarUser.rating.toDouble())
+            }
 
+            viewModel.refreshCurrentUser()
+            viewModel.refreshCurrentBook()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -178,6 +169,4 @@ class OnePost : AppCompatActivity() {
             true
         } else super.onOptionsItemSelected(item)
     }
-
-
 }

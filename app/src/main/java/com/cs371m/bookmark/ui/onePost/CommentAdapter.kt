@@ -30,16 +30,6 @@ import java.util.*
 // You can call adapterPosition to get the index of the selected item
 class CommentAdapter(private val viewModel: MainViewModel)
     : ListAdapter<BookCommentModel, CommentAdapter.VH>(CommentDiff()) {
-    companion object {
-        const val hotTitle = "title"
-        const val hotAuthor = "author"
-        const val hotImageURL = "imageURL"
-        const val hotStars = "stars"
-        const val hotLikes = "likes"
-        const val hotComment = "comment"
-        const val isbn = "isbn"
-    }
-
     inner class VH(val commentPostBinding: CommentPostBinding) : RecyclerView.ViewHolder(commentPostBinding.root) {
         init {
 
@@ -47,15 +37,12 @@ class CommentAdapter(private val viewModel: MainViewModel)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        Log.d("commentAdapter", "doing")
-
         val commentPostBinding = CommentPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return VH(commentPostBinding)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = currentList[holder.adapterPosition]
-        Log.d("commentAdapter", "item: ${item}")
         val commentPostBinding = holder.commentPostBinding
 
         commentPostBinding.commentContent.text = item.content

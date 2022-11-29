@@ -11,64 +11,40 @@ import com.cs371m.bookmark.api.OpenLibraryApi
 import com.cs371m.bookmark.api.SearchResult
 import com.cs371m.bookmark.model.BookModel
 import com.cs371m.bookmark.model.UserModel
+import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.HttpUrl
 
 class MainViewModel : ViewModel() {
-
-    private var isbn = "9780980200447"
-
-    private var searchTitle = "abc"
-
     private var api = OpenLibraryApi.create()
     private var repo = Repository(api)
 
     private var searchBookResult = MutableLiveData<SearchResult>()
-    private var likesResult = MutableLiveData<List<String>>()
-
     private var bookDetails = MutableLiveData<Map<String, Book>>()
-    private var favoriteContent =
-        MutableLiveData<List<BookModel>>().apply { value = mutableListOf() }
-
-
-
     private val dbHelp = DBHelper()
-
     private val bookForTitle = MutableLiveData<BookModel>()
     private val currentBook = MutableLiveData<BookModel>()
-
     private val currentUser = MutableLiveData<UserModel>()
-
     private val topBooks = MutableLiveData<List<BookModel>>()
-
     val topBooksReady = MutableLiveData(false)
 
-    private val randomBooks = MutableLiveData<List<BookModel>>()
-
-    private val randomBookIndex = MutableLiveData(0)
-
-    val mediatorLike = MediatorLiveData<List<String>>().apply {
-        addSource(currentUser) {
-            value = currentUser.value?.likes
-        }
-    }
+    private val ratingBook = MutableLiveData<BookModel>()
+    private val userId = "haha"
 
     init {
         // XXX one-liner to kick off the app
+        checkUser(userId)
         netRefresh()
-
-
 
     }
 
 
-    // From https://openlibrary.org/dev/docs/api/covers
+
+// From https://openlibrary.org/dev/docs/api/covers
 //    https://covers.openlibrary.org/b/$key/$value-$size.jpg
-//
-    // haha
-    //haha
 //    Where:
 //
 //    key can be any one of ISBN, OCLC, LCCN, OLID and ID (case-insensitive)
@@ -97,79 +73,27 @@ class MainViewModel : ViewModel() {
             context = viewModelScope.coroutineContext
                     + Dispatchers.IO
         ) {
-            // Update LiveData from IO dispatcher, use postValue
-//            Log.d("netRefresh", "haha")
-//            val books = repo.getBook(isbn)
-//            books.forEach{
-//                Log.d("netRefresh", it.key.toString())
-//                Log.d("netRefresh", it.value.toString())
-//            }
-//
-//            Log.d("netRefresh", coverImageUrl(isbn, "M"))
-//            Log.d("netRefresh", repo.searchBookByTitle(searchTitle).toString())
-
-//            dbHelp.fetchBook("dzx8yqfsIR2aRw1PBBuZ",currentBook)
-//            dbHelp.fetchTopBooks(topBooks,5,"averageRate")
-//            dbHelp.fetchTopBooks(topBooks,5,"likes")
-//            dbHelp.checkUser("haha")
-//            dbHelp.checkBook("isbn1235", "jun","a good book.")
-//            dbHelp.fetchUser("uItYS3uQ3gPvDYSdxncb",currentUser)
-//            dbHelp.updateUserDisPlayName("haha","new_name")
-//            dbHelp.addUserComment("haha", "isbn1235","this is a comment", Timestamp.now())
-//            dbHelp.likeBook("haha", "isbn1235")
-//            dbHelp.unlikeBook("haha", "isbn1235")
-//            dbHelp.updateRate("haha", "isbn1235",5.0,5.0,1,5.0)
-
-
-//            dbHelp.fetchTopBooks(randomBooks, 5, "averageRate")
-
             updateTopBooks()
-
+            refreshCurrentUser()
         }
     }
 
-
     fun observeTopBooks(): MutableLiveData<List<BookModel>> {
-        Log.d("MainVM", "topBooks: ${topBooks.value}")
         return topBooks
     }
 
-    fun observeRandomBooks(): MutableLiveData<List<BookModel>> {
-        Log.d("MainVM", "randomBooks: ${randomBooks.value}")
-        return randomBooks
+    fun observeRatingBook(): MutableLiveData<BookModel> {
+        return ratingBook
     }
 
-    fun addFav(post: BookModel) {
-        val lst = favoriteContent.value?.toMutableList()
-        lst?.let {
-            it.add(post)
-            favoriteContent.value = it
-        }
-
-    }
-
-    fun isFav(post: BookModel): Boolean {
-        return favoriteContent.value?.contains(post) ?: false
-    }
-
-    fun removeFav(post: BookModel) {
-        val lst = favoriteContent.value?.toMutableList()
-        lst?.let {
-            it.remove(post)
-            favoriteContent.value = it
-        }
-    }
-
-    fun observeFavorite(): LiveData<List<BookModel>> {
-        return favoriteContent
+    fun setRatingBook(book: BookModel){
+        ratingBook.postValue(book)
     }
 
     fun getCurrentBook(isbn: String): MutableLiveData<BookModel> {
         dbHelp.fetchBook(isbn, currentBook)
         return currentBook
     }
-
-
 
     fun getCurrentUser(user: String): MutableLiveData<UserModel> {
         dbHelp.fetchUser(user, currentUser)
@@ -184,12 +108,7 @@ class MainViewModel : ViewModel() {
 
     fun getBookForTitle(isbn: String): String {
         dbHelp.fetchBook(isbn, bookForTitle)
-        // Log.d("MainVM", "bookForTitle: ${bookForTitle.value}")
         return bookForTitle.value?.title ?: "0"
-    }
-
-    fun refreshBookForTitle() {
-        dbHelp.fetchBook(bookForTitle.value!!.ISBN, bookForTitle)
     }
 
     fun refreshCurrentBook() {
@@ -197,24 +116,18 @@ class MainViewModel : ViewModel() {
     }
 
     fun refreshCurrentUser() {
-        dbHelp.fetchUser("haha", currentUser)
+        dbHelp.fetchUser(userId, currentUser)
     }
 
     fun observeCurrentBook(): MutableLiveData<BookModel> {
-        Log.d("MainVM", "currentBook: ${currentBook.value}")
+        Log.d("observeCurrentBook", "currentBook: ${currentBook.value}")
         return currentBook
     }
 
     fun observeCurrentUser(): MutableLiveData<UserModel> {
-        Log.d("MainVM", "currentUser: ${currentUser.value}")
+        Log.d("observeCurrentUser", "currentUser: ${currentUser.value}")
         return currentUser
     }
-
-    fun observeMediatorLike(): MutableLiveData<List<String>> {
-        Log.d("MainVM", "mediatorlike: ${mediatorLike.value}")
-        return mediatorLike
-    }
-
 
     fun currentUser(): UserModel{
         return currentUser.value!!
@@ -222,6 +135,10 @@ class MainViewModel : ViewModel() {
 
     fun currentBook(): BookModel{
         return currentBook.value!!
+    }
+
+    fun ratingBook(): BookModel{
+        return ratingBook.value!!
     }
 
     fun getDetails(isbn: String): MutableLiveData<Map<String, Book>> {
@@ -232,6 +149,10 @@ class MainViewModel : ViewModel() {
             bookDetails.postValue(repo.getBook(isbn))
         }
         return bookDetails
+    }
+
+    fun getBookUnsafe(isbn: String): Task<DocumentSnapshot> {
+        return dbHelp.getBookUnsafe(isbn)
     }
 
     // Searching
@@ -259,17 +180,14 @@ class MainViewModel : ViewModel() {
     }
 
     fun addUserComment(content: String) {
-//        dbHelp.addUserComment(currentUser.value!!.displayName, currentBook.value!!.ISBN,content,
-//            Timestamp.now())
-
         dbHelp.addUserComment(
-            "haha", currentBook.value!!.ISBN, content,
+            userId, currentBook.value!!.ISBN, content,
             Timestamp.now()
         )
     }
 
     fun updateUserDisplayName(displayName: String) {
-        dbHelp.updateUserDisPlayName("haha", displayName)
+        dbHelp.updateUserDisPlayName(userId, displayName)
     }
 
     fun getTopBookList(): MutableLiveData<List<BookModel>> {
@@ -278,17 +196,32 @@ class MainViewModel : ViewModel() {
 
     fun updateLike(ISBN: String, like:Boolean){
         if(like){
-            dbHelp.likeBook("haha",ISBN)
+            dbHelp.likeBook(userId,ISBN)
         }else{
-            dbHelp.unlikeBook("haha",ISBN)
+            dbHelp.unlikeBook(userId,ISBN)
         }
     }
 
     fun updateRate(book: BookModel, rate: Double){
         var tr = book.totalRate
         var cnt = book.totalRateCount
+        dbHelp.updateRate(userId,book.ISBN,rate,tr+rate,cnt+1, (tr+rate) /(cnt+1))
+    }
 
-        dbHelp.updateRate("haha",book.ISBN,rate,tr+rate,cnt+1, (tr+rate) /(cnt+1) )
-
+    fun formatAuthorList(list: List<String>):String{
+        when (list.size) {
+            0 -> {
+                return "by N/A"
+            }
+            1 -> {
+                return "by " + list[0]
+            }
+            2 -> {
+                return "by " + list[0] +", " +  list[1]
+            }
+            else -> {
+                return "by " + list[0] +", " +  list[1] + "..."
+            }
+        }
     }
 }

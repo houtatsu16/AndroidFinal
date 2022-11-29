@@ -15,7 +15,7 @@ data class RateModel(
 
 data class UserModel (
     var displayName:String = "haha",
-    var likes:List<String> = ArrayList<String>(),
-    var comments: List<UserCommentModel> = ArrayList<UserCommentModel>(),
-    var rate: List<RateModel> = ArrayList<RateModel>(),
+    var likes:List<String> = ArrayList(),
+    var comments: List<UserCommentModel> = ArrayList(),
+    var rate: List<RateModel> = ArrayList(),
 )

@@ -34,18 +34,6 @@ import java.util.*
 // You can call adapterPosition to get the index of the selected item
 class searchResultAdapter(private val viewModel: MainViewModel)
     : ListAdapter<Doc, searchResultAdapter.VH>(CommentDiff()) {
-    companion object {
-        const val hotTitle = "title"
-        const val hotAuthor = "author"
-        const val hotImageURL = "imageURL"
-        const val hotStars = "stars"
-        const val hotLikes = "likes"
-        const val hotComment = "comment"
-        const val isbn = "isbn"
-    }
-    private val dbHelp = DBHelper()
-
-
     inner class VH(val searchPostBinding: SearchPostBinding) : RecyclerView.ViewHolder(searchPostBinding.root) {
         init {
 
@@ -53,53 +41,23 @@ class searchResultAdapter(private val viewModel: MainViewModel)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        Log.d("searchPostAdapter", "doing")
-
         val searchPostBinding = SearchPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return VH(searchPostBinding)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = currentList[holder.adapterPosition]
-        Log.d("searchPostAdapter", "item: ${item}")
         if (item.isbn != null) {
             val searchPostBinding = holder.searchPostBinding
-
             searchPostBinding.searchPostTitle.text = item.title
-
-            when (item.author_name.size) {
-                0 -> {
-                    searchPostBinding.searchPostAuthor.text = "by N/A"
-                }
-                1 -> {
-                    searchPostBinding.searchPostAuthor.text = "by " + item.author_name[0]
-                }
-                2 -> {
-                    searchPostBinding.searchPostAuthor.text = "by " + item.author_name[0] +", " +  item.author_name[1]
-                }
-                else -> {
-                    searchPostBinding.searchPostAuthor.text = "by " + item.author_name[0] +", " +  item.author_name[1] + "..."
-                }
-            }
-
-            /*
-            if (item.author_name != null) {
-                searchPostBinding.searchPostAuthor.text = "by " + item.author_name[0]
-            } else {
-                searchPostBinding.searchPostAuthor.text = "by N/A"
-            }
-
-             */
-
-
+            searchPostBinding.searchPostAuthor.text = viewModel.formatAuthorList(item.author_name)
             searchPostBinding.searchPostTitle.setOnClickListener {
                 // dbHelp.checkBook(item.isbn[0], item.author_name[0], item.title)
                 val intent = Intent(holder.itemView.context, OnePost::class.java)
                 intent.apply {
-                    putExtra(isbn, item.isbn[0])
-                    putExtra(hotTitle, item.title)
-                    putExtra(hotAuthor, item.author_name[0])
-
+                    putExtra(OnePost.postISBN, item.isbn[0])
+                    putExtra(OnePost.postTitle, item.title)
+                    putStringArrayListExtra(OnePost.postAuthor, ArrayList(item.author_name))
                 }
 
                 holder.itemView.context.startActivity(intent)
@@ -107,12 +65,7 @@ class searchResultAdapter(private val viewModel: MainViewModel)
             searchPostBinding.searchPostIsbn.text = "ISBN: " + item.isbn[0]
             val urlStr = "https://covers.openlibrary.org/b/ISBN/" + item.isbn[0] + "-L.jpg"
             Glide.glideFetch(urlStr, searchPostBinding.searchPostThumbnail, 90)
-
         }
-
-
-
-        // Glide.glideFetch("https://covers.openlibrary.org/b/ISBN/9780980200447-M.jpg", searchPostBinding.searchPostThumbnail)
     }
 
     class CommentDiff : DiffUtil.ItemCallback<Doc>() {

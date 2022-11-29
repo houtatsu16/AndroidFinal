@@ -32,16 +32,6 @@ import java.util.*
 // You can call adapterPosition to get the index of the selected item
 class HistoryAdapter(private val viewModel: MainViewModel)
     : ListAdapter<UserCommentModel, HistoryAdapter.VH>(CommentDiff()) {
-    companion object {
-        const val hotTitle = "title"
-        const val hotAuthor = "author"
-        const val hotImageURL = "imageURL"
-        const val hotStars = "stars"
-        const val hotLikes = "likes"
-        const val hotComment = "comment"
-        const val isbn = "isbn"
-    }
-
     inner class VH(val historyBinding: CommentHistoryBinding) : RecyclerView.ViewHolder(historyBinding.root) {
         init {
 

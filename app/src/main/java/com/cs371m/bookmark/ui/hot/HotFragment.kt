@@ -28,14 +28,12 @@ class HotFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         (activity as AppCompatActivity).supportActionBar?.show()
-
         _binding = FragmentHotBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(javaClass.simpleName, "onViewCreated")
 
         val adapter = HotAdapter(viewModel)
         val rv = binding.recyclerView
@@ -46,11 +44,7 @@ class HotFragment : Fragment() {
             rv.context, LinearLayoutManager.VERTICAL )
         rv.addItemDecoration(dividerItemDecoration)
 
-
-
-
         viewModel.observeTopBooks().observe(viewLifecycleOwner) {
-            Log.d("hotFragment", "did!, ${it}")
             adapter.submitList(it)
             adapter.notifyDataSetChanged()
         }
@@ -64,8 +58,6 @@ class HotFragment : Fragment() {
         viewModel.topBooksReady.observe(viewLifecycleOwner){
             binding.HotSwipeRefreshLayout.isRefreshing = !it
         }
-
-
     }
 
     override fun onDestroyView() {

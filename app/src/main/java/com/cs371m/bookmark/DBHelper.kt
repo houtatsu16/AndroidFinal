@@ -1,13 +1,16 @@
 package com.cs371m.bookmark
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cs371m.bookmark.model.*
+import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import okhttp3.internal.wait
+import kotlinx.coroutines.tasks.await
 
 
 class DBHelper {
@@ -21,14 +24,17 @@ class DBHelper {
         db.collection(allBooksCollection).document(isbn).get().addOnSuccessListener {
                 document ->
             if (document.exists()) {
-                Log.d("checkBook3", "fetchBook data: $document")
+                Log.d("fetchBook", "fetchBook data: $document")
                 val book = document.toObject(BookModel::class.java)!!
                 model.postValue(book)
-                Log.d("bookModel", "model value: ${model.value}")
             }
         }.addOnFailureListener {
             Log.d("fetchBook", "fetchBook fetch FAILED ", it)
         }
+    }
+
+    fun getBookUnsafe(isbn: String): Task<DocumentSnapshot> {
+        return db.collection(allBooksCollection).document(isbn).get()
     }
 
     fun fetchTopBooks(models:MutableLiveData<List<BookModel>>, limit:Long, orderBy:String){
@@ -39,7 +45,7 @@ class DBHelper {
                     it.toObject(BookModel::class.java)
                 })
         }.addOnFailureListener {
-            Log.d("fetchBook", "fetchBook fetch FAILED ", it)
+            Log.d("fetchTopBooks", "fetchBook fetch FAILED ", it)
         }
     }
 
@@ -54,14 +60,13 @@ class DBHelper {
     }
 
     fun checkBook(ISBN:String, author:List<String>, title: String, model:MutableLiveData<BookModel>){
-        Log.d("checkBook1", ISBN)
         var doc = db.collection(allBooksCollection).document(ISBN)
         doc.get().addOnSuccessListener { document ->
             if (!document.exists()) {
                 val newBook = BookModel(author=author, ISBN = ISBN, title = title)
                 db.collection(allBooksCollection).document(ISBN)
                     .set(newBook).addOnSuccessListener {
-                        Log.d("checkBook2", ISBN + " done")
+                        Log.d("checkBook", ISBN + " done")
                     }
                 model.postValue(newBook)
             }
@@ -73,12 +78,12 @@ class DBHelper {
         db.collection(allUsersCollection).document(userId).get().addOnSuccessListener {
                 document ->
             if (document != null) {
-                Log.d("book1", "fetchUser data: ${document.toObject(UserModel::class.java)!!}")
+                Log.d("fetchUser", "fetchUser data: ${document.toObject(UserModel::class.java)!!}")
                 val book = document.toObject(UserModel::class.java)!!
                 model.postValue(book)
             }
         }.addOnFailureListener {
-            Log.d("fetchUser", "fetchBook fetch FAILED ", it)
+            Log.d("fetchUser", "fetchUser fetch FAILED ", it)
         }
     }
 
