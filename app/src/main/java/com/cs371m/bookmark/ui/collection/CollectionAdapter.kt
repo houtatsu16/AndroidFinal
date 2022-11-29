@@ -87,6 +87,7 @@ class CollectionAdapter(private val viewModel: MainViewModel)
 
         collectionPostBinding.favButton.setOnClickListener {
             viewModel.updateLike(item, false)
+            viewModel.refreshCurrentUser()
         }
     }
 

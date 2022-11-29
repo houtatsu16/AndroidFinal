@@ -184,7 +184,12 @@ class MainViewModel : ViewModel() {
 
     fun getBookForTitle(isbn: String): String {
         dbHelp.fetchBook(isbn, bookForTitle)
+        // Log.d("MainVM", "bookForTitle: ${bookForTitle.value}")
         return bookForTitle.value?.title ?: "0"
+    }
+
+    fun refreshBookForTitle() {
+        dbHelp.fetchBook(bookForTitle.value!!.ISBN, bookForTitle)
     }
 
     fun refreshCurrentBook() {

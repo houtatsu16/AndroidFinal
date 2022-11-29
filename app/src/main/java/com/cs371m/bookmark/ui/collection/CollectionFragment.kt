@@ -50,20 +50,20 @@ class CollectionFragment : Fragment() {
         viewModel.getCurrentLikes("haha")
 
 
-        /*
+
         viewModel.observeCurrentUser().observe(viewLifecycleOwner) {
-            if (it.likes.isNotEmpty()) {
-                adapter.submitList(it.likes)
-                adapter.notifyDataSetChanged()
-            }
+            adapter.submitList(it.likes)
+            adapter.notifyDataSetChanged()
         }
 
-         */
 
+        /*
         viewModel.observeMediatorLike().observe(viewLifecycleOwner) {
                 adapter.submitList(it)
                 adapter.notifyDataSetChanged()
             }
+
+         */
 
 
 

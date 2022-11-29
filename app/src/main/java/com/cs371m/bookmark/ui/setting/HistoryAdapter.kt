@@ -63,7 +63,10 @@ class HistoryAdapter(private val viewModel: MainViewModel)
         historyBinding.historyIsbn.text = "ISBN: " + item.ISBN
         historyBinding.historyContent.text = item.content
         historyBinding.historyTime.text = convertTimestamp(item.timestamp)
+
+        // TODO: display title
         historyBinding.historyTitle.text = viewModel.getBookForTitle(item.ISBN)
+
     }
 
     fun convertTimestamp(time: com.google.firebase.Timestamp): String {
