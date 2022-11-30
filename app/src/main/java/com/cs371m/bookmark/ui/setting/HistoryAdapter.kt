@@ -55,7 +55,24 @@ class HistoryAdapter(private val viewModel: MainViewModel)
         historyBinding.historyTime.text = convertTimestamp(item.timestamp)
 
         // TODO: display title
-        historyBinding.historyTitle.text = viewModel.getBookForTitle(item.ISBN)
+        // historyBinding.historyTitle.text = viewModel.getBookForTitle(item.ISBN)
+        viewModel.getBookUnsafe(item.ISBN).addOnSuccessListener { it ->
+            if (it.exists()) {
+                val book = it.toObject(BookModel::class.java)!!
+                historyBinding.historyTitle.text = book.title
+
+                historyBinding.historyTitle.setOnClickListener {
+                    val intent = Intent(holder.itemView.context, OnePost::class.java)
+                    intent.apply {
+                        putExtra(OnePost.postISBN, book.ISBN)
+                        putExtra(OnePost.postTitle, book.title)
+                        putStringArrayListExtra(OnePost.postAuthor, ArrayList(book.author))
+                    }
+
+                    holder.itemView.context.startActivity(intent)
+                }
+            }
+        }
 
     }
 

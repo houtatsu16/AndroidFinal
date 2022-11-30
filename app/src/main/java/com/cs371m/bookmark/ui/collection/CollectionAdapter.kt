@@ -44,7 +44,7 @@ class CollectionAdapter(private val viewModel: MainViewModel)
 
         var url = viewModel.coverImageUrl(item, "L")
 
-        Glide.glideFetch(url, collectionPostBinding.favImg, 170)
+        Glide.glideFetch(url, collectionPostBinding.favImg, 190)
         viewModel.getBookUnsafe(item).addOnSuccessListener { it ->
             if (it.exists()) {
                 val book = it.toObject(BookModel::class.java)!!
