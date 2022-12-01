@@ -16,6 +16,7 @@ import com.cs371m.bookmark.databinding.OnePostBinding
 import com.cs371m.bookmark.glide.Glide
 import com.cs371m.bookmark.model.BookCommentModel
 import com.cs371m.bookmark.model.BookModel
+import com.cs371m.bookmark.model.UserModel
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
@@ -47,7 +48,15 @@ class CommentAdapter(private val viewModel: MainViewModel)
 
         commentPostBinding.commentContent.text = item.content
         commentPostBinding.commentTime.text = convertTimestamp(item.timestamp)
-        commentPostBinding.commentUsername.text = item.user
+
+        viewModel.getDisplayNameUnsafe(item.user).addOnSuccessListener { it ->
+            if (it.exists()) {
+                val user = it.toObject(UserModel::class.java)!!
+                commentPostBinding.commentUsername.text = user.displayName
+            }
+        }
+        // commentPostBinding.commentUsername.text = item.user
+        Log.d("commentAdapter", "displayname: ${viewModel.checkUser(item.user).toString()}")
     }
 
     fun convertTimestamp(time: com.google.firebase.Timestamp): String {

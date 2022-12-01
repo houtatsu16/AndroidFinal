@@ -13,6 +13,7 @@ import com.cs371m.bookmark.model.BookModel
 import com.cs371m.bookmark.model.UserModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,7 +33,12 @@ class MainViewModel : ViewModel() {
     val topBooksReady = MutableLiveData(false)
 
     private val ratingBook = MutableLiveData<BookModel>()
-    private val userId = "haha"
+    private var userId = FirebaseAuth.getInstance().currentUser?.uid?:"haha"
+    private var displayName = FirebaseAuth.getInstance().currentUser?.displayName?:""
+
+    private var uid = MutableLiveData("Uninitialized")
+    private var dname = MutableLiveData("")
+
 
     init {
         // XXX one-liner to kick off the app
@@ -155,6 +161,10 @@ class MainViewModel : ViewModel() {
         return dbHelp.getBookUnsafe(isbn)
     }
 
+    fun getDisplayNameUnsafe(userId: String): Task<DocumentSnapshot> {
+        return dbHelp.getUserDisPlayNameUnsafe(userId)
+    }
+
     // Searching
     fun searchBook(title: String) {
         viewModelScope.launch(
@@ -224,4 +234,29 @@ class MainViewModel : ViewModel() {
             }
         }
     }
+
+    private fun userLogout() {
+        uid.postValue("")
+        dname.postValue("")
+
+    }
+
+    fun updateUser() {
+        // XXX Write me. Update user data in view model
+        val user = FirebaseAuth.getInstance().currentUser
+        user?.let {
+            uid.postValue(user.uid)
+            dname.postValue(user.displayName)
+        }
+    }
+
+    fun observeUid() : LiveData<String> {
+        return uid
+
+    }
+    fun signOut() {
+        FirebaseAuth.getInstance().signOut()
+        userLogout()
+    }
+
 }

@@ -37,7 +37,9 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.refreshCurrentUser()
+
+        viewModel.updateUser()
+        // viewModel.refreshCurrentUser()
 
         viewModel.observeCurrentUser().observe(viewLifecycleOwner) {
             binding.Username.text = it.displayName

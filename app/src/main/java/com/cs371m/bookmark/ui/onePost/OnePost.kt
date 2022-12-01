@@ -47,6 +47,9 @@ class OnePost : AppCompatActivity() {
         viewModel.checkBook(onePostISBN,onePostAuthor!!,onePostTitle)
         viewModel.getCurrentBook(onePostISBN)
 
+        viewModel.updateUser()
+        // viewModel.refreshCurrentUser()
+
         val adapter = CommentAdapter(viewModel)
         val rv = onePostBinding.recyclerView
         rv.adapter = adapter
@@ -123,7 +126,7 @@ class OnePost : AppCompatActivity() {
             } else {
                 viewModel.addUserComment(stringInput)
                 onePostBinding.actionComment.text.clear()
-                viewModel.refreshCurrentUser()
+                //viewModel.refreshCurrentUser()
                 viewModel.refreshCurrentBook()
             }
         }

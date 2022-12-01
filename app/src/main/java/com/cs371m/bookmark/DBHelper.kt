@@ -37,6 +37,10 @@ class DBHelper {
         return db.collection(allBooksCollection).document(isbn).get()
     }
 
+    fun getUserDisPlayNameUnsafe(userId: String): Task<DocumentSnapshot> {
+        return db.collection(allUsersCollection).document(userId).get()
+    }
+
     fun fetchTopBooks(models:MutableLiveData<List<BookModel>>, limit:Long, orderBy:String){
         db.collection(allBooksCollection).orderBy(orderBy, Query.Direction.DESCENDING).limit(limit).get().addOnSuccessListener {
                 result ->

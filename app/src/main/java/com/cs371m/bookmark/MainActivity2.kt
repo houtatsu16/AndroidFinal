@@ -20,6 +20,7 @@ import com.cs371m.bookmark.databinding.ActivityMainBinding
 import com.cs371m.bookmark.ui.hot.HotAdapter
 import com.cs371m.bookmark.ui.onePost.OnePost
 import com.cs371m.bookmark.ui.search.searchPost
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 
 class MainActivity2 : AppCompatActivity() {
 
@@ -31,6 +32,11 @@ class MainActivity2 : AppCompatActivity() {
 
     private var actionBarBinding: ActionBarBinding? = null
     private val viewModel : MainViewModel by viewModels()
+
+    private val signInLauncher =
+        registerForActivityResult(FirebaseAuthUIActivityResultContract()) {
+            viewModel.updateUser()
+        }
 
     // An Android nightmare
     // https://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
@@ -111,6 +117,10 @@ class MainActivity2 : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel.signOut()
+
+        AuthInit(viewModel, signInLauncher)
 
         supportActionBar?.let{
             initActionBar(it)
