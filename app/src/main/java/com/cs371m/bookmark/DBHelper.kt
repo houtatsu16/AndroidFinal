@@ -93,11 +93,12 @@ class DBHelper {
 
     fun updateUserDisPlayName(userId: String, displayName: String){
         var doc = db.collection(allUsersCollection).document(userId)
+        Log.d("updateUserDisPlayName", displayName)
         doc.update("displayName", displayName)
     }
 
-    fun addUserComment(userId: String, ISBN: String, content: String, timestamp: Timestamp){
-        val bookComment = BookCommentModel(content,userId,timestamp)
+    fun addUserComment(userId: String, displayName:String, ISBN: String, content: String, timestamp: Timestamp){
+        val bookComment = BookCommentModel(content,displayName,timestamp)
         db.collection(allBooksCollection).document(ISBN).update("comment", FieldValue.arrayUnion(bookComment))
 
         val userComment = UserCommentModel(ISBN, content, timestamp)

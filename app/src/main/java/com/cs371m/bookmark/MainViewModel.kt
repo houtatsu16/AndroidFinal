@@ -190,7 +190,7 @@ class MainViewModel : ViewModel() {
 
     fun addUserComment(content: String) {
         dbHelp.addUserComment(
-            userId, currentBook.value!!.ISBN, content,
+            userId, currentUser.value!!.displayName, currentBook.value!!.ISBN, content,
             Timestamp.now()
         )
     }

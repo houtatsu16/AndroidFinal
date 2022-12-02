@@ -55,6 +55,7 @@ class SettingsFragment : Fragment() {
                 rv.context, LinearLayoutManager.VERTICAL )
             rv.addItemDecoration(dividerItemDecoration)
 
+
             viewModel.observeCurrentUser().observe(viewLifecycleOwner) {
                 binding.historyTitle.visibility = View.VISIBLE
                 binding.historyClose.visibility = View.VISIBLE
