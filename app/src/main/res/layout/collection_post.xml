@@ -22,7 +22,6 @@
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
             android:layout_marginTop="10dp"
-            android:src="@drawable/no_picture"
             />
 
         <LinearLayout
@@ -37,7 +36,6 @@
                 android:textSize="15sp"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:text="title"
                 android:textStyle="italic|bold"
                 android:layout_marginBottom="6dp"
                 />

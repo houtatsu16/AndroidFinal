@@ -29,7 +29,6 @@
             android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/no_picture"
             />
 
         <LinearLayout
@@ -44,7 +43,6 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="10dp"
-                android:text="Title"
                 android:textColor="@color/burnt"
                 android:textSize="22sp"
                 android:textStyle="bold|italic"
@@ -58,7 +56,6 @@
                 android:layout_marginLeft="18dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="author"
                 android:textSize="16sp"
                 android:textStyle="italic"
                 />
@@ -86,7 +83,6 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:gravity="center"
-                    android:text="fav_num"
                     android:textSize="18sp"
                     />
                 <com.google.android.material.internal.BaselineLayout
@@ -111,7 +107,7 @@
                 android:transformPivotX="120dp"
                 android:secondaryProgressTint="@color/burnt"
                 android:numStars="5"
-                android:rating="3.5"
+                android:rating="0"
                 android:layout_gravity="center"
                 />
 
@@ -119,7 +115,6 @@
                 android:id="@+id/onePost_averageRating"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="5.0"
                 android:layout_gravity="center"
                 android:textStyle="bold"
                 android:textSize="30dp"/>
@@ -146,7 +141,6 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="50dp"
-        android:text="Description"
         android:textSize="17sp"
         android:textStyle="italic"
         />

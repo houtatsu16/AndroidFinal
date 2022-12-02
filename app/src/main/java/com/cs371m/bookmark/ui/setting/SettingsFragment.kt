@@ -39,7 +39,7 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.updateUser()
-        // viewModel.refreshCurrentUser()
+        viewModel.refreshCurrentUser()
 
         viewModel.observeCurrentUser().observe(viewLifecycleOwner) {
             binding.Username.text = it.displayName

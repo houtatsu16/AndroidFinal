@@ -25,7 +25,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/no_picture"
             />
 
         <TextView
@@ -33,7 +32,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="17sp"
-            android:text="Title"
             android:ellipsize="end"
             android:maxLines="1"
             android:maxWidth="200dp"
@@ -56,7 +54,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:maxWidth="200dp"
-            android:text="author"
             android:textStyle="bold|italic"
             android:layout_marginLeft="15dp"
             app:layout_constraintTop_toBottomOf="@+id/hotPost_title"
@@ -80,7 +77,6 @@
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:padding="6dp"
-            android:text="fav_num"
             android:textSize="16sp"
             android:layout_marginRight="10dp"
             app:layout_constraintTop_toTopOf="parent"
@@ -100,7 +96,7 @@
             android:progressTint="@color/burnt"
             android:secondaryProgressTint="@color/burnt"
             android:numStars="5"
-            android:rating="3.5"
+            android:rating="0"
             android:layout_marginLeft="40dp"
             app:layout_constraintTop_toBottomOf="@+id/hotPost_author"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -111,7 +107,6 @@
             android:id="@+id/hotPost_averageRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5"
             android:textColor="@color/burnt"
             android:textStyle="bold"
             android:textSize="18dp"

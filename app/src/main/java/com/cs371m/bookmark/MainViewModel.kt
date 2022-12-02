@@ -34,7 +34,6 @@ class MainViewModel : ViewModel() {
 
     private val ratingBook = MutableLiveData<BookModel>()
     private var userId = FirebaseAuth.getInstance().currentUser?.uid?:"haha"
-    private var displayName = FirebaseAuth.getInstance().currentUser?.displayName?:""
 
     private var uid = MutableLiveData("Uninitialized")
     private var dname = MutableLiveData("")
